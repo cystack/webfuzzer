@@ -1,17 +1,17 @@
 import pika
 import requests
 import json
-import logging
 
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger('Wait for task done')
+credentials = pika.PlainCredentials('test', 'test123@')
+con = pika.BlockingConnection(pika.ConnectionParameters(host='188.166.243.111',credentials=credentials))
 
 channelResult = con.channel()
-channelResult.queue_declare(queue='result', durable=True)
+channelResult.queue_declare(queue='result')
 
 
 def callback(ch, method, properties, body):
-	logger.debug('Task done %s', body)
+	print('Task done %s' % (body))
 	
 	
-channel.basic_consume(callback, queue='result')
+channelResult.basic_consume(callback, queue='result', no_ack=True)
+channelResult.start_consuming()
