@@ -26,9 +26,9 @@
                             </a> </li>
                         </ul>
                     </li>
-                    <!-- <li> -->
-                    <!-- <a href=""> <i class="fa fa-key"></i> API Keys </a> -->
-                    <!-- </li> -->
+                    <li>
+                    <a href=""> <i class="fa fa-key"></i> API Keys </a>
+                    </li>
                     <li>
                         <a href=""> <i class="fa fa-user"></i> User profile </a>
                     </li>

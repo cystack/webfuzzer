@@ -20,10 +20,10 @@
                                     <input type="text" class="form-control" placeholder="Search by domain...">
                                 </div>
                             </div>
-                           <div class="col-sm-offset-1 btn-group col-md-4" role="group" aria-label="...">
-                              <button type="button" class="btn btn-default"><a data-toggle="tab" href="#all">All</a></button>
-                              <button type="button" class="btn btn-default"><a data-toggle="tab" href="#finished">Finished</a></button>
-                              <button type="button" class="btn btn-default"><a data-toggle="tab" href="#running">Scanning</a></button>
+                           <div class="col-sm-offset-1 btn-group col-md-4">
+                              <button type="button" class="btn btn-secondary"<a data-toggle="tab" href="#all">All</a></button>
+                             <button type="button" class="btn btn-secondary"<a data-toggle="tab" href="#finished">Finished</a></button>
+                              <button type="button" class="btn btn-secondary"<a data-toggle="tab" href="#running">Scanning</a></button>
                             </div>
                             <div class="col-sm-offset-1" role="">
                                 <p><a href="./newScan.php" class="btn btn-primary" role="button">New scan</a></p>
@@ -56,7 +56,7 @@
                                                         <td>2016-05-22 15:23:00</td>
                                                         <td>2 hours</td>
                                                         <td>6</td>
-                                                        <td>Detail | Rescan | Stop</td>
+                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td>2</td>
@@ -65,7 +65,7 @@
                                                         <td>2016-05-22 15:23:00</td>
                                                         <td>2 hours</td>
                                                         <td>6</td>
-                                                        <td>Detail | Rescan | Stop</td>
+                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td>3</td>
@@ -74,7 +74,7 @@
                                                         <td>2016-05-22 15:23:00</td>
                                                         <td>2 hours</td>
                                                         <td>6</td>
-                                                        <td>Detail | Rescan | Stop</td>
+                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td>4</td>
@@ -83,7 +83,7 @@
                                                         <td>2016-05-22 15:23:00</td>
                                                         <td>2 hours</td>
                                                         <td>6</td>
-                                                        <td>Detail | Rescan | Stop</td>
+                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td>5</td>
@@ -92,7 +92,7 @@
                                                         <td>2016-05-22 15:23:00</td>
                                                         <td>2 hours</td>
                                                         <td>6</td>
-                                                        <td>Detail | Rescan | Stop</td>
+                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -126,7 +126,7 @@
                                                         <td>2016-05-22 15:23:00</td>
                                                         <td>2 hours</td>
                                                         <td>6</td>
-                                                        <td>Detail | Rescan | Stop</td>
+                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td>5</td>
@@ -135,7 +135,7 @@
                                                         <td>2016-05-22 15:23:00</td>
                                                         <td>2 hours</td>
                                                         <td>6</td>
-                                                        <td>Detail | Rescan | Stop</td>
+                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -169,7 +169,7 @@
                                                         <td>2016-05-22 15:23:00</td>
                                                         <td>2 hours</td>
                                                         <td>6</td>
-                                                        <td>Detail | Rescan | Stop</td>
+                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td>3</td>
@@ -178,7 +178,7 @@
                                                         <td>2016-05-22 15:23:00</td>
                                                         <td>2 hours</td>
                                                         <td>6</td>
-                                                        <td>Detail | Rescan | Stop</td>
+                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td>4</td>
@@ -187,7 +187,7 @@
                                                         <td>2016-05-22 15:23:00</td>
                                                         <td>2 hours</td>
                                                         <td>6</td>
-                                                        <td>Detail | Rescan | Stop</td>
+                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
