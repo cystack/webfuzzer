@@ -4,6 +4,55 @@ import json
 from enum import Enum
 import sys
 import time
+import sqlalchemy as db
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+import os
+
+# database stuffs
+Base = declarative_base()
+
+# scan
+class Scan(Base):
+    __tablename__ = 'scans'
+    id = db.Column(db.Integer, primary_key = True)
+    relative_id = db.Column(db.Integer)
+    description = db.Column(db.Text)
+    target_url = db.Column(db.String(128))
+    start_time = db.Column(db.Time)
+    scan_time = db.Column(db.Time, nullable=True)
+    profile = db.Column(db.String(32))
+    status = db.Column(db.String(32))
+    deleted = db.Column(db.Boolean, default=False)
+    num_vulns = db.Column(db.Integer)
+    vulns = db.relationship("Vulnerability", back_populates="scan")
+    user_id = db.Column(db.String(32))
+
+    def __repr__(self):
+        return '<Scan %d>' % self.id
+
+# vuln
+class Vulnerability(Base):
+    __tablename__ = 'vulns'
+    id = db.Column(db.Integer, primary_key = True)
+    relative_id = db.Column(db.Integer) # relative to scans
+    stored_json = db.Column(db.Text) # inefficient, might fix later
+    deleted = db.Column(db.Boolean, default=False)
+    false_positive = db.Column(db.Boolean, default=False)
+    scan_id = db.Column(db.Integer, db.ForeignKey('scans.id'))
+    scan = db.relationship("Scan", back_populates="vulns")
+
+    def __init__(self, id, json, scan_id):
+        self.relative_id = id
+        self.stored_json = json
+        self.scan_id = scan_id
+
+    def __repr__(self):
+        return '<Vuln %d>' % self.id
+
+engine = db.create_engine(os.environ.get('SQLALCHEMY_CONN_STRING'))
+Session = sessionmaker(bind=engine)
+sess = Session()
 
 class ServerStatus(Enum):
 	FREE = 1
@@ -74,18 +123,32 @@ def callback(ch, method, properties, body):
 	task_done = False
 	time.sleep(1)
 	step = 0
+	last_vuln_len = 0
 	while True:
-		status, href = getServerStatus(server)
-		if status == ServerStatus.FREE:
+		scan = sess.query(Scan).filter_by(id=task['scan_id']).first()
+		# update vuln list
+		r = requests.get(sv + '/scans/0/kb/')
+		items = json.loads(r.text)['items']	
+		for i in xrange(last_vuln_len, len(items)):
+			v = Vulnerability(i, requests.get(sv + items[i]['href']).text, task['scan_id'])
+			sess.add(v)
+			sess.commit()
+		scan.num_vulns += 1
+		sess.commit()
+		# update scan status; check if freed
+		list_scans = json.loads(requests.get(sv + '/scans/')) # currently just 1
+		if (len(list_scans == 0)): # freed
 			break
-		if status == ServerStatus.STOPPED and not task_done:
+		scan.status = json.loads(requests.get(sv + '/scans/'))[0]['status']
+		sess.commit()
+		if scan.status == 'Stopped' and not task_done:
 			task_done = True
-			sendTaskDone(server, href)
+			requests.delete(sv + '/scans/0')
 		step += 1
-		if step == 20:
+		if step == 9:
 			con.process_data_events()
 			step = 0
-		time.sleep(0.5)
+		time.sleep(5)
 	ch.basic_ack(delivery_tag=method.delivery_tag)
 #print getServerStatus(server)
 

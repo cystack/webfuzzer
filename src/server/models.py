@@ -121,7 +121,7 @@ class Scan(db.Model):
         self.description = description
         self.target_url = target
         self.profile = profile
-        self.status = '' # what?
+        self.status = 'Enqueued'
         self.user_id = user_id
         self.num_vulns = 0
 

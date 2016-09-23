@@ -5,8 +5,9 @@ from .errors import JsonRequiredError
 from .errors import JsonInvalidError
 from .errors import ResourceNotFoundError
 from database import db
-from models import Scan
+from models import Scan, Domain
 import json
+import pika
 
 class ScansList(Resource):
     decorators = [jwt_required()]
@@ -26,13 +27,33 @@ class ScansList(Resource):
         if not reqs:
             raise JsonRequiredError()
         try:
-            reqs['user_id'] = current_identity.id
+            params = {}
+            params['user_id'] = current_identity.id
             current_identity.num_scans += 1
-            reqs['id'] = current_identity.num_scans
-            u = Scan(**reqs)
+            params['id'] = current_identity.num_scans
+            params['description'] = reqs['description']
+            # construct URL from stuffs
+            domain = Domain.query.filter_by(user_id=current_identity.id, relative_id=reqs['domain_id']).first()
+            if (domain is None) or (domain.deleted):
+                raise ResourceNotFoundError()
+            url = ''
+            if (reqs['bootstrap_path'][0] != '/'):
+                reqs['bootstrap_path'] = '/' + reqs['bootstrap_path']
+            if (domain.ssl):
+                url = 'https://%s:%d%s' % (domain.url, domain.port, reqs['bootstrap_path'])
+            else:
+                url = 'http://%s:%d%s' % (domain.url, domain.port, reqs['bootstrap_path'])
+            params['target'] = url
+            u = Scan(**params)
             db.session.add(u)
             db.session.commit()
-            # TODO: do actual scan
+            # post message to RabbitMQ then forget about it
+            credentials = pika.PlainCredentials('test', 'test123@')
+            con = pika.BlockingConnection(pika.ConnectionParameters(host='188.166.243.111',credentials=credentials))
+            channel = con.channel()
+            channel.queue_declare(queue='task', durable=True)
+            channel.basic_publish(exchange='', routing_key='task', body=jsonify({'target': url}), properties=pika.BasicProperties(delivery_mode = 2))
+            con.close()
         except KeyError:
             raise JsonInvalidError()
 
