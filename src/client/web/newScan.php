@@ -36,7 +36,7 @@
                                             <td>
                                                 <br><br>
                                                 <div class="col-md-offset-6" role="">
-                                                    <p><a href="#" class="btn btn-primary" role="button">Launch Scan</a></p>
+                                                    <p><a href="./scan.php" class="btn btn-primary" role="button">Launch Scan</a></p>
                                                 </div>
                                             </td>
                                         </tr>

@@ -11,6 +11,7 @@
             	?>		
                 <article class="content dashboard-page">
                     <section class="section">
+                        <h4>Vulnerability report of <a href="http://google.com">google.com</a> domain</h4>
                         <div class="card col-md-7">
                             <div class="card-block">
                                 <section class="example">
@@ -24,27 +25,27 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
+                                                <tr onclick="window.document.location='./detailVulnerabilityScan.php';"style="cursor: pointer;">
                                                     <td><span class="label label-danger col-md-8">High</span></td>
                                                     <td>SQL Injection</td>
                                                     <td>3</td>
                                                 </tr>
-                                                <tr>
+                                                <tr onclick="window.document.location='./detailVulnerabilityScan.php';" style="cursor: pointer;">
                                                     <td><span class="label label-warning col-md-8">Warning</span></td>
                                                     <td>XSS</td>
                                                     <td>2</td>
                                                 </tr>
-                                                <tr>
+                                                <tr onclick="window.document.location='./detailVulnerabilityScan.php';"style="cursor: pointer;">
                                                     <td><span class="label label-info col-md-8">Info</span></td>
                                                     <td>Information Disclosure</td>
                                                     <td>3</td>
                                                 </tr>
-                                                <tr>
+                                                <tr onclick="window.document.location='./detailVulnerabilityScan.php';"style="cursor: pointer;">
                                                     <td><span class="label label-warning col-md-8">Warning</span></td>
                                                     <td>XSS</td>
                                                     <td>2</td>
                                                 </tr>
-                                                <tr>
+                                                <tr onclick="window.document.location='./detailVulnerabilityScan.php';"style="cursor: pointer;">
                                                     <td><span class="label label-info col-md-8">Info</span></td>
                                                     <td>Information Disclosure</td>
                                                     <td>3</td>
@@ -110,6 +111,14 @@
         </div>
         <script src="js/vendor.js"></script>
         <script src="js/app.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.document.location = $(this).data("href");
+    });
+});
+        </script>
     </body>
 
 </html>
