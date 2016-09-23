@@ -3,6 +3,7 @@ from flask_restful import Resource, Api, marshal_with, fields, abort
 from flask_jwt import current_identity, jwt_required
 from .errors import JsonRequiredError
 from .errors import JsonInvalidError
+from .errors import ResourceNotFoundError
 from database import db
 from models import Scan
 import json
@@ -41,14 +42,14 @@ class ScansEndpoint(Resource):
     def get(self, scan_rel_id):
         s = Scan.query.filter_by(user_id=current_identity.id, relative_id=scan_rel_id).first()
         if (s is None) or (s.deleted):
-            return {"code": "ResourceNotFound", "message": "The specified resource does not exist."}, 404
+            raise ResourceNotFoundError()
         res = {'id': s.relative_id, "description": s.description, "target_url": s.target_url, "start_time": s.start_time, "scan_time": s.scan_time, "profile": s.profile, "status": s.status, "noti_href": "/scans/%d/noti" % s.relative_id, "vuln_href": "/scans/%d/vuln" % s.relative_id}
         return res
 
     def post(self, scan_rel_id): # change false positive only
         s = Scan.query.filter_by(user_id=current_identity.id, relative_id=scan_rel_id).first()
         if (s is None) or (s.deleted):
-            return {"code": "ResourceNotFound", "message": "The specified resource does not exist."}, 404
+            raise ResourceNotFoundError()
         reqs = request.get_json()
         if not reqs:
             raise JsonRequiredError()
@@ -61,7 +62,7 @@ class ScansEndpoint(Resource):
     def delete(self, scan_rel_id):
         s = Scan.query.filter_by(user_id=current_identity.id, relative_id=scan_rel_id).first()
         if (s is None) or (s.deleted):
-            return {"code": "ResourceNotFound", "message": "The specified resource does not exist."}, 404
+            raise ResourceNotFoundError()
         s.deleted = True
         db.session.commit()
         return None, 204

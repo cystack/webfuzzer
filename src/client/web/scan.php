@@ -11,25 +11,26 @@
             	?>		
                 <article class="content dashboard-page">
                     <section class="section">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default fa fa-search" type="button"></button>
-                                    </span>
-                                    <input type="text" class="form-control" placeholder="Search by domain...">
+                        <div class="tab-content">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default fa fa-search" type="button"></button>
+                                        </span>
+                                        <input type="text" class="form-control" placeholder="Search by domain...">
+                                    </div>
+                                </div>
+                               <div class="col-md-offset-1 btn-group col-md-4">
+                                  <button type="button" class="btn btn-secondary"<a data-toggle="tab" href="#all">All</a></button>
+                                 <button type="button" class="btn btn-secondary"<a data-toggle="tab" href="#finished">Finished</a></button>
+                                  <button type="button" class="btn btn-secondary"<a data-toggle="tab" href="#running">Scanning</a></button>
+                                </div>
+                                <div class="col-md-offset-1 col-md-2" role="">
+                                    <p><a href="./newScan.php" class="btn btn-primary" role="button">New scan</a></p>
                                 </div>
                             </div>
-                           <div class="col-sm-offset-1 btn-group col-md-4">
-                              <button type="button" class="btn btn-secondary"<a data-toggle="tab" href="#all">All</a></button>
-                             <button type="button" class="btn btn-secondary"<a data-toggle="tab" href="#finished">Finished</a></button>
-                              <button type="button" class="btn btn-secondary"<a data-toggle="tab" href="#running">Scanning</a></button>
-                            </div>
-                            <div class="col-sm-offset-1" role="">
-                                <p><a href="./newScan.php" class="btn btn-primary" role="button">New scan</a></p>
-                            </div>
                         </div>
-
                         <div class="tab-content">
                             <div id="all" class="tab-pane fade in active">
                               <div class="card">

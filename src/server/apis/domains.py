@@ -3,6 +3,7 @@ from flask_restful import Resource, Api, marshal_with, fields, abort
 from flask_jwt import current_identity, jwt_required
 from .errors import JsonRequiredError
 from .errors import JsonInvalidError
+from .errors import ResourceNotFoundError
 from database import db
 from models import Domain
 import json
@@ -40,14 +41,14 @@ class DomainsEndpoint(Resource):
     def get(self, domain_rel_id):
         d = Domain.query.filter_by(user_id=current_identity.id, relative_id=domain_rel_id).first()
         if (d is None) or (d.deleted):
-            return {"code": "ResourceNotFound", "message": "The specified resource does not exist."}, 404
+            raise ResourceNotFoundError()
         res = {'id': d.relative_id, "description": d.description, "url": d.url, "port": d.port, "ssl": d.ssl, "verification": d.verification, "verification_code": d.verification_code}
         return res
 
     def post(self, domain_rel_id):
         d = Domain.query.filter_by(user_id=current_identity.id, relative_id=domain_rel_id).first()
         if (d is None) or (d.deleted):
-            return {"code": "ResourceNotFound", "message": "The specified resource does not exist."}, 404
+            raise ResourceNotFoundError()
         reqs = request.get_json()
         if not reqs:
             raise JsonRequiredError()
@@ -60,7 +61,7 @@ class DomainsEndpoint(Resource):
     def delete(self, domain_rel_id):
         d = Domain.query.filter_by(user_id=current_identity.id, relative_id=domain_rel_id).first()
         if (d is None) or (d.deleted):
-            return {"code": "ResourceNotFound", "message": "The specified resource does not exist."}, 404
+            raise ResourceNotFoundError()
         d.deleted = True
         db.session.commit()
         return None, 204
