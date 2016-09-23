@@ -26,8 +26,8 @@ user_roles = db.Table('user_roles',
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.String(32), primary_key = True) # UUID
-    username = db.Column(db.String(32), index = True, unique = True)
-    email = db.Column(db.String(32))
+    email = db.Column(db.String(32), index=True, unique=True)
+    name = db.Column(db.Unicode(32))
     password_hash = db.Column(db.String(128))
     roles = db.relationship('Role', secondary=user_roles,
         backref=db.backref('users', lazy='dynamic'))
@@ -37,11 +37,11 @@ class User(db.Model):
     num_domains = db.Column(db.Integer)
     num_scans = db.Column(db.Integer)
 
-    def __init__(self, username, password, email=None, organization=None):
+    def __init__(self, email, password, name=None, organization=None):
         self.id = str(uuid.uuid4())
-        self.username = username
-        self.password = password
+        self.name = name
         self.email = email
+        self.password = password
         self.organization = organization
         self.num_scans = 0
         self.num_domains = 0
@@ -61,8 +61,8 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 # Flask-JWT supplier
-def authenticate(username, password):
-    user = User.query.filter_by(username = username).first()
+def authenticate(email, password):
+    user = User.query.filter_by(email = email).first()
     if user and user.verify_password(password):
         return user
 
