@@ -30,13 +30,13 @@
                         <a href="./vulnerability.php"> <i class="fa fa-exclamation-triangle"></i> Vulnerabilities </a>
                     </li>
                     <li>
-                    <a href=""> <i class="fa fa-key"></i> API Keys </a>
+                    <a href="./apikey.php"> <i class="fa fa-key"></i> API Keys </a>
                     </li>
                     <li>
                         <a href=""> <i class="fa fa-user"></i> User profile </a>
                     </li>
                     <li>
-                        <a href=""> <i class="fa fa-life-ring"></i> Support </a>
+                        <a href="./support.php"> <i class="fa fa-life-ring"></i> Support </a>
                     </li>
                 </ul>
             </nav>
