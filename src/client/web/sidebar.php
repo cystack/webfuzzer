@@ -15,7 +15,7 @@
                     <li>
                         <a href="scan.php"> <i class="fa fa-search"></i> Scans </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href=""> <i class=" fa fa-exclamation-triangle"></i> Vulnerabilities</a>
                         <ul>
                             <li> <a href="Summary.html">
@@ -25,6 +25,9 @@
                                 False Positive
                             </a> </li>
                         </ul>
+                    </li> -->
+                    <li>
+                        <a href="./vulnerability.php"> <i class="fa fa-exclamation-triangle"></i> Vulnerabilities </a>
                     </li>
                     <li>
                     <a href=""> <i class="fa fa-key"></i> API Keys </a>
