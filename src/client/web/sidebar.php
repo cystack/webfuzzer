@@ -33,7 +33,7 @@
                     <a href=""> <i class="fa fa-key"></i> API Keys </a>
                     </li>
                     <li>
-                        <a href=""> <i class="fa fa-user"></i> User profile </a>
+                        <a href="userProfile.php"> <i class="fa fa-user"></i> User profile </a>
                     </li>
                     <li>
                         <a href=""> <i class="fa fa-life-ring"></i> Support </a>
