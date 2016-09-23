@@ -9,6 +9,9 @@ channel = con.channel()
 channel.queue_declare(queue='task', durable=True)
 
 data = {'target': 'http://testphp.acunetix.com'}
+data1 = {'target': 'http://vnu.edu.vn/home'}
+data2 = {'target': 'http://mp3.zing.vn'}
+data3 = {'target': 'http://tinchi.ftu.edu.vn'}
 
 channel.basic_publish(exchange='',
 						routing_key='task',
@@ -17,6 +20,26 @@ channel.basic_publish(exchange='',
 							delivery_mode = 2,
 						))
 
+channel.basic_publish(exchange='',
+						routing_key='task',
+						body=json.dumps(data1),
+						properties=pika.BasicProperties(
+							delivery_mode = 2,
+						))
+
+channel.basic_publish(exchange='',
+						routing_key='task',
+						body=json.dumps(data2),
+						properties=pika.BasicProperties(
+							delivery_mode = 2,
+						))
+
+channel.basic_publish(exchange='',
+						routing_key='task',
+						body=json.dumps(data3),
+						properties=pika.BasicProperties(
+							delivery_mode = 2,
+						))
 print "[x] Sent"
 
 con.close()

@@ -16,11 +16,7 @@ class DomainsList(Resource):
         for d in domains:
             if (d.deleted):
                 continue
-            if (d.ssl):
-                url = 'https://%s:%d/' % (d.url, d.port)
-            else:
-                url = 'http://%s:%d/' % (d.url, d.port)
-            res.append({'id': d.relative_id, 'href': url})
+            res.append({'id': d.relative_id, 'href': '/domains/%d' % d.relative_id})
         return res
 
     def post(self):

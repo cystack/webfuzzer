@@ -16,7 +16,7 @@ class ScansList(Resource):
         for s in scans:
             if (s.deleted):
                 continue
-            r = {"id": s.relative_id, "href": "string", "status": s.status, "start_time": s.start_time, "target_url": s.target_url}
+            r = {"id": s.relative_id, "href": "/scans/%d" % s.relative_id, "status": s.status, "start_time": s.start_time, "target_url": s.target_url}
             res.append(r)
         return res
 
@@ -26,7 +26,7 @@ class ScansList(Resource):
             raise JsonRequiredError()
         try:
             reqs['user_id'] = current_identity.id
-            current_identity.num_domains += 1
+            current_identity.num_scans += 1
             reqs['id'] = current_identity.num_scans
             u = Scan(**reqs)
             db.session.add(u)
@@ -58,8 +58,8 @@ class ScansEndpoint(Resource):
         except KeyError:
             raise JsonInvalidError()
 
-    def delete(self, domain_rel_id):
-        s = Scan.query.filter_by(user_id=current_identity.id, relative_id=domain_rel_id).first()
+    def delete(self, scan_rel_id):
+        s = Scan.query.filter_by(user_id=current_identity.id, relative_id=scan_rel_id).first()
         if (s is None) or (s.deleted):
             return {"code": "ResourceNotFound", "message": "The specified resource does not exist."}, 404
         s.deleted = True

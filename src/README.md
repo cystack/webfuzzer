@@ -3,5 +3,4 @@
 - **server:** HTTP Service hay REST API
 - **client:** web/mobile
 - **middleware:** thành phần giao tiếp giữa core và server
-- **tagcube**: code cũ của dự án tagcube, dùng để tham khảo
 - **test**: các module test dự án
