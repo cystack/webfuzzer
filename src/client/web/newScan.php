@@ -23,17 +23,12 @@
                                         <tr>
                                             <td data-toggle="tooltip" data-placement="top" title="The scan profile to use during this application scan">Profile</td>
                                             <td>
-                                                <div class="dropdown">
-                                                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                    Full Audit
-                                                    <span class="caret"></span>
-                                                  </button>
-                                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="#">Full Audit</a></li>
-                                                    <li><a href="#">SQL Injetion</a></li>
-                                                    <li><a href="#">XSS</a></li>
-                                                  </ul>
-                                                </div>
+                                            <select class="c-select form-control boxed">
+                                                <option selected="">Full Audit</option>
+                                                <option value="1">SQL Injetion</option>
+                                                <option value="2">XSS</option>
+                                            </select>
+                                            
                                             </td>
                                         </tr>
                                         <tr>
