@@ -9,9 +9,9 @@
             		include("header.php"); 
             		include("sidebar.php");
             	?>		
-                <article class="">
+                <article class="content dashboard-page">
                     <section class="section">
-                        
+                    
                     </section>                    
                 </article>
             </div>
