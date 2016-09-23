@@ -1,10 +1,10 @@
 ﻿import requests
 import json
 
-data = {'scan_profile': file('../Server/Engine/w3af/profiles/full_audit.pw3af').read(),
+data = {'scan_profile': file('../core/w3af/profiles/full_audit.pw3af').read(),
         'target_urls': ['http://testphp.acunetix.com']}
 
-response = requests.post('http://192.168.81.128:5000/scans/',
+response = requests.post('http://128.199.218.229:5000/',
                          data=json.dumps(data),
                          headers={'content-type': 'application/json'})
 						 
