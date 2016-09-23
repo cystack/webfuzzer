@@ -1,7 +1,6 @@
 import pika
 import requests
 import json
-from enum import Enum
 import sys
 import time
 import sqlalchemy as db
@@ -54,11 +53,6 @@ engine = db.create_engine(os.environ.get('SQLALCHEMY_CONN_STRING'))
 Session = sessionmaker(bind=engine)
 sess = Session()
 
-class ServerStatus(Enum):
-	FREE = 1
-	RUNNING = 2
-	STOPPED = 3
-
 credentials = pika.PlainCredentials('test', 'test123@')
 con = pika.BlockingConnection(pika.ConnectionParameters(host='188.166.243.111',credentials=credentials))
 
@@ -86,19 +80,6 @@ def isFree(sv):
 		freeServer(sv, item['href'])
 		return True
 	return False
-
-def getServerStatus(sv):
-	r = requests.get(sv + '/scans/')
-	items = json.loads(r.text)['items']
-	if len(items) == 0:
-		return ServerStatus.FREE, ''
-	item = items[0]
-	href = item['href']
-	if item['status'] == 'Running':
-		return ServerStatus.RUNNING, href
-	if item['status'] == 'Stopped':
-		print "Get status:", json.dumps(item)
-		return ServerStatus.STOPPED, href
 
 def sendTaskDone(server, href):
 	data = {}
