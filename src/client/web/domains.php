@@ -14,7 +14,7 @@
                     <div class="header-block header-block-search hidden-sm-down">
                         <div class="row sameheight-container">		
                             <div class="row">
-                                <div class="col-lg-11">
+                                <div class="col-md-11">
                                     <div class="input-group">
                                         <span class="input-group-btn">
                                             <button class="btn btn-default fa fa-search" type="button"></button>
@@ -22,7 +22,7 @@
                                         <input type="text" class="form-control" placeholder="Search by domain...">
                                     </div>
                                 </div>
-                            <div class="col-lg-1">
+                            <div class="col-md-1">
                         		<button type="button" class="btn btn-primary btn-sm">Add</button>
                     		</div>
                 		</div>
@@ -32,7 +32,7 @@
         	<div class="card">
         		<div class="card-block">
             		<div class="card-title-block">
-            			<h3 class="title"> Responsive simple </h3>
+            			<h3 class="title"> Verify domains </h3>
 	            </div>
 	            <section class="example">
 		            <div class="table-responsive">
@@ -40,40 +40,37 @@
 	                <thead>
 	                    <tr>
 	                    <th>#</th>
-	                    <th>Table heading</th>
-	                    <th>Table heading</th>
-	                    <th>Table heading</th>
-	                    <th>Table heading</th>
+	                    <th>Domains</th>
+	                    <th>Ownership verified</th>
+	                    <th>Action</th>
 	                    </tr>
 	                </thead>
 		                <tbody>
 	                    <tr>
-	                    <td>Table cell</td>
-	                    <td>Table cell</td>
-	                    <td>Table cell</td>
-	                    <td>Table cell</td>
-	                    <td>Table cell</td>
+	                    <td>1</td>
+	                    <td>google.com</td>
+	                    <td>True</td>
+	                    <td>Delete</td>
 	                    </tr>
 	                    <tr>
-	                    <td>Table cell</td>
-	                    <td>Table cell</td>
-	                    <td>Table cell</td>
-	                    <td>Table cell</td>
-		                    <td>Table cell</td>
+	                    <td>2</td>
+	                    <td>bing.com</td>
+	                    <td>False</td>
+	                    <td>Delete | Verify</td>
 	                    </tr>
 	                    <tr>
-	                    <td>Table cell</td>
-	                    <td>Table cell</td>
-	                    <td>Table cell</td>
-	                    <td>Table cell</td>
-	                    <td>Table cell</td>
+	                    <td></td>
+	                    <td></td>
+	                    <td></td>
+	                    <td></td>
+	                    <td></td>
 	                    </tr>
 	                    <tr>
-	                    <td>Table cell</td>
-	                    <td>Table cell</td>
-	                    <td>Table cell</td>
-		                    <td>Table cell</td>
-	                    <td>Table cell</td>
+	                    <td></td>
+	                    <td></td>
+	                    <td></td>
+		                <td></td>
+	                    <td></td>
 	                    </tr>
 	                </tbody>
 	                </table>
