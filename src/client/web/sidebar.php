@@ -7,13 +7,13 @@
             <nav class="menu">
                 <ul class="nav metismenu" id="sidebar-menu">
                     <li class="active">
-                        <a href="index.html"> <i class="fa fa-home"></i> Dashboard </a>
+                        <a href="dashboard.php"> <i class="fa fa-home"></i> Dashboard </a>
                     </li>
                     <li>
-                        <a href=""> <i class="fa fa-th-large"></i> Domains </a>
+                        <a href="domains.php"> <i class="fa fa-th-large"></i> Domains </a>
                     </li>
                     <li>
-                        <a href=""> <i class="fa fa-search"></i> Scans </a>
+                        <a href="scan.php"> <i class="fa fa-search"></i> Scans </a>
                     </li>
                     <li>
                         <a href=""> <i class=" fa fa-exclamation-triangle"></i> Vulnerabilities</a>
