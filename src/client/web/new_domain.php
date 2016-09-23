@@ -40,7 +40,7 @@
                                     <div class="col-md-5 col-md-offset-3">
                                         <form role="form">
                                             <div class="form-group">  
-                                                <input type="text" class="form-control underlined" id="email_field">
+                                                <input class="form-control boxed" placeholder="" type="text" id="email_field">
                                             </div>
                                         </form>
                                     </div>
