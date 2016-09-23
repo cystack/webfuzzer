@@ -2,12 +2,8 @@ import pika
 import requests
 import json
 from enum import Enum
-import logging
 import sys
 import time
-
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger('Dispatcher')
 
 class ServerStatus(Enum):
 	FREE = 1
@@ -21,7 +17,7 @@ channelTask = con.channel()
 channelTask.queue_declare(queue='task', durable=True)
 
 channelResult = con.channel()
-channelResult.queue_declare(queue='result', durable=True)
+channelResult.queue_declare(queue='result')
 
 server = sys.argv[1]
 
@@ -52,6 +48,7 @@ def getServerStatus(sv):
 	if item['status'] == 'Running':
 		return ServerStatus.RUNNING, href
 	if item['status'] == 'Stopped':
+		print "Get status:", json.dumps(item)
 		return ServerStatus.STOPPED, href
 
 def sendTaskDone(server, href):
@@ -61,10 +58,7 @@ def sendTaskDone(server, href):
 	message = json.dumps(data)
 	channelResult.basic_publish(exchange='',
 						routing_key='result',
-						body=message,
-						properties=pika.BasicProperties(
-							delivery_mode = 2,
-						))
+						body=message)
 
 def scan(target):
 	data = {'scan_profile': file('../core/w3af/profiles/full_audit.pw3af').read(),
@@ -74,10 +68,11 @@ def scan(target):
 						headers={'content-type': 'application/json'})
 
 def callback(ch, method, properties, body):
-	logger.debug('Get message %s', body)
+	print('Get message %s', body)
 	task = json.loads(body)
 	scan(task['target'])
 	task_done = False
+	time.sleep(1)
 	while True:
 		status, href = getServerStatus(server)
 		if status == ServerStatus.FREE:
@@ -86,11 +81,14 @@ def callback(ch, method, properties, body):
 			task_done = True
 			sendTaskDone(server, href)
 		time.sleep(0.5)
-	ch.basic_ack(delivery_tag = method.delivery_tag)
+	ch.basic_ack(delivery_tag=method.delivery_tag)
+#print getServerStatus(server)
 
-channel.basic_qos(prefetch_count=1)
-channel.basic_consume(callback, queue='task')
+
+channelTask.basic_qos(prefetch_count=1)
+channelTask.basic_consume(callback, queue='task')
 
 print '[*] Waiting for message'
 
-channel.start_consuming()
+channelTask.start_consuming()
+
