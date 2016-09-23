@@ -25,7 +25,7 @@ class Scan(Base):
     status = db.Column(db.String(32))
     deleted = db.Column(db.Boolean, default=False)
     num_vulns = db.Column(db.Integer)
-    vulns = db.relationship("Vulnerability", back_populates="scan")
+    vulns = db.orm.relationship("Vulnerability", back_populates="scan")
     user_id = db.Column(db.String(32))
 
     def __repr__(self):
@@ -40,7 +40,7 @@ class Vulnerability(Base):
     deleted = db.Column(db.Boolean, default=False)
     false_positive = db.Column(db.Boolean, default=False)
     scan_id = db.Column(db.Integer, db.ForeignKey('scans.id'))
-    scan = db.relationship("Scan", back_populates="vulns")
+    scan = db.orm.relationship("Scan", back_populates="vulns")
 
     def __init__(self, id, json, scan_id):
         self.relative_id = id
@@ -109,7 +109,7 @@ def sendTaskDone(server, href):
 						routing_key='result',
 						body=message)
 
-def scan(target):
+def scann(target):
 	data = {'scan_profile': file('../core/w3af/profiles/full_audit.pw3af').read(),
 		'target_urls': [target]}
 	response = requests.post(server + '/scans/',
@@ -119,7 +119,7 @@ def scan(target):
 def callback(ch, method, properties, body):
 	print('Get message %s', body)
 	task = json.loads(body)
-	scan(task['target'])
+	scann(task['target'])
 	task_done = False
 	time.sleep(1)
 	step = 0
