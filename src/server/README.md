@@ -1,1 +1,1 @@
-HTTP REST Service
+POST tên người dùng và password vào `auth`, theo JSON `{'username': 'abc', 'password': 'def'}`.
