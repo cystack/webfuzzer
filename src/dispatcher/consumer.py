@@ -73,6 +73,7 @@ def callback(ch, method, properties, body):
 	scan(task['target'])
 	task_done = False
 	time.sleep(1)
+	step = 0
 	while True:
 		status, href = getServerStatus(server)
 		if status == ServerStatus.FREE:
@@ -80,6 +81,10 @@ def callback(ch, method, properties, body):
 		if status == ServerStatus.STOPPED and not task_done:
 			task_done = True
 			sendTaskDone(server, href)
+		step += 1
+		if step == 20:
+			con.process_data_events()
+			step = 0
 		time.sleep(0.5)
 	ch.basic_ack(delivery_tag=method.delivery_tag)
 #print getServerStatus(server)

@@ -9,9 +9,9 @@ channel = con.channel()
 channel.queue_declare(queue='task', durable=True)
 
 data = {'target': 'http://testphp.acunetix.com'}
-data1 = {'target': 'http://timbus.vn'}
+data1 = {'target': 'http://vnu.edu.vn/home'}
 data2 = {'target': 'http://mp3.zing.vn'}
-data3 = {'target': 'http://ctf.babyphd.net'}
+data3 = {'target': 'http://tinchi.ftu.edu.vn'}
 
 channel.basic_publish(exchange='',
 						routing_key='task',
