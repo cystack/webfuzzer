@@ -35,13 +35,14 @@
                 var password = document.getElementById('password').value;
 
                 var http = new XMLHttpRequest();
-                var url = "connection.php";
-                var params = "action=POST&url=/auth&accessToken=None&body=email:" + username + " ++ password=" + password + "&redirectURL=dashboard";
+                var url = "188.166.224.165:5555";
+                var params = '{"email" : ' + username + ', "password" : ' + password + '}';
+
                 http.open("POST", url, true);
 
                 http.setRequestHeader("Content-type", "application/json");
 
-                http.send(params);
+                http.send(JSON.parse(params));
             }
         </script>
         <!-- Reference block for JS -->
