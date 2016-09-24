@@ -58,7 +58,7 @@
                 var http = new XMLHttpRequest();
                 var url = "http://188.166.224.165:5555/users";
                 var params = '{"name":"'+name+'","email" : "' + email + '", "password" : "' + password + '"}';
-                alert(params);
+                // alert(params);
                 http.open("POST", url, true);
                 // console.log(params);
                 http.setRequestHeader("Content-type", "text/plain");

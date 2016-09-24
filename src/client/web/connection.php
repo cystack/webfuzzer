@@ -2,7 +2,9 @@
 	$host = '188.166.224.165';
 	$port = '5555';
 	// var_dump($_POST);
-	function GET($host, $port, $url, $accessToken){
+	function GET($url, $accessToken){
+		$host = '188.166.224.165';
+		$port = '5555';
 		$ch = curl_init($host.':'.$port.$url);
 
 		if ($accessToken !== "None"){
