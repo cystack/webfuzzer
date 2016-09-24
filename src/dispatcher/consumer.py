@@ -23,6 +23,7 @@ class Scan(Base):
 	profile = db.Column(db.String(32))
 	status = db.Column(db.String(32))
 	deleted = db.Column(db.Boolean, default=False)
+    domain_id = db.Column(db.Integer)
 	run_instance = db.Column(db.Unicode(128))
 	num_vulns = db.Column(db.Integer)
 	vulns = db.orm.relationship("Vulnerability", back_populates="scan")
@@ -39,6 +40,7 @@ class Vulnerability(Base):
 	stored_json = db.Column(db.Text) # inefficient, might fix later
 	deleted = db.Column(db.Boolean, default=False)
 	false_positive = db.Column(db.Boolean, default=False)
+	severity = db.Column(db.String(16))
 	scan_id = db.Column(db.Integer, db.ForeignKey('scans.id'))
 	scan = db.orm.relationship("Scan", back_populates="vulns")
 
