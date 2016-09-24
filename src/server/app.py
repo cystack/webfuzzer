@@ -34,6 +34,10 @@ def create_app(config_name):
     # redirect
     app.add_url_rule('/scans/<int:scan_rel_id>/vuln', endpoint='VulnsList') # list vulns found in a scan
 
+    @app.before_first_request
+    def init():
+        db.create_all()
+
     @app.before_request
     def detect_user_language():
         print request.data

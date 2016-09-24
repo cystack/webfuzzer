@@ -1,6 +1,7 @@
 from database import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from flask.json import loads
 import uuid
 
 # user + role
@@ -82,6 +83,7 @@ class Domain(db.Model):
     verification = db.Column(db.Boolean)
     verification_code = db.Column(db.String(64))
     deleted = db.Column(db.Boolean, default=False)
+    scans = db.relationship("Scan", back_populates="domain")
     user_id = db.Column(db.String(40), db.ForeignKey('users.id'))
     user = db.relationship("User", back_populates="domains")
 
@@ -114,6 +116,7 @@ class Scan(db.Model):
     run_instance = db.Column(db.Unicode(128))
     num_vulns = db.Column(db.Integer)
     domain_id = db.Column(db.Integer, db.ForeignKey('domains.id'))
+    domain = db.relationship("Domain", back_populates="scans")
     vulns = db.relationship("Vulnerability", back_populates="scan")
     user_id = db.Column(db.String(40), db.ForeignKey('users.id'))
     user = db.relationship("User", back_populates="scans")
@@ -143,6 +146,7 @@ class Vulnerability(db.Model):
     relative_id = db.Column(db.Integer) # relative to scans
     stored_json = db.Column(db.Text) # inefficient, might fix later
     deleted = db.Column(db.Boolean, default=False)
+    severity = db.Column(db.String(16))
     false_positive = db.Column(db.Boolean, default=False)
 
     scan_id = db.Column(db.Integer, db.ForeignKey('scans.id'))
@@ -152,6 +156,7 @@ class Vulnerability(db.Model):
         self.relative_id = id
         self.stored_json = json
         self.scan_id = scan_id
+        self.severity = loads(json)['severity']
 
     def __repr__(self):
         return '<Vuln %d>' % self.id
