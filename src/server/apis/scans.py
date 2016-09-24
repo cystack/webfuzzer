@@ -92,7 +92,7 @@ class ScansEndpoint(Resource):
         db.session.commit()
         return None, 204
 
-class ScanStop(Resource):
+class ScansStop(Resource):
     decorators = [jwt_required()]
 
     def get(self, scan_rel_id):

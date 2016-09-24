@@ -3,21 +3,15 @@ This script runs the application using a development server.
 It contains the definition of routes and views for the application.
 """
 
-from flask import Flask
-from flask_jwt import JWT
-from flask_script import Manager
+from flask import Flask, request, current_app
+from flask_jwt import JWT, JWTError
 from config import configs
 from database import db
 from apis import api
 from models import authenticate, identity, User
+from werkzeug.local import LocalProxy
 
 jwt = JWT(authentication_handler=authenticate, identity_handler=identity)
-manager = Manager()
-
-@manager.command
-def createdb():
-    "Just say hello"
-    db.create_all()
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -29,20 +23,18 @@ def create_app(config_name):
     db.init_app(app)
     jwt.init_app(app)
     api.init_app(app)
-    manager.init_app(app)
 
     # routes
         
-    # CORS
-#    @app.after_request
-#    def after_request(response):
-#        response.headers.add('Access-Control-Allow-Origin', '*')
-#        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-#        response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-#        return response
+     #CORS
 
     # redirect
     app.add_url_rule('/scans/<int:scan_rel_id>/vuln', endpoint='VulnsList') # list vulns found in a scan
+
+    @app.before_request
+    def detect_user_language():
+        print request.data
+        print request.headers
 
     return app
 
