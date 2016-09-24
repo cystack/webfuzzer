@@ -23,6 +23,7 @@ class Scan(Base):
 	profile = db.Column(db.String(32))
 	status = db.Column(db.String(32))
 	deleted = db.Column(db.Boolean, default=False)
+    domain_id = db.Column(db.Integer)
 	run_instance = db.Column(db.Unicode(128))
 	num_vulns = db.Column(db.Integer)
 	vulns = db.orm.relationship("Vulnerability", back_populates="scan")

@@ -113,17 +113,19 @@ class Scan(db.Model):
     deleted = db.Column(db.Boolean, default=False)
     run_instance = db.Column(db.Unicode(128))
     num_vulns = db.Column(db.Integer)
+    domain_id = db.Column(db.Integer, db.ForeignKey('domains.id'))
     vulns = db.relationship("Vulnerability", back_populates="scan")
     user_id = db.Column(db.String(40), db.ForeignKey('users.id'))
     user = db.relationship("User", back_populates="scans")
 
-    def __init__(self, id, description, target, profile, user_id):
+    def __init__(self, id, description, target, profile, user_id, domain_id):
         self.relative_id = id
         self.description = description
         self.target_url = target
         self.profile = profile
         self.status = 'Enqueued'
         self.user_id = user_id
+        self.domain_id = domain_id
         self.num_vulns = 0
         self.run_instance = '' # will be populated with URL of running instance
 
