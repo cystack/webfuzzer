@@ -61,7 +61,7 @@
                 alert(params);
                 http.open("POST", url, true);
                 // console.log(params);
-                http.setRequestHeader("Content-type", "application/json");
+                http.setRequestHeader("Content-type", "text/plain");
 
                 http.send(params);
                 // alert(params);
