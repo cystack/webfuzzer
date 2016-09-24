@@ -7,3 +7,4 @@ WebFuzzer built using [w3af](https://github.com/andresriancho/w3af), a  Web Appl
 - REST API
 - Web Interface now and the future will have mobile, pc version
 - Detects 200+ vulnerabilities, and continuing
+- Patching vulnerabilities by generate rule firewall
