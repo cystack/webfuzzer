@@ -2,13 +2,22 @@
 <html class="no-js" lang="en">
     <?php include("head.php") ?>
     <?php
-    $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6IjhiYWU4YzM4LTQ3NzgtNDM4Zi1hODA2LWVlYTYxMWI0MjIzMCIsImlhdCI6MTQ3NDcxMTQwMiwibmJmIjoxNDc0NzExNDAyLCJleHAiOjE0NzQ3OTc4MDJ9.b6Ctxvx4xTL-QynOB19B5gPYKIXkrQnsK8x-ydq1ncI';
-    $num = GET('/gets', $token);
-    for ( $x = 0; $x < count($num['body']); $x++ ) {
-        $data = GET('/domains/'.($x + 1), $token);
-
-        echo "<tr><td>".$data['body']['id']."</td><td>".$data['body']['url']."</td><td>".(int)$data['body']['ssl']."</td><td>Delete</td></tr>";
+    $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
+    $all = GET('/scans', $token)['body'];
+    $finished = array();
+    $scanning = array();
+    $allID = array();
+    for ( $x = 0; $x < count($all); $x++ ) {
+        if ($all[$x]['status'] == 'Stopped'){
+            array_push($finished, $all[$x]['id']);
+        }else{
+            array_push($scanning, $all[$x]['id']);
+        }
+        array_push($allID, $all[$x]['id']);
     }
+    // var_dump($finished);
+    // var_dump($scanning);
+    // var_dump($allID);
     ?>
     <body>
         <div class="main-wrapper">
@@ -58,51 +67,20 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>google.com</td>
-                                                        <td>Running</td>
-                                                        <td>2016-05-22 15:23:00</td>
-                                                        <td>2 hours</td>
-                                                        <td>6</td>
-                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>microsoft.com</td>
-                                                        <td>Finished</td>
-                                                        <td>2016-05-22 15:23:00</td>
-                                                        <td>2 hours</td>
-                                                        <td>6</td>
-                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>google.com</td>
-                                                        <td>Running</td>
-                                                        <td>2016-05-22 15:23:00</td>
-                                                        <td>2 hours</td>
-                                                        <td>6</td>
-                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>google.com</td>
-                                                        <td>Running</td>
-                                                        <td>2016-05-22 15:23:00</td>
-                                                        <td>2 hours</td>
-                                                        <td>6</td>
-                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>microsoft.com</td>
-                                                        <td>Finished</td>
-                                                        <td>2016-05-22 15:23:00</td>
-                                                        <td>2 hours</td>
-                                                        <td>6</td>
-                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
-                                                    </tr>
+                                                    <?php  
+                                                        foreach ($allID as &$id) {
+                                                            echo '<tr>';
+                                                            $all = GET('/scans/'.$id, $token)['body'];
+                                                            echo '<td>'.$all['id'].'</td>';
+                                                            echo '<td>'.$all['target_url'].'</td>';
+                                                            echo '<td>'.$all['status'].'</td>';
+                                                            echo '<td>'.$all['start_time'].'</td>';
+                                                            echo '<td>'.$all['scan_time'].'</td>';
+                                                            echo '<td>'.count(GET('/vulns/'.$id, $token)['body']).'</td>';
+                                                            echo '<td><a href="detailScan.php?scanID='.$id.'">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>';
+                                                            echo '</tr>';
+                                                        }
+                                                    ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -128,24 +106,20 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>microsoft.com</td>
-                                                        <td>Finished</td>
-                                                        <td>2016-05-22 15:23:00</td>
-                                                        <td>2 hours</td>
-                                                        <td>6</td>
-                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>microsoft.com</td>
-                                                        <td>Finished</td>
-                                                        <td>2016-05-22 15:23:00</td>
-                                                        <td>2 hours</td>
-                                                        <td>6</td>
-                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
-                                                    </tr>
+                                                    <?php  
+                                                        foreach ($finished as &$id) {
+                                                            echo '<tr>';
+                                                            $all = GET('/scans/'.$id, $token)['body'];
+                                                            echo '<td>'.$all['id'].'</td>';
+                                                            echo '<td>'.$all['target_url'].'</td>';
+                                                            echo '<td>'.$all['status'].'</td>';
+                                                            echo '<td>'.$all['start_time'].'</td>';
+                                                            echo '<td>'.$all['scan_time'].'</td>';
+                                                            echo '<td>'.count(GET('/vulns/'.$id, $token)['body']).'</td>';
+                                                            echo '<td><a href="detailScan.php?id='.$id.'">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>';
+                                                            echo '</tr>';
+                                                        }
+                                                    ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -171,33 +145,20 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>google.com</td>
-                                                        <td>Running</td>
-                                                        <td>2016-05-22 15:23:00</td>
-                                                        <td>2 hours</td>
-                                                        <td>6</td>
-                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>google.com</td>
-                                                        <td>Running</td>
-                                                        <td>2016-05-22 15:23:00</td>
-                                                        <td>2 hours</td>
-                                                        <td>6</td>
-                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>google.com</td>
-                                                        <td>Running</td>
-                                                        <td>2016-05-22 15:23:00</td>
-                                                        <td>2 hours</td>
-                                                        <td>6</td>
-                                                        <td><a href="detailScan.php">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>
-                                                    </tr>
+                                                    <?php  
+                                                        foreach ($scanning as &$id) {
+                                                            echo '<tr>';
+                                                            $all = GET('/scans/'.$id, $token)['body'];
+                                                            echo '<td>'.$all['id'].'</td>';
+                                                            echo '<td>'.$all['target_url'].'</td>';
+                                                            echo '<td>'.$all['status'].'</td>';
+                                                            echo '<td>'.$all['start_time'].'</td>';
+                                                            echo '<td>'.$all['scan_time'].'</td>';
+                                                            echo '<td>'.count(GET('/vulns/'.$id, $token)['body']).'</td>';
+                                                            echo '<td><a href="detailScan.php?id='.$id.'">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>';
+                                                            echo '</tr>';
+                                                        }
+                                                    ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -205,12 +166,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="menu3" class="tab-pane fade">
-                          <h3>Menu 3</h3>
-                          <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                        </div>
                       </div>
-
                     </section>                    
                 </article>
             </div>
