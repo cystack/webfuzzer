@@ -8,6 +8,7 @@ from database import db
 from models import Scan, Domain
 import json
 import pika
+import os
 
 class ScansList(Resource):
     decorators = [jwt_required()]
@@ -49,12 +50,13 @@ class ScansList(Resource):
             db.session.add(u)
             db.session.commit()
             # post message to RabbitMQ then forget about it
-            credentials = pika.PlainCredentials('test', 'test123@')
-            con = pika.BlockingConnection(pika.ConnectionParameters(host='188.166.243.111',credentials=credentials))
+            credentials = pika.PlainCredentials(os.environ.get('TASKQUEUE_USER'), os.environ.get('TASKQUEUE_PASS'))
+            con = pika.BlockingConnection(pika.ConnectionParameters(host=os.environ.get('TASKQUEUE_HOST'),credentials=credentials))
             channel = con.channel()
             channel.queue_declare(queue='task', durable=True)
             channel.basic_publish(exchange='', routing_key='task', body=json.dumps({'target': url, 'scan_id': u.id}), properties=pika.BasicProperties(delivery_mode = 2))
             con.close()
+            return {}, 201, {'Location': '/scans/%d' % u.relative_id}
         except KeyError:
             raise JsonInvalidError()
 

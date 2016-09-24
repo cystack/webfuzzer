@@ -36,6 +36,7 @@ class DomainsList(Resource):
             u = Domain(**reqs)
             db.session.add(u)
             db.session.commit()
+            return {}, 201, {'Location': '/domains/%d' % u.relative_id}
         except KeyError:
             raise JsonInvalidError()
 

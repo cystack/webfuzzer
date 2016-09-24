@@ -135,7 +135,7 @@ def callback(ch, method, properties, body):
 		r = requests.get(sv + currentpath + '/kb/')
 		items = json.loads(r.text)['items']	
 		for i in xrange(last_vuln_len, len(items)):
-			v = Vulnerability(i, requests.get(sv + items[i]['href']).text, task['scan_id'])
+			v = Vulnerability(i+1, requests.get(sv + items[i]['href']).text, task['scan_id'])
 			sess.add(v)
 			sess.commit()
 		scan.num_vulns += 1
