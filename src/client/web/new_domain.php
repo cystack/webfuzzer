@@ -336,7 +336,6 @@
                         http.setRequestHeader("Content-Type", "application/json");
                         http.setRequestHeader("Authorization", "JWT " + token);
                         http.send(params);
-                //sleep(2);
                 window.location.replace("domains.php");
             }
 
