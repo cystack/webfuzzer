@@ -14,6 +14,7 @@
 - Phát hiện được hơn **200 loại lỗ hổng**, và sẽ còn mở rộng tiếp
 - **Xử lý phân tán**, cho phép scan một số lượng lớn ứng dụng web đồng thời
 - **REST API**: Hướng đến người dùng chuyên gia, họ có khả năng tự xây dựng những công cụ Scanner trên hạ tầng WebFuzzer
+- **Đa nền tảng**: Hiện tại là Web Interface, tương lai sẽ là CLI, Mobile, PC vì đã có API hỗ trợ
 
 ## Kiến trúc sản phẩm
 
@@ -24,3 +25,4 @@
 4. Thiết lập môi trường cho Server Flask bằng nginx, gunicorn
 5. Khởi động server
 
+## Giao diện
