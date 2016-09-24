@@ -1,6 +1,7 @@
 <?php
 	$host = '188.166.224.165';
 	$port = '5555';
+	$token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
 	// var_dump($_POST);
 	function GET($url, $accessToken){
 		$host = '188.166.224.165';
@@ -19,6 +20,25 @@
 		$header = explode("\n", substr($response, 0, $header_size));;
 		$body = json_decode(substr($response, $header_size), true);
 		return array('header' => $header, 'body' => $body);
+	}
+
+	function DELETE($url, $accessToken){
+		$host = '188.166.224.165';
+		$port = '5555';
+		$ch = curl_init($host.':'.$port.$url);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+		if ($accessToken !== "None"){
+			curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Authorization:JWT '.$accessToken));
+		}
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt($ch, CURLOPT_VERBOSE, 1);
+		curl_setopt($ch, CURLOPT_HEADER, 1);
+		# Send request.
+		$response = curl_exec($ch);
+	}
+
+	if (isset($_GET['action']) && isset($_GET['id'])){
+		DELETE('/domains/'.$_GET['id'], $token);
 	}
 
 	function POST($host, $port, $url, $accessToken, $body){

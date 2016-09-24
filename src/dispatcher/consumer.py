@@ -144,6 +144,7 @@ def callback(ch, method, properties, body):
 			v = Vulnerability(i+1, requests.get(sv + items[i]['href']).text, task['scan_id'])
 			sess.add(v)
 			sess.commit()
+		last_vuln_len = len(items)
 		scan.num_vulns += 1
 		sess.commit()
 		scan.status = list_scans[0]['status']
