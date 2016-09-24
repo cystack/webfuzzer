@@ -5,11 +5,11 @@
 <body>
     <div class="main-wrapper">
         <div class="app" id="app">
-         <?php 
-         include("header.php"); 
-         include("sidebar.php");
-         ?>     
-         <article class="content dashboard-page">
+           <?php 
+           include("header.php"); 
+           include("sidebar.php");
+           ?>     
+           <article class="content dashboard-page">
             <section class="section">
                 <div class="container" style="margin-top: 100px; margin-bottom: 100px;">
                     <div class="row">
@@ -35,6 +35,12 @@
                     <div class="row setup-content step activeStepInfo" id="step-1">
                         <div class="col-xs-12">
                             <div class="col-md-12 text-center">
+                                <div class="alert alert-success" id="success-domain" style="display: none;">
+                                    <strong>Success!</strong> No duplicated domain.
+                                </div>
+                                <div class="alert alert-warning" id="warning-domain" style="display: none;">
+                                    <strong>Warning!</strong> Duplicated domain.
+                                </div>
                                 Enter the domain name where the Web application is deployed
                                 <div class="row sameheight-container">
                                     <div class="col-md-5 col-md-offset-3">
@@ -45,13 +51,13 @@
                                         </form>
                                     </div>
                                     <div class="col-md-1">
-                                        <button type="button" class="btn btn-primary btn-sm">Check</button>
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="javascript: enableNext();">Check</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="text-xs-right">
-                            <button type="button" class="btn btn-primary btn-lg" onclick="javascript: resetActive(event, '2', 'finised');">Next</button>
+                            <button type="button" class="btn btn-primary btn-lg" onclick="javascript: resetActive(event, '2', 'finised');" id="firstNext" disabled>Next</button>
                         </div>
                     </div>
                     <div class="row setup-content step hiddenStepInfo" id="step-2">
@@ -96,11 +102,11 @@
                                 <div class="row">
                                     <div class="col-md-10 col-md-offset-1">
                                         <p style="word-break: break-all;"><font color="red"> 
-                                        <?php 
+                                            <?php 
                                             echo htmlentities('<meta name="verify-ownership-cloud-scan" value="f6bc53d4-9f91-42cd-b0a9-e085b594ee23">'); 
-                                        ?>
+                                            ?>
 
-</font></p>
+                                        </font></p>
                                     </div>
                                     <div class="">
                                         <button type="button" class="btn btn-primary">Copy</button>
@@ -136,17 +142,17 @@
                                                 </select>        
                                             </td>
                                         </tr>
-                                    <tr>
-                                        <td>Email notification</td>
-                                        <td>
-                                            <input type="text" name="num" style="width: 500px;">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>            
+                                        <tr>
+                                            <td>Email notification</td>
+                                            <td>
+                                                <input type="text" name="num" style="width: 500px;">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>            
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
+                        <div class="row">
                             <div class="col-md-4 col-md-offset-1">
                                 <button type="button" class="btn btn-primary btn-lg" onclick="javascript: resetActive(event, '3', 'unfinished');">Previous</button>
                             </div>
@@ -154,171 +160,175 @@
                                 <button type="button" class="btn btn-primary btn-lg" onclick="javascript: submitData()">Save</button>
                             </div>
                         </div>
+                    </div>
+
                 </div>
 
-            </div>
-
-            <style>
-                .hiddenStepInfo {
-                    display: none;
-                }
-
-                .activeStepInfo {
-                    display: block !important;
-                }
-
-                .underline {
-                    text-decoration: underline;
-                }
-
-                .step {
-                    margin-top: 27px;
-                }
-
-                .progress {
-                    position: relative;
-                    height: 25px;
-                }
-
-                .borderless td, .borderless th {
-                    border: none;
-                }
-
-             .progress > .progress-type {
-                position: absolute;
-                left: 0px;
-                font-weight: 800;
-                padding: 3px 30px 2px 10px;
-                color: rgb(255, 255, 255);
-                background-color: rgba(25, 25, 25, 0.2);
-            }
-
-            .progress > .progress-completed {
-                position: absolute;
-                right: 0px;
-                font-weight: 800;
-                padding: 3px 10px 2px;
-            }
-
-            .step {
-                text-align: center;
-            }
-
-            .step .col-md-3 {
-                background-color: #fff;
-                border: 3px solid #C0C0C0;
-                border-right: none;
-            }
-
-            .step .col-md-3:last-child {
-                border: 3px solid #C0C0C0;
-            }
-
-            .step .col-md-3:first-child {
-                border-radius: 5px 0 0 5px;
-            }
-
-            .step .col-md-3:last-child {
-                border-radius: 0 5px 5px 0;
-            }
-
-            .step .activestep {
-                color: #F58723;
-                height: 100px;
-                margin-top: -7px;
-                padding-top: 7px;
-                border-left: 6px solid #5CB85C !important;
-                border-right: 6px solid #5CB85C !important;
-                border-top: 3px solid #5CB85C !important;
-                border-bottom: 3px solid #5CB85C !important;
-                vertical-align: central;
-            }
-
-            .step .fa {
-                padding-top: 15px;
-                font-size: 40px;
-            }
-        </style>
-
-        <script type="text/javascript">
-            function resetActive(event, id, mode) {
-                if ( mode == "unfinished" ) {
-                    document.getElementById(id).style.borderColor = "#C0C0C0";
-                }
-                else if ( mode == "finised" ) {
-                    if ( id == "2" && document.getElementById("domain_field").value.length == 0 ) {
-                        alert('Fill in the blank');
-                        return;
+                <style>
+                    .hiddenStepInfo {
+                        display: none;
                     }
-                    else {
-                        if ( id == "4" ) {
-                            document.getElementById('target_domain').innerHTML = document.getElementById('domain_field').value;
+
+                    .activeStepInfo {
+                        display: block !important;
+                    }
+
+                    .underline {
+                        text-decoration: underline;
+                    }
+
+                    .step {
+                        margin-top: 27px;
+                    }
+
+                    .progress {
+                        position: relative;
+                        height: 25px;
+                    }
+
+                    .borderless td, .borderless th {
+                        border: none;
+                    }
+
+                    .progress > .progress-type {
+                        position: absolute;
+                        left: 0px;
+                        font-weight: 800;
+                        padding: 3px 30px 2px 10px;
+                        color: rgb(255, 255, 255);
+                        background-color: rgba(25, 25, 25, 0.2);
+                    }
+
+                    .progress > .progress-completed {
+                        position: absolute;
+                        right: 0px;
+                        font-weight: 800;
+                        padding: 3px 10px 2px;
+                    }
+
+                    .step {
+                        text-align: center;
+                    }
+
+                    .step .col-md-3 {
+                        background-color: #fff;
+                        border: 3px solid #C0C0C0;
+                        border-right: none;
+                    }
+
+                    .step .col-md-3:last-child {
+                        border: 3px solid #C0C0C0;
+                    }
+
+                    .step .col-md-3:first-child {
+                        border-radius: 5px 0 0 5px;
+                    }
+
+                    .step .col-md-3:last-child {
+                        border-radius: 0 5px 5px 0;
+                    }
+
+                    .step .activestep {
+                        color: #F58723;
+                        height: 100px;
+                        margin-top: -7px;
+                        padding-top: 7px;
+                        border-left: 6px solid #5CB85C !important;
+                        border-right: 6px solid #5CB85C !important;
+                        border-top: 3px solid #5CB85C !important;
+                        border-bottom: 3px solid #5CB85C !important;
+                        vertical-align: central;
+                    }
+
+                    .step .fa {
+                        padding-top: 15px;
+                        font-size: 40px;
+                    }
+                </style>
+
+                <script type="text/javascript">
+                    function resetActive(event, id, mode) {
+                        if ( mode == "unfinished" ) {
+                            document.getElementById(id).style.borderColor = "#C0C0C0";
                         }
-                        document.getElementById(id-1).style.borderColor = "green";
+                        else if ( mode == "finised" ) {
+                            if ( id == "2" && document.getElementById("domain_field").value.length == 0 ) {
+                                alert('Fill in the blank');
+                                return;
+                            }
+                            else {
+                                if ( id == "4" ) {
+                                    document.getElementById('target_domain').innerHTML = document.getElementById('domain_field').value;
+                                }
+                                document.getElementById(id-1).style.borderColor = "green";
+                            }
+                        }
+
+                        $("div").each(function () {
+                            if ($(this).hasClass("activestep")) {
+                                $(this).removeClass("activestep");
+                            }
+                        });
+
+                        if (event.target.className == "col-md-3") {
+                            $(event.target).addClass("activestep");
+                        }
+                        else {
+                            $(event.target.parentNode).addClass("activestep");
+                        }
+
+                        hideSteps();
+                        showCurrentStepInfo('step-' +id);
                     }
-                }
 
-                $("div").each(function () {
-                    if ($(this).hasClass("activestep")) {
-                        $(this).removeClass("activestep");
+                    function hideSteps() {
+                        $("div").each(function () {
+                            if ($(this).hasClass("activeStepInfo")) {
+                                $(this).removeClass("activeStepInfo");
+                                $(this).addClass("hiddenStepInfo");
+                            }
+                        });
                     }
-                });
 
-                if (event.target.className == "col-md-3") {
-                    $(event.target).addClass("activestep");
-                }
-                else {
-                    $(event.target.parentNode).addClass("activestep");
-                }
-
-                hideSteps();
-                showCurrentStepInfo('step-' +id);
-            }
-
-            function hideSteps() {
-                $("div").each(function () {
-                    if ($(this).hasClass("activeStepInfo")) {
-                        $(this).removeClass("activeStepInfo");
-                        $(this).addClass("hiddenStepInfo");
+                    function showCurrentStepInfo(step) {        
+                        var id = "#" + step;
+                        $(id).addClass("activeStepInfo");
                     }
-                });
-            }
 
-            function showCurrentStepInfo(step) {        
-                var id = "#" + step;
-                $(id).addClass("activeStepInfo");
-            }
+                    function submitData() {
+                        var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
+                        var domain = document.getElementById('domain_field').value;
+                        var protocol;
+                        var port;
+                        var tmp = $("input[name=protocol]:checked").val();
+                        if ( tmp == "https" ) protocol = "1";
+                        else protocol = "0";
+                        tmp = $("input[name=port]:checked").val();
+                        if ( tmp == "Other" ) {
+                            if ( document.getElementById('portText').value.length == 0 ) {
+                                alert("Need a specific port");
+                                return;
+                            }
+                            port = document.getElementById('portText').value;
+                        }
+                        else port = tmp;
+                        var http = new XMLHttpRequest();
+                        var url = "http://188.166.224.165:5555/domains";
+                        var e = document.getElementById('sb');
+                        var params = '{ "url" : "' + domain + '", "description" : "' + e.options[e.selectedIndex].value + '", "port" : "' + port + '", "ssl" : "' + protocol + '" }';
+                        http.open("POST", url, false);
 
-            function submitData() {
-                var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6IjhiYWU4YzM4LTQ3NzgtNDM4Zi1hODA2LWVlYTYxMWI0MjIzMCIsImlhdCI6MTQ3NDcxMTQwMiwibmJmIjoxNDc0NzExNDAyLCJleHAiOjE0NzQ3OTc4MDJ9.b6Ctxvx4xTL-QynOB19B5gPYKIXkrQnsK8x-ydq1ncI';
-                var domain = document.getElementById('domain_field').value;
-                var protocol;
-                var port;
-                var tmp = $("input[name=protocol]:checked").val();
-                if ( tmp == "https" ) protocol = "1";
-                else protocol = "0";
-                tmp = $("input[name=port]:checked").val();
-                if ( tmp == "Other" ) {
-                    if ( document.getElementById('portText').value.length == 0 ) {
-                        alert("Need a specific port");
-                        return;
-                    }
-                    port = document.getElementById('portText').value;
-                }
-                else port = tmp;
-                accessToken = localStorage.getItem("accessToken"); 
-                var http = new XMLHttpRequest();
-                var url = "http://188.166.224.165:5555/domains";
-                var e = document.getElementById('sb');
-                var params = '{ "url" : "' + domain + '", "description" : "' + e.options[e.selectedIndex].value + '", "port" : "' + port + '", "ssl" : "' + protocol + '" }';
-                http.open("POST", url, true);
-
-                http.setRequestHeader("Content-type", "application/json");
-                http.setRequestHeader("Authorization", "JWT " + token);
-                http.send(params);
+                        http.setRequestHeader("Content-Type", "application/json");
+                        http.setRequestHeader("Authorization", "JWT " + token);
+                        http.send(params);
+                //sleep(2);
                 window.location.replace("domains.php");
             }
 
+            function enableNext() {
+                document.getElementById("success-domain").style.display = 'block';
+                document.getElementById("firstNext").disabled = false;
+            }
         </script>
     </section>                    
 </article>
