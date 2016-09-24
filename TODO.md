@@ -6,7 +6,9 @@
 
 ## Server
 - Kiến trúc hàng đợi thông điệp và gửi nhận còn nhiều bất cập, cần cải tiến để dễ dàng scale hơn
+- Quản lý API Key và các gói dịch vụ hiệu quả hơn
+- Thêm cảnh báo email đến user khi quét xong
 
 ## Client
 - Sử dụng AngularJS thay thế hoàn toàn cho PHP đang sử dụng
-
+- Bổ sung chức năng xuất báo cáo
