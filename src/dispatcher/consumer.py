@@ -21,6 +21,8 @@ channelResult.queue_declare(queue='result')
 
 server = sys.argv[1]
 
+vul_cnt = 0
+
 def freeServer(sv, href):
 	r = requests.delete(sv + href)
 	print r.text
@@ -66,6 +68,22 @@ def scan(target):
 	response = requests.post(server + '/scans/',
 						data=json.dumps(data),
 						headers={'content-type': 'application/json'})
+
+def getVul(sv, href):
+	r = requests.get(sv + href)
+	#db.insert(r.text)
+
+def getVulsList(sv, href):
+	global vul_cnt
+	r = requests.get(sv + href + 'kb')
+	vuls = json.loads(r.text)['items']
+	l = len(vuls)
+	if l > vuls_cnt:
+		for vul in vuls:
+			if vul['id'] >= vul_cnt:
+				getVul(sv, vul['href'])
+	vul_cnt = l
+		
 
 def callback(ch, method, properties, body):
 	print('Get message %s', body)
