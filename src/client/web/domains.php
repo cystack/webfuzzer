@@ -53,7 +53,7 @@
 	                </thead>
 		                <tbody>
 	                    <?php
-	                    	$token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
+	                    	$token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImE1MzdlYjcyLTUwYTgtNDg5OC04NTU5LTA0OTFkMTU4MDRiMCIsImlhdCI6MTQ3NDc0MDQxOCwibmJmIjoxNDc0NzQwNDE4LCJleHAiOjE0NzQ4MjY4MTh9.OOaeHh3X78hW_jB5JpZty09c81qGpr6mepEdwbjb_5A';
 	                    	$num = GET('/domains', $token);
 	                    	for ( $x = 0; $x < count($num['body']); $x++ ) {
 	                    		$data = GET($num['body'][$x]['href'], $token);
@@ -63,7 +63,7 @@
 	                    			$action = "<a href='connection.php?action=delete&id=".$num['body'][$x]['id']."'>Delete</a>";
 	                    			$verify = "true";
 	                    		}
-	                    		echo "<tr><td>".$data['body']['id']."</td><td onclick='window.document.location=\"domain_info.php?id=".$data['body']['id']."\";'style=\"cursor: pointer;\" >".$data['body']['url']."</td><td>".$verify."</td><td>".$action."</td></tr>";
+	                    		echo "<tr><td>".$data['body']['id']."</td><td>".$data['body']['url']."</td><td>".$verify."</td><td>".$action."</td></tr>";
 	                    	}
 	                    ?>
 	                </tbody>

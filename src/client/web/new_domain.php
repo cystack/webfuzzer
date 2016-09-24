@@ -140,9 +140,9 @@
                                             <td>Profile</td>
                                             <td>
                                                 <select class="c-select form-control boxed" style="width: 500px;" id="sb">
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                    <option value="1">Full Scan</option>
+                                                    <option value="2">Option 2</option>
+                                                    <option value="3">Option 3</option>
                                                 </select>        
                                             </td>
                                         </tr>
