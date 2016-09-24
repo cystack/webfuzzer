@@ -35,14 +35,14 @@
 
             var http = new XMLHttpRequest();
             var url = "connection.php";
-            var params = "username=" + username + "&password=" + password;
+            var params = "url=/auth&body=email:" + username + " ++ password=" + password;
             http.open("POST", url, true);
 
-            http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            http.setRequestHeader("Content-type", "application/json");
 
             http.onreadystatechange = function() {
                 if(http.readyState == 4 && http.status == 200) {
-                    localStorage.setItem("accessToken", http.responseText);
+                    alert("Error");
                 }
             }
             http.send(params);

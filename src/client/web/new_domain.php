@@ -306,7 +306,7 @@
                 var http = new XMLHttpRequest();
                 var url = "connection.php";
                 var e = document.getElementById('sb');
-                var params = "url='/domains'&accessToken=" + accessToken + "&body={ url : \"" + domain + "\", desription : \"" + e.options[e.selectedIndex].value + "\", port : \"" + port + "\", ssl : " + protocol + "\", redirectURL : dashboard.php }";
+                var params = "url=/domains&accessToken=" + accessToken + "&body=url:" + domain + " ++ desription:" + e.options[e.selectedIndex].value + " ++ port:" + port + " ++ ssl:" + protocol + " ++ redirectURL:dashboard.php";
                 http.open("POST", url, true);
 
                 http.setRequestHeader("Content-type", "application/json");
