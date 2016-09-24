@@ -1,1 +1,1 @@
-WebFuzzer - Web Application Security Scanning by Cystack Team
+WebFuzzer - Web Application Security Scanner by Cystack Team
