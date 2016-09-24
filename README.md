@@ -16,3 +16,11 @@
 - **REST API**: Hướng đến người dùng chuyên gia, họ có khả năng tự xây dựng những công cụ Scanner trên hạ tầng WebFuzzer
 
 ## Kiến trúc sản phẩm
+
+## Hướng dẫn cài đặt
+1. Cài w3af trên các server riêng biệt và khởi động tiến trình w3af_api. Trên mỗi server có thể mở nhiều tiến trình này tùy thuộc vào cấu hình
+2. Cài đặt RabbitMQ làm hàng đợi thông điệp
+3. Cấu hình Server và Dispatcher làm Producer và Consumer cho hàng đợi trên, đồng thời cấu hình đến danh sách server w3af theo ip và port
+4. Thiết lập môi trường cho Server Flask bằng nginx, gunicorn
+5. Khởi động server
+
