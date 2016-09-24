@@ -97,8 +97,9 @@
                                     <div class="col-md-10 col-md-offset-1">
                                         <p style="word-break: break-all;"><font color="red"> 
                                         <?php 
-                                            $num = GET('/domains', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6IjhiYWU4YzM4LTQ3NzgtNDM4Zi1hODA2LWVlYTYxMWI0MjIzMCIsImlhdCI6MTQ3NDcxMTQwMiwibmJmIjoxNDc0NzExNDAyLCJleHAiOjE0NzQ3OTc4MDJ9.b6Ctxvx4xTL-QynOB19B5gPYKIXkrQnsK8x-ydq1ncI');
-                                            $verify = GET('/domains'.(count($num['body']) + 1).'verification', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6IjhiYWU4YzM4LTQ3NzgtNDM4Zi1hODA2LWVlYTYxMWI0MjIzMCIsImlhdCI6MTQ3NDcxMTQwMiwibmJmIjoxNDc0NzExNDAyLCJleHAiOjE0NzQ3OTc4MDJ9.b6Ctxvx4xTL-QynOB19B5gPYKIXkrQnsK8x-ydq1ncI');
+                                            $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6IjhiYWU4YzM4LTQ3NzgtNDM4Zi1hODA2LWVlYTYxMWI0MjIzMCIsImlhdCI6MTQ3NDcxMTQwMiwibmJmIjoxNDc0NzExNDAyLCJleHAiOjE0NzQ3OTc4MDJ9.b6Ctxvx4xTL-QynOB19B5gPYKIXkrQnsK8x-ydq1ncI';
+                                            $num = GET('/domains', $token);
+                                            $verify = GET('/domains'.(count($num['body']) + 1).'verification', $token);
 
                                             echo htmlentities($verify); 
                                         ?>

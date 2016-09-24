@@ -53,9 +53,10 @@
 	                </thead>
 		                <tbody>
 	                    <?php
-	                    	$num = GET('/domains', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6IjhiYWU4YzM4LTQ3NzgtNDM4Zi1hODA2LWVlYTYxMWI0MjIzMCIsImlhdCI6MTQ3NDcxMTQwMiwibmJmIjoxNDc0NzExNDAyLCJleHAiOjE0NzQ3OTc4MDJ9.b6Ctxvx4xTL-QynOB19B5gPYKIXkrQnsK8x-ydq1ncI');
+	                    	$token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6IjhiYWU4YzM4LTQ3NzgtNDM4Zi1hODA2LWVlYTYxMWI0MjIzMCIsImlhdCI6MTQ3NDcxMTQwMiwibmJmIjoxNDc0NzExNDAyLCJleHAiOjE0NzQ3OTc4MDJ9.b6Ctxvx4xTL-QynOB19B5gPYKIXkrQnsK8x-ydq1ncI';
+	                    	$num = GET('/domains', $token);
 	                    	for ( $x = 0; $x < count($num['body']); $x++ ) {
-	                    		$data = GET('/domains/'.($x + 1), 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6IjhiYWU4YzM4LTQ3NzgtNDM4Zi1hODA2LWVlYTYxMWI0MjIzMCIsImlhdCI6MTQ3NDcxMTQwMiwibmJmIjoxNDc0NzExNDAyLCJleHAiOjE0NzQ3OTc4MDJ9.b6Ctxvx4xTL-QynOB19B5gPYKIXkrQnsK8x-ydq1ncI');
+	                    		$data = GET('/domains/'.($x + 1), $token);
 
 	                    		echo "<tr><td>".$data['body']['id']."</td><td>".$data['body']['url']."</td><td>".(int)$data['body']['ssl']."</td><td>Delete</td></tr>";
 	                    	}

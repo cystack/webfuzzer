@@ -12,7 +12,7 @@
                     </header>
                     <div class="auth-content">
                         <p class="text-xs-center">LOGIN TO CONTINUE</p>
-                        <form id="login-form" action="#" method="POST" novalidate="">
+                        <form id="login-form"  novalidate="">
                             <div class="form-group"> <label for="username">Username</label> <input type="email" class="form-control underlined" name="username" id="username" placeholder="Your email address" required> </div>
                             <div class="form-group"> <label for="password">Password</label> <input type="password" class="form-control underlined" name="password" id="password" placeholder="Your password" required> </div>
                             <div class="form-group"> <label for="remember">
@@ -40,10 +40,11 @@
 
                 http.open("POST", url, true);
                 // console.log(params);
-                http.setRequestHeader("Content-type", "text/plain");
+                http.setRequestHeader("Content-Type", "application/json");
 
                 http.send(params);
-                alert(params);
+                alert(http.responseText);
+                // alert(params);
             }
         </script>
         <!-- Reference block for JS -->
