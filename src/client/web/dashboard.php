@@ -11,7 +11,36 @@
             	?>		
                 <article class="content dashboard-page">
                     <section class="section">
-                    
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="card-title-block">
+                                            <h3 class="title"> Vulnerabilities by severity </h3>
+                                        </div>
+                                        <section class="example">
+                                            <div class="flot-chart">
+                                                <div class="flot-chart-pie-content" id="flot-pie-chart"></div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="card-title-block">
+                                            <h3 class="title"> Vulnerabilities by time</h3>
+                                        </div>
+                                        <section class="example">
+                                            <div class="flot-chart">
+                                                <div class="flot-chart-content" id="flot-line-chart"></div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </section>                    
                 </article>
             </div>

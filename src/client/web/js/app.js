@@ -313,125 +313,25 @@ function setSameHeights($container) {
 //Flot Bar Chart
 $(function() {
 
-    if (!$('#flot-bar-chart').length) {
-        return false;
-    }
-
     function drawFlotCharts() {
-
-        var barOptions = {
-            series: {
-                bars: {
-                    show: true,
-                    barWidth: 0.6,
-                    fill: true,
-                    fillColor: {
-                        colors: [{
-                            opacity: 0.8
-                        }, {
-                            opacity: 0.8
-                        }]
-                    }
-                }
-            },
-            xaxis: {
-                tickDecimals: 0
-            },
-            colors: [config.chart.colorPrimary],
-            grid: {
-                color: "#999999",
-                hoverable: true,
-                clickable: true,
-                tickColor: "#D4D4D4",
-                borderWidth:0
-            },
-            legend: {
-                show: false
-            },
-            tooltip: true,
-            tooltipOpts: {
-                content: "x: %x, y: %y"
-            }
-        };
-        var barData = {
-            label: "bar",
-            data: [
-                [1, 34],
-                [2, 25],
-                [3, 19],
-                [4, 34],
-                [5, 32],
-                [6, 44]
-            ]
-        };
-        $.plot($("#flot-bar-chart"), [barData], barOptions);
-
-
-        // Flot line chart
-        var lineOptions = {
-            series: {
-                lines: {
-                    show: true,
-                    lineWidth: 2,
-                    fill: true,
-                    fillColor: {
-                        colors: [{
-                            opacity: 0.0
-                        }, {
-                            opacity: 0.0
-                        }]
-                    }
-                }
-            },
-            xaxis: {
-                tickDecimals: 0
-            },
-            colors: [config.chart.colorPrimary],
-            grid: {
-                color: "#999999",
-                hoverable: true,
-                clickable: true,
-                tickColor: "#D4D4D4",
-                borderWidth:0
-            },
-            legend: {
-                show: false
-            },
-            tooltip: true,
-            tooltipOpts: {
-                content: "x: %x, y: %y"
-            }
-        };
-        var barData = {
-            label: "bar",
-            data: [
-                [1, 34],
-                [2, 25],
-                [3, 19],
-                [4, 34],
-                [5, 32],
-                [6, 44]
-            ]
-        };
-        $.plot($("#flot-line-chart"), [barData], lineOptions);
 
         //Flot Pie Chart
         var data = [{
-            label: "Sales 1",
+            label: "Information",
             data: 21,
-            color: tinycolor(config.chart.colorPrimary.toString()).lighten(20),
+            color: '#81e119',
         }, {
-            label: "Sales 2",
+            label: "Low",
             data: 15,
-            color: tinycolor(config.chart.colorPrimary.toString()).lighten(10),
+            color: '#eff352',
         }, {
-            label: "Sales 3",
+            label: "Medium",
             data: 7,
-            color: tinycolor(config.chart.colorPrimary.toString()),
+            color: '#e69438',
         }, {
-            label: "Sales 4",
+            label: "High",
             data: 52,
-            color: tinycolor(config.chart.colorPrimary.toString()).darken(10),
+            color: '#fe1122',
         }];
 
         var plotObj = $.plot($("#flot-pie-chart"), data, {
@@ -450,106 +350,57 @@ $(function() {
                     x: 20,
                     y: 0
                 },
-                defaultTheme: false
+                defaultTheme: true
             }
         });
 
 
-        //live chart example
-        var container = $("#flot-line-chart-moving");
-        container.empty();
-        // Determine how many data points to keep based on the placeholder's initial size;
-        // this gives us a nice high-res plot while avoiding more than one point per pixel.
-
-        var maximum = container.outerWidth() / 10 || 100;
-
-        //
-
-        var data = [];
-
-        function getRandomData() {
-
-            if (data.length) {
-                data = data.slice(1);
-            }
-
-            while (data.length < maximum) {
-                var previous = data.length ? data[data.length - 1] : 50;
-                var y = previous + Math.random() * 10 - 5;
-                data.push(y < 0 ? 0 : y > 100 ? 100 : y);
-            }
-
-            // zip the generated y values with the x values
-
-            var res = [];
-            for (var i = 0; i < data.length; ++i) {
-                res.push([i, data[i]])
-            }
-
-            return res;
-        }
-
-        series = [{
-            data: getRandomData(),
-            lines: {
-                fill: true
-            }
-        }];
-
-
-        var plot = $.plot(container, series, {
-            grid: {
-
-                color: "#999999",
-                tickColor: "#D4D4D4",
-                borderWidth:0,
-                minBorderMargin: 20,
-                labelMargin: 10,
-                backgroundColor: {
-                    colors: ["#ffffff", "#ffffff"]
-                },
-                margin: {
-                    top: 8,
-                    bottom: 20,
-                    left: 20
-                },
-                markings: function(axes) {
-                    var markings = [];
-                    var xaxis = axes.xaxis;
-                    for (var x = Math.floor(xaxis.min); x < xaxis.max; x += xaxis.tickSize * 2) {
-                        markings.push({
-                            xaxis: {
-                                from: x,
-                                to: x + xaxis.tickSize
-                            },
-                            color: "#fff"
-                        });
+         var lineOptions = {
+            series: {
+                lines: {
+                    show: true,
+                    lineWidth: 2,
+                    fill: true,
+                    fillColor: {
+                        colors: [{
+                            opacity: 0.0
+                        }, {
+                            opacity: 0.0
+                        }]
                     }
-                    return markings;
                 }
             },
-            colors: [config.chart.colorPrimary.toString()],
             xaxis: {
-                tickFormatter: function() {
-                    return "";
-                }
+                mode: "time"
             },
-            yaxis: {
-                min: 0,
-                max: 110
+            colors: [config.chart.colorPrimary],
+            grid: {
+                color: "#999999",
+                hoverable: true,
+                clickable: true,
+                tickColor: "#D4D4D4",
+                borderWidth:0
             },
             legend: {
-                show: true
+                show: false
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: "x: %x, y: %y"
             }
-        });
-
-        // Update the random dataset at 25FPS for a smoothly-animating chart
-
-        setInterval(function updateRandom() {
-            series[0].data = getRandomData();
-            plot.setData(series);
-            plot.draw();
-        }, 40);
+        };
+        var barData = {
+            label: "bar",
+            data: [
+                [373597200000, 34],
+                [373697200000, 25],
+                [373797200000, 19],
+                [373897200000, 34],
+                [373997200000, 32],
+                [374097200000, 44]
+            ]
+        };
+        $.plot($("#flot-line-chart"), [barData], lineOptions);
 
 
         //Flot Multiple Axes Line Chart
