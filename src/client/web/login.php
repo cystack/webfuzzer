@@ -35,7 +35,7 @@
 
             var http = new XMLHttpRequest();
             var url = "connection.php";
-            var params = "url=/auth&body=email:" + username + " ++ password=" + password;
+            var params = "url=/auth&accessToken=None&body=email:" + username + " ++ password=" + password + "&redirectURL=dashboard";
             http.open("POST", url, true);
 
             http.setRequestHeader("Content-type", "application/json");
