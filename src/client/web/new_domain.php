@@ -5,11 +5,11 @@
 <body>
     <div class="main-wrapper">
         <div class="app" id="app">
-         <?php 
-         include("header.php"); 
-         include("sidebar.php");
-         ?>     
-         <article class="content dashboard-page">
+           <?php 
+           include("header.php"); 
+           include("sidebar.php");
+           ?>     
+           <article class="content dashboard-page">
             <section class="section">
                 <div class="container" style="margin-top: 100px; margin-bottom: 100px;">
                     <div class="row">
@@ -292,47 +292,50 @@
                     function showCurrentStepInfo(step) {        
                         var id = "#" + step;
                         $(id).addClass("activeStepInfo");
-                        function submitData() {
-                            var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
-                            var domain = document.getElementById('domain_field').value;
-                            var protocol;
-                            var port;
-                            var tmp = $("input[name=protocol]:checked").val();
-                            if ( tmp == "https" ) protocol = "1";
-                            else protocol = "0";
-                            tmp = $("input[name=port]:checked").val();
-                            if ( tmp == "Other" ) {
-                                if ( document.getElementById('portText').value.length == 0 ) {
-                                    alert("Need a specific port");
-                                    return;
-                                }
+                    }
+                    function submitData() {
+                        var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
+                        var domain = document.getElementById('domain_field').value;
+                        var protocol;
+                        var port;
+                        var tmp = $("input[name=protocol]:checked").val();
+                        if ( tmp == "https" ) protocol = "1";
+                        else protocol = "0";
+                        tmp = $("input[name=port]:checked").val();
+                        if ( tmp == "Other" ) {
+                            if ( document.getElementById('portText').value.length == 0 ) {
+                                alert("Need a specific port");
+                                return;
+                            }
+                        }
+                    }
 
-                                function submitData() {
-                                    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
-                                    var domain = document.getElementById('domain_field').value;
-                                    var protocol;
-                                    var port;
-                                    var tmp = $("input[name=protocol]:checked").val();
-                                    if ( tmp == "https" ) protocol = "1";
-                                    else protocol = "0";
-                                    tmp = $("input[name=port]:checked").val();
-                                    if ( tmp == "Other" ) {
-                                        if ( document.getElementById('portText').value.length == 0 ) {
-                                            alert("Need a specific port");
-                                            return;
-                                        }
-                                        port = document.getElementById('portText').value;
-                                    }
-                                    else port = tmp;
-                                    var http = new XMLHttpRequest();
-                                    var url = "http://188.166.224.165:5555/domains";
-                                    var e = document.getElementById('sb');
-                                    var params = '{ "url" : "' + domain + '", "description" : "' + e.options[e.selectedIndex].value + '", "port" : "' + port + '", "ssl" : "' + protocol + '" }';
-                                    http.open("POST", url, false);
+                    function submitData() {
+                        var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
+                        var domain = document.getElementById('domain_field').value;
+                        var protocol;
+                        var port;
+                        var tmp = $("input[name=protocol]:checked").val();
+                        if ( tmp == "https" ) protocol = "1";
+                        else protocol = "0";
+                        tmp = $("input[name=port]:checked").val();
+                        if ( tmp == "Other" ) {
+                            if ( document.getElementById('portText').value.length == 0 ) {
+                                alert("Need a specific port");
+                                return;
+                            }
+                            port = document.getElementById('portText').value;
+                        }
+                        else port = tmp;
+                        var http = new XMLHttpRequest();
+                        var url = "http://188.166.224.165:5555/domains";
+                        var e = document.getElementById('sb');
+                        var params = '{ "url" : "' + domain + '", "description" : "' + e.options[e.selectedIndex].value + '", "port" : "' + port + '", "ssl" : "' + protocol + '" }';
+                        http.open("POST", url, false);
 
-                                    http.setRequestHeader("Content-Type", "application/json");
-                                    http.setRequestHeader("Authorization", "JWT " + token);
-                                    http.send(params);
+                        http.setRequestHeader("Content-Type", "application/json");
+                        http.setRequestHeader("Authorization", "JWT " + token);
+                        http.send(params);
                 //sleep(2);
                 window.location.replace("domains.php");
             }
