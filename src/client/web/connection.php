@@ -1,10 +1,10 @@
 <?php
 	$host = '188.166.224.165';
 	$port = '5555';
-
+	// var_dump($_POST);
 	function GET($host, $port, $url, $accessToken){
 		$ch = curl_init($host.':'.$port.$url);
-		# Setup request to send json via POST.
+
 		if ($accessToken !== "None"){
 			curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Authorization:JWT '.$accessToken));
 		}
@@ -22,7 +22,15 @@
 	function POST($host, $port, $url, $accessToken, $body){
 		$ch = curl_init($host.':'.$port.$url);
 		# Setup request to send json via POST.
-		$payload = $body;
+		$bodyArray = array();
+		foreach (explode(" ++ ", $body) as $pair){
+			$keyValue = explode(":", $pair);
+			$key = $keyValue[0];
+			$value = $keyValue[1];
+			$bodyArray[$key] = $value;
+		}
+		$bodyJSON = json_encode($bodyArray);
+		$payload = $bodyJSON;
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
 		if ($accessToken !== "None"){
@@ -39,12 +47,15 @@
 		return array('header' => $header, 'body' => $body);
 	}
 
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	if (isset($_POST['action'])) {
 		POST($host, $port, $_POST['url'], $_POST['accessToken'], $_POST['body']);
+		// header('Location: '.'./'.$_POST['redirectURL'].php);
 	}
 	
-	var_dump(POST($host, $port, '/users', 'None', '{"email": "stri@ssccc.nssg", "password": "string", "name": "string", "organization": "string"
-}'));
+	// $body = "email:giaplvk57@gmail.com ++ password:123567 ++ name:asd ++ organization:BSE";
+	
+	
+	// var_dump(POST($host, $port, '/users', 'None', 'email:giaplvk57@gmail.com ++ password:123567 ++ name:asd ++ organization:BSE company'));
 	// $authRequest = POST($host, $port, '/auth', array(), array("email" => "1stsring@a2maa.com", "password" => "string"));
 	// var_dump($authRequest);
 	// $access_token = $authRequest['body']['access_token'];
@@ -55,4 +66,4 @@
 ?>
 
 
-<!-- action=POST&url=api_url&accessToken=sjaghdas&body=jhasghjdas -->
+<!-- action=POST&url=api_url&accessToken=sjaghdas&body=abc:aksdhjk ++ fei:wqei ++ uwiqe:jhasd&redirecURL=dashboard -->

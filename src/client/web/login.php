@@ -12,7 +12,7 @@
                     </header>
                     <div class="auth-content">
                         <p class="text-xs-center">LOGIN TO CONTINUE</p>
-                        <form id="login-form" action="./dashboard.php" method="GET" novalidate="">
+                        <form id="login-form" action="#" method="POST" novalidate="">
                             <div class="form-group"> <label for="username">Username</label> <input type="email" class="form-control underlined" name="username" id="username" placeholder="Your email address" required> </div>
                             <div class="form-group"> <label for="password">Password</label> <input type="password" class="form-control underlined" name="password" id="password" placeholder="Your password" required> </div>
                             <div class="form-group"> <label for="remember">
@@ -35,14 +35,15 @@
                 var password = document.getElementById('password').value;
 
                 var http = new XMLHttpRequest();
-                var url = "188.166.224.165:5555";
-                var params = '{"email" : ' + username + ', "password" : ' + password + '}';
+                var url = "http://188.166.224.165:5555/auth";
+                var params = '{"email" : "' + username + '", "password" : "' + password + '"}';
 
                 http.open("POST", url, true);
-
+                // console.log(params);
                 http.setRequestHeader("Content-type", "application/json");
 
-                http.send(JSON.parse(params));
+                http.send(params);
+                alert(params);
             }
         </script>
         <!-- Reference block for JS -->

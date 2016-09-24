@@ -11,7 +11,7 @@
                     </header>
                     <div class="auth-content">
                         <p class="text-xs-center">SIGNUP TO GET INSTANT ACCESS</p>
-                        <form id="signup-form" action="connection.php" method="POST" novalidate="">
+                        <form id="signup-form" action="#" method="POST" novalidate="">
                             <div class="form-group"> <label for="firstname">Name</label>
                                 <div class="row">
                                     <div class="col-sm-12"> <input type="text" class="form-control underlined" name="name" id="name" placeholder="Enter full name" required=""> </div>
@@ -27,8 +27,9 @@
                             <div class="form-group"> <label for="agree">
             <input class="checkbox" name="agree" id="agree" type="checkbox" required=""> 
             <span>Agree the terms and <a href="#">policy</a></span>
-          </label> </div>
-                            <div class="form-group"> <button type="submit" class="btn btn-block btn-primary">Sign Up</button> </div>
+          </label> </div>   
+                            <!-- action=POST&url=api_url&accessToken=sjaghdas&body=jhasghjdas&redirecURL=dashboard -->
+                            <div class="form-group"> <button type="submit" onclick="javascript: login();" class="btn btn-block btn-primary">Sign Up</button> </div>
                             <div class="form-group">
                                 <p class="text-muted text-xs-center">Already have an account? <a href="login.php">Login!</a></p>
                             </div>
@@ -48,5 +49,23 @@
         <script src="js/vendor.js"></script>
         <script src="js/app.js"></script>
     </body>
+    <script type="text/javascript">
+            function login() {
+                var name = document.getElementById('name').value;
+                var email = document.getElementById('email').value;
+                var password = document.getElementById('password').value;
+
+                var http = new XMLHttpRequest();
+                var url = "http://188.166.224.165:5555/users";
+                var params = '{"name":"'+name+'","email" : "' + email + '", "password" : "' + password + '"}';
+                alert(params);
+                http.open("POST", url, true);
+                // console.log(params);
+                http.setRequestHeader("Content-type", "application/json");
+
+                http.send(params);
+                // alert(params);
+            }
+        </script>
 
 </html>
