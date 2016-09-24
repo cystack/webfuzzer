@@ -95,9 +95,14 @@
                                 <br><br>
                                 <div class="row">
                                     <div class="col-md-10 col-md-offset-1">
-                                        <p style="word-break: break-all;"><font color="red"> <?php echo htmlentities('<meta name="verify-ownership-cloud-scan" value="f6bc53d4-9f91-42cd-b0a9-e085b594ee23">'); ?>
+                                        <p style="word-break: break-all;"><font color="red"> 
+                                        <?php 
+                                            $num = GET('/domains', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6IjhiYWU4YzM4LTQ3NzgtNDM4Zi1hODA2LWVlYTYxMWI0MjIzMCIsImlhdCI6MTQ3NDcxMTQwMiwibmJmIjoxNDc0NzExNDAyLCJleHAiOjE0NzQ3OTc4MDJ9.b6Ctxvx4xTL-QynOB19B5gPYKIXkrQnsK8x-ydq1ncI');
+                                            $verify = GET('/domains'.(count($num['body']) + 1).'verification', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6IjhiYWU4YzM4LTQ3NzgtNDM4Zi1hODA2LWVlYTYxMWI0MjIzMCIsImlhdCI6MTQ3NDcxMTQwMiwibmJmIjoxNDc0NzExNDAyLCJleHAiOjE0NzQ3OTc4MDJ9.b6Ctxvx4xTL-QynOB19B5gPYKIXkrQnsK8x-ydq1ncI');
 
-</font></p>
+                                            echo htmlentities($verify); 
+                                        ?>
+                                        </font></p>
                                     </div>
                                     <div class="">
                                         <button type="button" class="btn btn-primary">Copy</button>
@@ -306,7 +311,7 @@
                 var http = new XMLHttpRequest();
                 var url = "connection.php";
                 var e = document.getElementById('sb');
-                var params = "action=POST&url=/domains&accessToken=" + accessToken + "&body=url:" + domain + " ++ desription:" + e.options[e.selectedIndex].value + " ++ port:" + port + " ++ ssl:" + protocol + " ++ redirectURL:dashboard.php";
+                var params = '{ "url" : "' + domain + '", "description" : "' + e.options[e.selectedIndex].value + '", "port" : "' + port + '", "ssl" : "' + protocol + '" }';
                 http.open("POST", url, true);
 
                 http.setRequestHeader("Content-type", "application/json");
