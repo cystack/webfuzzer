@@ -40,7 +40,7 @@
 	}
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-		POST($host, $port, $_POST['url'], $_POST['header'], $_POST['body']);
+		POST($host, $port, $_POST['url'], $_POST['accessToken'], $_POST['body']);
 	}
 	
 	var_dump(POST($host, $port, '/users', 'None', '{"email": "stri@ssccc.nssg", "password": "string", "name": "string", "organization": "string"
