@@ -40,7 +40,7 @@
                                     <div class="col-md-5 col-md-offset-3">
                                         <form role="form">
                                             <div class="form-group">  
-                                                <input class="form-control boxed" placeholder="" type="text" id="email_field">
+                                                <input class="form-control boxed" placeholder="" type="text" id="domain_field">
                                             </div>
                                         </form>
                                     </div>
@@ -58,17 +58,17 @@
                         <div class="col-xs-12">
                             <div class="col-md-12 text-center">
                                 Enter the protocol and TCP port where the Web application listens for connections:<br>
-                                <form>
+                                <form id='protocolID'>
                                     <label>Protocol:</label>
                                     <input type="radio" name="protocol" value="http" > HTTP
                                     <input type="radio" name="protocol" value="https"> HTTPS
                                 </form>
-                                <form>
+                                <form id='portID'>
                                     <label>Port:</label>
-                                    <input type="radio" name="eighty"> 80
-                                    <input type="radio" name="fourfourthree">443
-                                    <input type="radio" name="other">Other
-                                    <input type="text" name="num" maxlength="5" style="width: 30px;">
+                                    <input type="radio" name="port" value="80"> 80
+                                    <input type="radio" name="port" value="443">443
+                                    <input type="radio" name="port" value="Other">Other
+                                    <input type="text" id="portText" maxlength="5" style="width: 30px;">
                                 </form> 
                             </div>
                         </div>
@@ -92,12 +92,14 @@
                                     <strong>Warning!</strong> The HTTP response body does NOT contain the verification code.
                                 </div>
                                 Your plan requires you to verify bing.com's ownership before scanning it. To verify the domain add this HTML verification code to the site's root "index.html" page and click "Verify"
-                                <br><br><br>
+                                <br><br>
                                 <div class="row">
-                                    <div class="col-md-9 col-md-offset-1">
-                                        <p style="word-break: break-all;"><font color="red">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</font></p>
+                                    <div class="col-md-10 col-md-offset-1">
+                                        <p style="word-break: break-all;"><font color="red"> <?php echo htmlentities('<meta name="verify-ownership-cloud-scan" value="f6bc53d4-9f91-42cd-b0a9-e085b594ee23">'); ?>
+
+</font></p>
                                     </div>
-                                    <div class="col-md-">
+                                    <div class="">
                                         <button type="button" class="btn btn-primary">Copy</button>
                                     </div>
                                 </div>
@@ -124,8 +126,7 @@
                                         <tr>
                                             <td>Profile</td>
                                             <td>
-                                                <select class="c-select form-control boxed">
-                                                    <option selected="">Select Category</option>
+                                                <select class="c-select form-control boxed" style="width: 500px;" id="sb">
                                                     <option value="1">One</option>
                                                     <option value="2">Two</option>
                                                     <option value="3">Three</option>
@@ -135,7 +136,7 @@
                                     <tr>
                                         <td>Email notification</td>
                                         <td>
-                                            <input type="text" name="num" style="width: 300px;">
+                                            <input type="text" name="num" style="width: 500px;">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -147,7 +148,7 @@
                                 <button type="button" class="btn btn-primary btn-lg" onclick="javascript: resetActive(event, '3', 'unfinished');">Previous</button>
                             </div>
                             <div class="col-md-4 col-md-offset-2">
-                                <button type="button" class="btn btn-primary btn-lg">Launch scan</button>
+                                <button type="button" class="btn btn-primary btn-lg" onclick="javascript: submitData()">Launch scan</button>
                             </div>
                         </div>
                 </div>
@@ -242,13 +243,13 @@
                     document.getElementById(id).style.borderColor = "#C0C0C0";
                 }
                 else if ( mode == "finised" ) {
-                    if ( id == "2" && document.getElementById("email_field").value.length == 0 ) {
+                    if ( id == "2" && document.getElementById("domain_field").value.length == 0 ) {
                         alert('Fill in the blank');
                         return;
                     }
                     else {
                         if ( id == "4" ) {
-                            document.getElementById('target_domain').innerHTML = document.getElementById('email_field').value;
+                            document.getElementById('target_domain').innerHTML = document.getElementById('domain_field').value;
                         }
                         document.getElementById(id-1).style.borderColor = "green";
                     }
@@ -271,12 +272,6 @@
                 showCurrentStepInfo('step-' +id);
             }
 
-
-
-            function setFinished(event, id) {
-                document.getElementById(id).style.borderColor = "green";
-            }
-
             function hideSteps() {
                 $("div").each(function () {
                     if ($(this).hasClass("activeStepInfo")) {
@@ -291,11 +286,45 @@
                 $(id).addClass("activeStepInfo");
             }
 
+            function submitData() {
+                var domain = document.getElementById('domain_field').value;
+                var protocol;
+                var port;
+                var tmp = $("input[name=protocol]:checked").val();
+                if ( tmp == "https" ) protocol = "1";
+                else protocol = "0";
+                tmp = $("input[name=protocol]:checked").val();
+                if ( tmp == "Other" ) {
+                    if ( document.getElementById('portText').value.length == 0 ) {
+                        alert("Need a specific port");
+                        return;
+                    }
+                    port = document.getElementById('portText').value;
+                }
+                else port = tmp;
+                accessToken = localStorage.getItem("accessToken"); 
+                var http = new XMLHttpRequest();
+                var url = "connection.php";
+                var e = document.getElementById('sb');
+                var params = "url='/domains'&accessToken" + accessToken + "&body={ url : \"" + domain + "\", desription : \"" + e.options[e.selectedIndex].value + "\", port : \"" + port + "\", ssl : " + protocol + "\" }";
+                http.open("POST", url, true);
+
+                http.setRequestHeader("Content-type", "application/json");
+
+                http.onreadystatechange = function() {
+                    if(http.status != 200) {
+                        alert("Error");
+                    }
+                }
+                http.send(params);
+            }
+
         </script>
     </section>                    
 </article>
 </div>
 </div>
+<div id="hidden_form_container" style="display:none;"></div>
 <!-- Reference block for JS -->
 <div class="ref" id="ref">
     <div class="color-primary"></div>
