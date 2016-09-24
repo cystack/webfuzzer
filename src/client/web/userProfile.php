@@ -8,7 +8,12 @@
             	<?php 
             		include("header.php"); 
             		include("sidebar.php");
-            	?>		
+            	?>
+
+                <?php  
+                    
+                ?>
+
                 <article class="content dashboard-page">
                     <section class="section">
                         <div class="row">
