@@ -57,10 +57,11 @@
 	                    	$num = GET('/domains', $token);
 	                    	for ( $x = 0; $x < count($num['body']); $x++ ) {
 	                    		$data = GET($num['body'][$x]['href'], $token);
-	                    		$action = "<a href='connection.php?action=delete&id='".$num['body'][$x]['id'].">Delete</a> | Verify";
+	                    		echo $num['body'][$x]['id'];
+	                    		$action = "<a href='connection.php?action=delete&id=".$num['body'][$x]['id']."'>Delete</a> | Verify";
 	                    		$verify = "false";
 	                    		if ( $data['body']['verification'] == "true" ) {
-	                    			$action = "Delete";
+	                    			$action = "<a href='connection.php?action=delete&id=".$num['body'][$x]['id']."'>Delete</a>";
 	                    			$verify = "true";
 	                    		}
 	                    		echo "<tr><td>".$data['body']['id']."</td><td onclick='window.document.location=\"domain_info.php?id=".$data['body']['id']."\";'style=\"cursor: pointer;\" >".$data['body']['url']."</td><td>".$verify."</td><td>".$action."</td></tr>";
