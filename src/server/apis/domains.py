@@ -3,7 +3,7 @@ from flask_restful import Resource, Api, marshal_with, fields, abort
 from flask_jwt import current_identity, jwt_required
 from .errors import JsonRequiredError
 from .errors import JsonInvalidError
-from .errors import ResourceNotFoundError
+from .errors import ResourceNotFoundError, UserExistedError
 from database import db
 from models import Domain
 import json
@@ -25,6 +25,10 @@ class DomainsList(Resource):
         if not reqs:
             raise JsonRequiredError()
         try:
+            # check if domain pair existed
+            u = Domain.query.filter_by(url=reqs['url'], port=reqs['port']).first()
+            if not (u is None):
+                raise UserExistedError()
             # TODO: check proper input
             reqs['user_id'] = current_identity.id
             current_identity.num_domains += 1

@@ -17,7 +17,7 @@ def create_app(config_name):
 
     # setup configs
     app.config.from_object(configs[config_name])
-    configs[config_name].init_app(app)
+#    configs[config_name].init_app(app)
 
     # init modules
     db.init_app(app)
@@ -31,30 +31,30 @@ def create_app(config_name):
     wsgi_app = app.wsgi_app
 
 	# dev
-    @app.before_first_request
-    def init_data():
-        db.create_all()
-        u = User('joe', 'pass')
-        db.session.add(u)
-        db.session.commit()
+#    @app.before_first_request
+#    def init_data():
+#        db.create_all()
+#        u = User('joe', 'pass')
+#        db.session.add(u)
+#        db.session.commit()
         
     # CORS
-    @app.after_request
-    def after_request(response):
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-        response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-        return response
+#    @app.after_request
+#    def after_request(response):
+#        response.headers.add('Access-Control-Allow-Origin', '*')
+#        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+#        response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+#        return response
 
     return app
 
 
 if __name__ == '__main__':
     import os
-    HOST = os.environ.get('SERVER_HOST', 'localhost')
+    HOST = os.environ.get('SERVER_HOST', '0.0.0.0')
     try:
         PORT = int(os.environ.get('SERVER_PORT', '5555'))
     except ValueError:
-        PORT = 5555
+        PORT = 8080
     app = create_app('development')
     app.run(HOST, PORT)
