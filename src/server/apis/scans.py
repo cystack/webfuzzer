@@ -8,6 +8,8 @@ from database import db
 from models import Scan, Domain
 import json
 import pika
+import os
+import requests
 
 class ScansList(Resource):
     decorators = [jwt_required()]
@@ -49,12 +51,13 @@ class ScansList(Resource):
             db.session.add(u)
             db.session.commit()
             # post message to RabbitMQ then forget about it
-            credentials = pika.PlainCredentials('test', 'test123@')
-            con = pika.BlockingConnection(pika.ConnectionParameters(host='188.166.243.111',credentials=credentials))
+            credentials = pika.PlainCredentials(os.environ.get('TASKQUEUE_USER'), os.environ.get('TASKQUEUE_PASS'))
+            con = pika.BlockingConnection(pika.ConnectionParameters(host=os.environ.get('TASKQUEUE_HOST'),credentials=credentials))
             channel = con.channel()
             channel.queue_declare(queue='task', durable=True)
             channel.basic_publish(exchange='', routing_key='task', body=json.dumps({'target': url, 'scan_id': u.id}), properties=pika.BasicProperties(delivery_mode = 2))
             con.close()
+            return {}, 201, {'Location': '/scans/%d' % u.relative_id}
         except KeyError:
             raise JsonInvalidError()
 
@@ -88,3 +91,19 @@ class ScansEndpoint(Resource):
         s.deleted = True
         db.session.commit()
         return None, 204
+
+class ScanStop(Resource):
+    decorators = [jwt_required()]
+
+    def get(self, scan_rel_id):
+        s = Scan.query.filter_by(user_id=current_identity.id, relative_id=scan_rel_id).first()
+        if (s is None) or (s.deleted):
+            raise ResourceNotFoundError()
+        if (s.status == 'Running'):
+            # so, this scan should be the only one running on that instance right now due to current limitation of w3af's REST API
+            list_tasks = requests.get(s.run_instance + '/scans').json['items']
+            if len(list_tasks) == 0:
+                return {}, 304
+            path = list_tasks[0]['href']
+            res = requests.get(s.run_instance + path + '/delete')
+            return res.json, res.status_code

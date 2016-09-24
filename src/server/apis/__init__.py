@@ -2,7 +2,7 @@ from flask import jsonify
 from flask_restful import abort, Api, Resource
 from users import UsersList, UsersEndpoint
 from domains import DomainsList, DomainsEndpoint
-from scans import ScansList, ScansEndpoint
+from scans import ScansList, ScansEndpoint, ScansStop
 from vulns import VulnsList, VulnsEndpoint
 
 # meaningful errors
@@ -14,7 +14,6 @@ errors = {
     'ResourceNotFoundError': {
         'message': "The specified resource does not exist.",
         'status': 404,
-        'extra': "Any extra information you want.",
     },
     'InsufficientPermissionError': {
         'message': "Read operations are currently disabled.",
@@ -25,7 +24,7 @@ errors = {
         'status': 400,
     },
     'JsonRequiredError': {
-        'message': "One of the request inputs is not valid.",
+        'message': "This method requires JSON as input; please set Content-Type header to 'application/json'.",
         'status': 400,
     },
     'JWTError': {
@@ -42,5 +41,6 @@ api.add_resource(DomainsList, '/domains')
 api.add_resource(DomainsEndpoint, '/domains/<int:domain_rel_id>')
 api.add_resource(ScansList, '/scans')
 api.add_resource(ScansEndpoint, '/scans/<int:scan_rel_id>')
+api.add_resource(ScansStop, '/scans/<int:scan_rel_id>/stop')
 api.add_resource(VulnsList, '/vulns/<int:scan_rel_id>')
 api.add_resource(VulnsEndpoint, '/vulns/<int:scan_rel_id>/<int:vuln_rel_id>')
