@@ -39,6 +39,7 @@
 
 	if (isset($_GET['action']) && isset($_GET['id'])){
 		DELETE('/domains/'.$_GET['id'], $token);
+		header('Location: domains.php');
 	}
 
 	function POST($host, $port, $url, $accessToken, $body){
