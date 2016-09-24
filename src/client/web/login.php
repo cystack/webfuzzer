@@ -30,12 +30,12 @@
         </div>
 
         <script type="text/javascript">
-            var username = document.getElementByID('username').value;
-            var password = document.getElementByID('password').value;
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
 
             var http = new XMLHttpRequest();
             var url = "connection.php";
-            var params = "url=/auth&accessToken=None&body=email:" + username + " ++ password=" + password + "&redirectURL=dashboard";
+            var params = "action=POST&url=/auth&accessToken=None&body=email:" + username + " ++ password=" + password + "&redirectURL=dashboard";
             http.open("POST", url, true);
 
             http.setRequestHeader("Content-type", "application/json");
