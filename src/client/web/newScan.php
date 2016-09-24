@@ -29,7 +29,7 @@
                                         <tr>
                                             <td data-toggle="tooltip" data-placement="top" title="This is the domain where your Web application lives, and the target for WebFuzzer application scanner">Target Domain</td>
                                             <td>
-                                                <select class="c-select form-control boxed">
+                                                <select class="c-select form-control boxed" id="domain">
                                                 <?php
                                                     foreach ($domainNameList as $key => $value) {
                                                         echo '<option value="'.$key.'">'.$value.'</option>';
@@ -54,7 +54,7 @@
                                             <td>
                                                 <br><br>
                                                 <div class="col-md-offset-6" role="">
-                                                    <p><a href="./scan.php" class="btn btn-primary" onclick="javascript: pushToScan();" role="button">Launch Scan</a></p>
+                                                    <p><a class="btn btn-primary" onclick="javascript: pushToScan();" role="button">Launch Scan</a></p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -86,17 +86,18 @@
 
         <script type="text/javascript">
             function pushToScan() {
-                var domain = document.getElementById('domain').value;
-                                          var http = new XMLHttpRequest();
-                var url = "http://188.166.224.165:5555/domains";
-                var e = document.getElementById('sb');
-                var params = '{ "url" : "' + domain + '", "description" : "' + e.options[e.selectedIndex].value + '", "port" : "' + port + '", "ssl" : "' + protocol + '" }';
-                http.open("POST", url, true);
-
-                http.setRequestHeader("Content-type", "application/json");
+                var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac";
+                var domain = document.getElementById('domain');
+                var domainID = domain.options[domain.selectedIndex].value;
+                var http = new XMLHttpRequest();
+                var url = "http://188.166.224.165:5555/scans";
+                var params = '{ "domain_id" : "' + domainID + '", "profile_id" : "0", "bootstrap_path" : "/", "description" : "string" }';
+                http.open("POST", url, false);
+                http.setRequestHeader("Content-Type", "application/json");
                 http.setRequestHeader("Authorization", "JWT " + token);
                 http.send(params);
-                window.location.replace("domains.php");
+                // alert(params);
+                window.location.replace("scan.php");
             }
         </script>
 

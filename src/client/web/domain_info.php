@@ -1,7 +1,10 @@
 <!doctype html>
 <html class="no-js" lang="en">
 <?php include("head.php") ?>
-
+<?php
+    $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
+    $id = $_GET['id'];
+?>
 <body>
     <div class="main-wrapper">
         <div class="app" id="app">

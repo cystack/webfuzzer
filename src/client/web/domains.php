@@ -56,9 +56,14 @@
 	                    	$token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
 	                    	$num = GET('/domains', $token);
 	                    	for ( $x = 0; $x < count($num['body']); $x++ ) {
-	                    		$data = GET('/domains/'.($x + 1), $token);
-
-	                    		echo "<tr><td>".$data['body']['id']."</td><td>".$data['body']['url']."</td><td>".(int)$data['body']['ssl']."</td><td>Delete</td></tr>";
+	                    		$data = GET($num['body'][$x]['href'], $token);
+	                    		$action = "Delete | Verify";
+	                    		$verify = "false";
+	                    		if ( $data['body']['verification'] == "true" ) {
+	                    			$action = "Delete";
+	                    			$verify = "true";
+	                    		}
+	                    		echo "<tr><td>".$data['body']['id']."</td><td onclick='window.document.location=\"domain_info.php?id=".$data['body']['id']."\";'style=\"cursor: pointer;\" >".$data['body']['url']."</td><td>".$verify."</td><td>".$action."</td></tr>";
 	                    	}
 	                    ?>
 	                </tbody>

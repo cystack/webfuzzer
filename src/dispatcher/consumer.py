@@ -40,6 +40,7 @@ class Vulnerability(Base):
 	stored_json = db.Column(db.Text) # inefficient, might fix later
 	deleted = db.Column(db.Boolean, default=False)
 	false_positive = db.Column(db.Boolean, default=False)
+	severity = db.Column(db.String(16))
 	scan_id = db.Column(db.Integer, db.ForeignKey('scans.id'))
 	scan = db.orm.relationship("Scan", back_populates="vulns")
 
