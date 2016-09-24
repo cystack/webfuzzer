@@ -8,7 +8,17 @@
             	<?php 
             		include("header.php"); 
             		include("sidebar.php");
-            	?>		
+            	?>
+                <?php 
+                    $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
+                    $domainIDList = GET('/domains', $token)['body'];
+                    $domainNameList = array();
+                    foreach ($domainIDList as $value) {
+                        $domainName = GET('/domains/'.$value['id'], $token)['body']['url'];
+                        $domainNameList[$value['id']] = $domainName;
+                    }
+                    // var_dump($domainNameList);
+                ?>
                 <article class="content dashboard-page">
                     <section class="section">
                     <div class="row">
@@ -18,7 +28,15 @@
                                     <tbody>
                                         <tr>
                                             <td data-toggle="tooltip" data-placement="top" title="This is the domain where your Web application lives, and the target for WebFuzzer application scanner">Target Domain</td>
-                                            <td><input type="text" class="form-control"> </td>
+                                            <td>
+                                                <select class="c-select form-control boxed">
+                                                <?php
+                                                    foreach ($domainNameList as $key => $value) {
+                                                        echo '<option value="'.$key.'">'.$value.'</option>';
+                                                    }
+                                                ?>
+                                                </select>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td data-toggle="tooltip" data-placement="top" title="The scan profile to use during this application scan">Profile</td>
@@ -36,7 +54,7 @@
                                             <td>
                                                 <br><br>
                                                 <div class="col-md-offset-6" role="">
-                                                    <p><a href="./scan.php" class="btn btn-primary" role="button">Launch Scan</a></p>
+                                                    <p><a href="./scan.php" class="btn btn-primary" onclick="javascript: pushToScan();" role="button">Launch Scan</a></p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -65,6 +83,23 @@
                 </article>
             </div>
         </div>
+
+        <script type="text/javascript">
+            function pushToScan() {
+                var domain = document.getElementById('domain').value;
+                                          var http = new XMLHttpRequest();
+                var url = "http://188.166.224.165:5555/domains";
+                var e = document.getElementById('sb');
+                var params = '{ "url" : "' + domain + '", "description" : "' + e.options[e.selectedIndex].value + '", "port" : "' + port + '", "ssl" : "' + protocol + '" }';
+                http.open("POST", url, true);
+
+                http.setRequestHeader("Content-type", "application/json");
+                http.setRequestHeader("Authorization", "JWT " + token);
+                http.send(params);
+                window.location.replace("domains.php");
+            }
+        </script>
+
         <!-- Reference block for JS -->
         <div class="ref" id="ref">
             <div class="color-primary"></div>
