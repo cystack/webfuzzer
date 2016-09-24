@@ -23,7 +23,6 @@ class Scan(Base):
 	profile = db.Column(db.String(32))
 	status = db.Column(db.String(32))
 	deleted = db.Column(db.Boolean, default=False)
-    domain_id = db.Column(db.Integer)
 	run_instance = db.Column(db.Unicode(128))
 	num_vulns = db.Column(db.Integer)
 	vulns = db.orm.relationship("Vulnerability", back_populates="scan")
@@ -40,7 +39,6 @@ class Vulnerability(Base):
 	stored_json = db.Column(db.Text) # inefficient, might fix later
 	deleted = db.Column(db.Boolean, default=False)
 	false_positive = db.Column(db.Boolean, default=False)
-	severity = db.Column(db.String(16))
 	scan_id = db.Column(db.Integer, db.ForeignKey('scans.id'))
 	scan = db.orm.relationship("Scan", back_populates="vulns")
 
@@ -103,6 +101,10 @@ def scann(target):
 						data=json.dumps(data),
 						headers={'content-type': 'application/json'})
 
+	print response.status_code
+	print response.data
+	print response.headers
+
 def getVul(sv, href):
 	r = requests.get(sv + href)
 	#db.insert(r.text)
@@ -144,9 +146,8 @@ def callback(ch, method, properties, body):
 			v = Vulnerability(i+1, requests.get(sv + items[i]['href']).text, task['scan_id'])
 			sess.add(v)
 			sess.commit()
+			scan.num_vulns += 1
 		last_vuln_len = len(items)
-		scan.num_vulns += 1
-		sess.commit()
 		scan.status = list_scans[0]['status']
 		sess.commit()
 		if scan.status == 'Stopped' and not task_done:
@@ -158,6 +159,7 @@ def callback(ch, method, properties, body):
 			step = 0
 		time.sleep(5) # avoid over consumption
 	# TODO: send mails to list when the scan is stopped or completed
+	print 'DOne'
 	ch.basic_ack(delivery_tag=method.delivery_tag)
 #print getServerStatus(server)
 

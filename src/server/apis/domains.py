@@ -26,7 +26,7 @@ class DomainsList(Resource):
             raise JsonRequiredError()
         try:
             # check if domain pair existed
-            u = Domain.query.filter_by(url=reqs['url'], port=reqs['port'], user_id=current_identity.id).first()
+            u = Domain.query.filter_by(url=reqs['url'], port=reqs['port']).first()
             if not (u is None):
                 raise UserExistedError()
             reqs['user_id'] = current_identity.id

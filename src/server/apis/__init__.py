@@ -4,7 +4,6 @@ from users import UsersList, UsersEndpoint
 from domains import DomainsList, DomainsEndpoint
 from scans import ScansList, ScansEndpoint, ScansStop
 from vulns import VulnsList, VulnsEndpoint
-from stats import OverallVulnEndpoint, DomainVulnEndpoint, DomainRecentScanEndpoint
 
 # meaningful errors
 errors = {
@@ -45,6 +44,3 @@ api.add_resource(ScansEndpoint, '/scans/<int:scan_rel_id>')
 api.add_resource(ScansStop, '/scans/<int:scan_rel_id>/stop')
 api.add_resource(VulnsList, '/vulns/<int:scan_rel_id>')
 api.add_resource(VulnsEndpoint, '/vulns/<int:scan_rel_id>/<int:vuln_rel_id>')
-api.add_resource(OverallVulnEndpoint, '/stats/vulns')
-api.add_resource(DomainVulnEndpoint, '/stats/vulns/<int:domain_rel_id>')
-api.add_resource(DomainRecentScanEndpoint, '/stats/scans/<int:domain_rel_id>')

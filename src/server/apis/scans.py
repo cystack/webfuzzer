@@ -34,7 +34,6 @@ class ScansList(Resource):
             current_identity.num_scans += 1
             params['id'] = current_identity.num_scans
             params['description'] = reqs['description']
-            params['domain_id'] = reqs['domain_id']
             # construct URL from stuffs
             domain = Domain.query.filter_by(user_id=current_identity.id, relative_id=reqs['domain_id']).first()
             if (domain is None) or (domain.deleted):
