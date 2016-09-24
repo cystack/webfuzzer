@@ -1,7 +1,12 @@
 <!doctype html>
 <html class="no-js" lang="en">
     <?php include("head.php") ?>
-
+    <?php
+        $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
+        $allVul = GET('/vulns/'.$_GET['scanID'], $token)['body'];
+        $scanInfo = GET('/scans/'.$_GET['scanID'], $token)['body'];
+        // var_dump($allVul);
+    ?>
     <body>
         <div class="main-wrapper">
             <div class="app" id="app">
@@ -11,7 +16,7 @@
             	?>		
                 <article class="content dashboard-page">
                     <section class="section">
-                        <h4>Vulnerability report of <a href="http://google.com">google.com</a> domain</h4><br>
+                        <h4>Vulnerability report of <a href="<?php echo $scanInfo['target_url'];?>"><?php echo $scanInfo['target_url'];?></a> domain</h4><br>
                         <div class="card col-md-7">
                             <div class="card-block">
                                 <section class="example">
@@ -25,31 +30,26 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr onclick="window.document.location='./detailVulnerabilityScan.php';"style="cursor: pointer;">
-                                                    <td><span class="label label-danger col-md-8">High</span></td>
-                                                    <td>SQL Injection</td>
-                                                    <td>3</td>
-                                                </tr>
-                                                <tr onclick="window.document.location='./detailVulnerabilityScan.php';" style="cursor: pointer;">
-                                                    <td><span class="label label-warning col-md-8">Warning</span></td>
-                                                    <td>XSS</td>
-                                                    <td>2</td>
-                                                </tr>
-                                                <tr onclick="window.document.location='./detailVulnerabilityScan.php';"style="cursor: pointer;">
-                                                    <td><span class="label label-info col-md-8">Info</span></td>
-                                                    <td>Information Disclosure</td>
-                                                    <td>3</td>
-                                                </tr>
-                                                <tr onclick="window.document.location='./detailVulnerabilityScan.php';"style="cursor: pointer;">
-                                                    <td><span class="label label-warning col-md-8">Warning</span></td>
-                                                    <td>XSS</td>
-                                                    <td>2</td>
-                                                </tr>
-                                                <tr onclick="window.document.location='./detailVulnerabilityScan.php';"style="cursor: pointer;">
-                                                    <td><span class="label label-info col-md-8">Info</span></td>
-                                                    <td>Information Disclosure</td>
-                                                    <td>3</td>
-                                                </tr>
+                                                <?php 
+                                                    foreach ($allVul as $vul) {
+                                                        echo '<tr onclick="window.document.location=\'detailVulnerabilityScan.php?scanID='.$_GET['scanID'].'&vulID='.$vul['id'].'\';"style="cursor: pointer;">';
+                                                        $severityColor = '';
+                                                        if ($vul['severity'] == 'Information'){
+                                                            $severityColor = 'label-info';
+                                                        }elseif ($vul['severity'] == 'Low') {
+                                                            $severityColor = 'label-success';
+                                                        }elseif ($vul['severity'] == 'Medium') {
+                                                            $severityColor = 'label-warning';
+                                                        }elseif ($vul['severity'] == 'High') {
+                                                            $severityColor = 'label-danger';
+                                                        }
+                                                        // var_dump($severityColor);
+                                                        echo '<td><span class="label '.$severityColor.' col-md-12">'.$vul['severity'].'</span></td>';
+                                                        echo '<td>'.$vul['name'].'</td>';
+                                                        echo '<td>1</td>';
+                                                        echo '</tr>';
+                                                    }
+                                                ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -64,9 +64,12 @@
                                     </div>
                                 </div>
                                 <div class="card-block">
-                                    <ul>
+                                    <ul>   
+                                        <?php
+                                        $parse = parse_url($scanInfo['target_url']);?>
+                                        
                                     	<li>IP: 42.112.10.214</li>
-                                    	<li>Domain: google.com</li>
+                                    	<li>Domain: <?php echo $parse['host'];?></li>
                                     	<li>OS: Microsoft Windows Server 2012 R2</li>
                                     </ul>
                                 </div>
