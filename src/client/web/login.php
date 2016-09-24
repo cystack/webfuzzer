@@ -19,7 +19,7 @@
             <input class="checkbox" id="remember" type="checkbox"> 
             <span>Remember me</span>
           </label> <a href="reset.php" class="forgot-btn pull-right">Forgot password?</a> </div>
-                            <div class="form-group"> <button type="submit" class="btn btn-block btn-primary">Login</button> </div>
+                            <div class="form-group"> <button type="submit" class="btn btn-block btn-primary" onclick="javascript: login();">Login</button> </div>
                             <div class="form-group">
                                 <p class="text-muted text-xs-center">Do not have an account? <a href="signup.php">Sign Up!</a></p>
                             </div>
@@ -28,6 +28,25 @@
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript">
+            var username = document.getElementByID('username').value;
+            var password = document.getElementByID('password').value;
+
+            var http = new XMLHttpRequest();
+            var url = "connection.php";
+            var params = "username=" + username + "&password=" + password;
+            http.open("POST", url, true);
+
+            http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 200) {
+                    localStorage.setItem("accessToken", http.responseText);
+                }
+            }
+            http.send(params);
+        </script>
         <!-- Reference block for JS -->
         <div class="ref" id="ref">
             <div class="color-primary"></div>
