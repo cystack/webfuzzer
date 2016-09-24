@@ -97,13 +97,10 @@
                                     <div class="col-md-10 col-md-offset-1">
                                         <p style="word-break: break-all;"><font color="red"> 
                                         <?php 
-                                            $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6IjhiYWU4YzM4LTQ3NzgtNDM4Zi1hODA2LWVlYTYxMWI0MjIzMCIsImlhdCI6MTQ3NDcxMTQwMiwibmJmIjoxNDc0NzExNDAyLCJleHAiOjE0NzQ3OTc4MDJ9.b6Ctxvx4xTL-QynOB19B5gPYKIXkrQnsK8x-ydq1ncI';
-                                            $num = GET('/domains', $token);
-                                            $verify = GET('/domains'.(count($num['body']) + 1).'verification', $token);
-
-                                            echo htmlentities($verify); 
+                                            echo htmlentities('<meta name="verify-ownership-cloud-scan" value="f6bc53d4-9f91-42cd-b0a9-e085b594ee23">'); 
                                         ?>
-                                        </font></p>
+
+</font></p>
                                     </div>
                                     <div class="">
                                         <button type="button" class="btn btn-primary">Copy</button>
@@ -293,13 +290,14 @@
             }
 
             function submitData() {
+                var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6IjhiYWU4YzM4LTQ3NzgtNDM4Zi1hODA2LWVlYTYxMWI0MjIzMCIsImlhdCI6MTQ3NDcxMTQwMiwibmJmIjoxNDc0NzExNDAyLCJleHAiOjE0NzQ3OTc4MDJ9.b6Ctxvx4xTL-QynOB19B5gPYKIXkrQnsK8x-ydq1ncI';
                 var domain = document.getElementById('domain_field').value;
                 var protocol;
                 var port;
                 var tmp = $("input[name=protocol]:checked").val();
                 if ( tmp == "https" ) protocol = "1";
                 else protocol = "0";
-                tmp = $("input[name=protocol]:checked").val();
+                tmp = $("input[name=port]:checked").val();
                 if ( tmp == "Other" ) {
                     if ( document.getElementById('portText').value.length == 0 ) {
                         alert("Need a specific port");
@@ -310,13 +308,15 @@
                 else port = tmp;
                 accessToken = localStorage.getItem("accessToken"); 
                 var http = new XMLHttpRequest();
-                var url = "connection.php";
+                var url = "http://188.166.224.165:5555/domains";
                 var e = document.getElementById('sb');
                 var params = '{ "url" : "' + domain + '", "description" : "' + e.options[e.selectedIndex].value + '", "port" : "' + port + '", "ssl" : "' + protocol + '" }';
                 http.open("POST", url, true);
 
                 http.setRequestHeader("Content-type", "application/json");
+                http.setRequestHeader("Authorization", "JWT " + token);
                 http.send(params);
+                window.location.replace("domains.php");
             }
 
         </script>
