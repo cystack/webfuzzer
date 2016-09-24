@@ -9,6 +9,7 @@ from models import Scan, Domain
 import json
 import pika
 import os
+import requests
 
 class ScansList(Resource):
     decorators = [jwt_required()]
@@ -90,3 +91,19 @@ class ScansEndpoint(Resource):
         s.deleted = True
         db.session.commit()
         return None, 204
+
+class ScanStop(Resource):
+    decorators = [jwt_required()]
+
+    def get(self, scan_rel_id):
+        s = Scan.query.filter_by(user_id=current_identity.id, relative_id=scan_rel_id).first()
+        if (s is None) or (s.deleted):
+            raise ResourceNotFoundError()
+        if (s.status == 'Running'):
+            # so, this scan should be the only one running on that instance right now due to current limitation of w3af's REST API
+            list_tasks = requests.get(s.run_instance + '/scans').json['items']
+            if len(list_tasks) == 0:
+                return {}, 304
+            path = list_tasks[0]['href']
+            res = requests.get(s.run_instance + path + '/delete')
+            return res.json, res.status_code
