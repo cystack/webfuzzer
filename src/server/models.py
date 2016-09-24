@@ -9,7 +9,7 @@ class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.Unicode(32), unique = True)
-    description = db.Column(db.Text, unique = True)
+    description = db.Column(db.Text)
 
     def __init__(self, name, description):
         self.name = name
@@ -25,9 +25,9 @@ user_roles = db.Table('user_roles',
 
 class User(db.Model):
     __tablename__ = 'users'
-    id = db.Column(db.String(32), primary_key = True) # UUID
-    username = db.Column(db.String(32), index = True, unique = True)
-    email = db.Column(db.String(32))
+    id = db.Column(db.String(40), primary_key = True) # UUID
+    email = db.Column(db.String(32), index=True, unique=True)
+    name = db.Column(db.Unicode(32))
     password_hash = db.Column(db.String(128))
     roles = db.relationship('Role', secondary=user_roles,
         backref=db.backref('users', lazy='dynamic'))
@@ -36,17 +36,15 @@ class User(db.Model):
     domains = db.relationship("Domain", back_populates="user")
     num_domains = db.Column(db.Integer)
     num_scans = db.Column(db.Integer)
-    num_vulns = db.Column(db.Integer)
 
-    def __init__(self, username, password, email=None, organization=None):
+    def __init__(self, email, password, name=None, organization=None):
         self.id = str(uuid.uuid4())
-        self.username = username
-        self.password = password
+        self.name = name
         self.email = email
+        self.password = password
         self.organization = organization
         self.num_scans = 0
         self.num_domains = 0
-        self.num_vulns = 0
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -63,8 +61,8 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 # Flask-JWT supplier
-def authenticate(username, password):
-    user = User.query.filter_by(username = username).first()
+def authenticate(email, password):
+    user = User.query.filter_by(email = email).first()
     if user and user.verify_password(password):
         return user
 
@@ -84,7 +82,7 @@ class Domain(db.Model):
     verification = db.Column(db.Boolean)
     verification_code = db.Column(db.String(64))
     deleted = db.Column(db.Boolean, default=False)
-    user_id = db.Column(db.String(32), db.ForeignKey('users.id'))
+    user_id = db.Column(db.String(40), db.ForeignKey('users.id'))
     user = db.relationship("User", back_populates="domains")
 
     def __init__(self, id, url, port, ssl, user_id, description=None):
@@ -95,7 +93,7 @@ class Domain(db.Model):
         self.description = description
         self.user_id = user_id
         # TODO: implement verification mechanism
-        self.verification = true
+        self.verification = True
         self.verification_code = ''
 
     def __repr__(self):
@@ -113,7 +111,9 @@ class Scan(db.Model):
     profile = db.Column(db.String(32))
     status = db.Column(db.String(32))
     deleted = db.Column(db.Boolean, default=False)
-    user_id = db.Column(db.String(32), db.ForeignKey('users.id'))
+    num_vulns = db.Column(db.Integer)
+    vulns = db.relationship("Vulnerability", back_populates="scan")
+    user_id = db.Column(db.String(40), db.ForeignKey('users.id'))
     user = db.relationship("User", back_populates="scans")
 
     def __init__(self, id, description, target, profile, user_id):
@@ -121,10 +121,11 @@ class Scan(db.Model):
         self.description = description
         self.target_url = target
         self.profile = profile
-        self.status = '' # what?
+        self.status = 'Enqueued'
         self.user_id = user_id
+        self.num_vulns = 0
 
-    def readyScan(self):
+    def doneScan(self):
         self.scan_time = datetime.utcnow()
         # change status?
 
@@ -132,3 +133,21 @@ class Scan(db.Model):
         return '<Scan %d>' % self.id
 
 # vuln
+class Vulnerability(db.Model):
+    __tablename__ = 'vulns'
+    id = db.Column(db.Integer, primary_key = True)
+    relative_id = db.Column(db.Integer) # relative to scans
+    stored_json = db.Column(db.Text) # inefficient, might fix later
+    deleted = db.Column(db.Boolean, default=False)
+    false_positive = db.Column(db.Boolean, default=False)
+
+    scan_id = db.Column(db.Integer, db.ForeignKey('scans.id'))
+    scan = db.relationship("Scan", back_populates="vulns")
+
+    def __init__(self, id, json, scan_id):
+        self.relative_id = id
+        self.stored_json = json
+        self.scan_id = scan_id
+
+    def __repr__(self):
+        return '<Vuln %d>' % self.id

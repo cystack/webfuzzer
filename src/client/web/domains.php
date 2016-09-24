@@ -12,22 +12,22 @@
             <article class="content dashboard-page">
                 <section class="section">
                     <div class="header-block header-block-search hidden-sm-down">
-                        <div class="row sameheight-container">		
-                            <div class="row">
-                                <div class="col-md-11">
-                                    <div class="input-group">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default fa fa-search" type="button"></button>
-                                        </span>
-                                        <input type="text" class="form-control" placeholder="Search by domain...">
-                                    </div>
-                                </div>
-                            <div class="col-md-1">
-                        		<button type="button" class="btn btn-primary btn-sm">Add</button>
+                    	<div class="tab-content">		
+                    		<div class="row">
+                    			<div class="col-md-10">
+                    				<div class="input-group">
+                    					<span class="input-group-btn">
+                    						<button class="btn btn-default fa fa-search" type="button"></button>
+                    					</span>
+                    					<input type="text" class="form-control" placeholder="Search by domain..." >
+                    				</div>
+                    			</div>
+                    			<div class="col-md-2">
+                    				<p><a href="./new_domain.php" class="btn btn-primary" role="button">New Domain</a></p>
+                    			</div>
                     		</div>
-                		</div>
-        			</div>
-    			</div>	
+                    	</div>
+                    </div>	
 
         	<div class="card">
         		<div class="card-block">
@@ -89,10 +89,13 @@
 	            <a class="page-link" href="">1</a>
 	        <li class="page-item"></li>
 		            <a class="page-link" href="">2</a>
-	-				<li class="page-item"></li>
+					<li class="page-item"></li>
 	            <a class="page-link" href="">3</a>
 	        <li class="page-item"></li>
 	            <a class="page-link" href="">4</a>
+	        <li class="page-item">
+	            <a class="page-link" href="">Next</a>
+	        </li>
 	        </ul>
 	    </nav>
 	

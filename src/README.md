@@ -2,5 +2,5 @@
 - **core:** source code của engine scanner, ở đây là w3af
 - **server:** HTTP Service hay REST API
 - **client:** web/mobile
-- **middleware:** thành phần giao tiếp giữa core và server
+- **dispatcher:** Module điều phối core w3af
 - **test**: các module test dự án

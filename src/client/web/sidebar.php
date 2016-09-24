@@ -15,7 +15,7 @@
                     <li>
                         <a href="scan.php"> <i class="fa fa-search"></i> Scans </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href=""> <i class=" fa fa-exclamation-triangle"></i> Vulnerabilities</a>
                         <ul>
                             <li> <a href="Summary.html">
@@ -25,15 +25,18 @@
                                 False Positive
                             </a> </li>
                         </ul>
-                    </li>
-                    <!-- <li> -->
-                    <!-- <a href=""> <i class="fa fa-key"></i> API Keys </a> -->
-                    <!-- </li> -->
+                    </li> -->
                     <li>
-                        <a href=""> <i class="fa fa-user"></i> User profile </a>
+                        <a href="./vulnerability.php"> <i class="fa fa-exclamation-triangle"></i> Vulnerabilities </a>
                     </li>
                     <li>
-                        <a href=""> <i class="fa fa-life-ring"></i> Support </a>
+                    <a href="./apikey.php"> <i class="fa fa-key"></i> API Keys </a>
+                    </li>
+                    <li>
+                        <a href="userProfile.php"> <i class="fa fa-user"></i> User profile </a>
+                    </li>
+                    <li>
+                        <a href="./support.php"> <i class="fa fa-life-ring"></i> Support </a>
                     </li>
                 </ul>
             </nav>
