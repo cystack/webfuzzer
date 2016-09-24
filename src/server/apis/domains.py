@@ -29,13 +29,13 @@ class DomainsList(Resource):
             u = Domain.query.filter_by(url=reqs['url'], port=reqs['port']).first()
             if not (u is None):
                 raise UserExistedError()
-            # TODO: check proper input
             reqs['user_id'] = current_identity.id
             current_identity.num_domains += 1
             reqs['id'] = current_identity.num_domains
             u = Domain(**reqs)
             db.session.add(u)
             db.session.commit()
+            return {}, 201, {'Location': '/domains/%d' % u.relative_id}
         except KeyError:
             raise JsonInvalidError()
 

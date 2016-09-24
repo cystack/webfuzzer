@@ -27,7 +27,7 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.String(40), primary_key = True) # UUID
     email = db.Column(db.String(32), index=True, unique=True)
-    name = db.Column(db.Unicode(32))
+    name = db.Column(db.Unicode(64))
     password_hash = db.Column(db.String(128))
     roles = db.relationship('Role', secondary=user_roles,
         backref=db.backref('users', lazy='dynamic'))
@@ -111,6 +111,7 @@ class Scan(db.Model):
     profile = db.Column(db.String(32))
     status = db.Column(db.String(32))
     deleted = db.Column(db.Boolean, default=False)
+    run_instance = db.Column(db.Unicode(128))
     num_vulns = db.Column(db.Integer)
     vulns = db.relationship("Vulnerability", back_populates="scan")
     user_id = db.Column(db.String(40), db.ForeignKey('users.id'))
@@ -124,6 +125,7 @@ class Scan(db.Model):
         self.status = 'Enqueued'
         self.user_id = user_id
         self.num_vulns = 0
+        self.run_instance = '' # will be populated with URL of running instance
 
     def doneScan(self):
         self.scan_time = datetime.utcnow()

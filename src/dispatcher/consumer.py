@@ -23,6 +23,7 @@ class Scan(Base):
 	profile = db.Column(db.String(32))
 	status = db.Column(db.String(32))
 	deleted = db.Column(db.Boolean, default=False)
+	run_instance = db.Column(db.Unicode(128))
 	num_vulns = db.Column(db.Integer)
 	vulns = db.orm.relationship("Vulnerability", back_populates="scan")
 	user_id = db.Column(db.String(40))
@@ -53,8 +54,8 @@ engine = db.create_engine(os.environ.get('SQLALCHEMY_CONN_STRING'))
 Session = sessionmaker(bind=engine)
 sess = Session()
 
-credentials = pika.PlainCredentials('test', 'test123@')
-con = pika.BlockingConnection(pika.ConnectionParameters(host='188.166.243.111',credentials=credentials))
+credentials = pika.PlainCredentials(os.environ.get('TASKQUEUE_USER'), os.environ.get('TASKQUEUE_PASS'))
+con = pika.BlockingConnection(pika.ConnectionParameters(host=os.environ.get('TASKQUEUE_HOST'),credentials=credentials))
 
 channelTask = con.channel()
 channelTask.queue_declare(queue='task', durable=True)
@@ -62,6 +63,7 @@ channelTask.queue_declare(queue='task', durable=True)
 channelResult = con.channel()
 channelResult.queue_declare(queue='result')
 
+# URL to w3af REST API interface instance
 server = sys.argv[1]
 
 vul_cnt = 0
@@ -114,7 +116,7 @@ def getVulsList(sv, href):
 				getVul(sv, vul['href'])
 	vul_cnt = l
 		
-
+# on receiving message
 def callback(ch, method, properties, body):
 	print('Get message %s', body)
 	task = json.loads(body)
@@ -124,18 +126,20 @@ def callback(ch, method, properties, body):
 	step = 0
 	last_vuln_len = 0
 	sv = server
+	scan = sess.query(Scan).filter_by(id=task['scan_id']).first()
+	# tell gateway server that the task is loaded on this instance
+	scan.run_instance = server
 	while True:
 		# update scan status; check if freed
 		list_scans = json.loads(requests.get(sv + '/scans/').text)['items'] # currently just 1
 		if (len(list_scans) == 0): # freed
 			break
-		scan = sess.query(Scan).filter_by(id=task['scan_id']).first()
 		currentpath = list_scans[0]['href']
 		# update vuln list
 		r = requests.get(sv + currentpath + '/kb/')
 		items = json.loads(r.text)['items']	
 		for i in xrange(last_vuln_len, len(items)):
-			v = Vulnerability(i, requests.get(sv + items[i]['href']).text, task['scan_id'])
+			v = Vulnerability(i+1, requests.get(sv + items[i]['href']).text, task['scan_id'])
 			sess.add(v)
 			sess.commit()
 		scan.num_vulns += 1
@@ -147,9 +151,10 @@ def callback(ch, method, properties, body):
 			requests.delete(sv + currentpath)
 		step += 1
 		if step == 9:
-			con.process_data_events()
+			con.process_data_events() # MQ heartbeat
 			step = 0
-		time.sleep(5)
+		time.sleep(5) # avoid over consumption
+	# TODO: send mails to list when the scan is stopped or completed
 	ch.basic_ack(delivery_tag=method.delivery_tag)
 #print getServerStatus(server)
 

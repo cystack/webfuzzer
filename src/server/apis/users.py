@@ -21,6 +21,7 @@ class UsersList(Resource):
             u = User(**reqs)
             db.session.add(u)
             db.session.commit()
+            return {}, 201, {'Location': '/users/%s' % u.id}
         except KeyError:
             raise JsonInvalidError()
         return {}, 201
