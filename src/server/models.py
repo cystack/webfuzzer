@@ -9,7 +9,7 @@ class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.Unicode(32), unique = True)
-    description = db.Column(db.Text, unique = True)
+    description = db.Column(db.Text)
 
     def __init__(self, name, description):
         self.name = name
@@ -25,7 +25,7 @@ user_roles = db.Table('user_roles',
 
 class User(db.Model):
     __tablename__ = 'users'
-    id = db.Column(db.String(32), primary_key = True) # UUID
+    id = db.Column(db.String(40), primary_key = True) # UUID
     email = db.Column(db.String(32), index=True, unique=True)
     name = db.Column(db.Unicode(32))
     password_hash = db.Column(db.String(128))
@@ -82,7 +82,7 @@ class Domain(db.Model):
     verification = db.Column(db.Boolean)
     verification_code = db.Column(db.String(64))
     deleted = db.Column(db.Boolean, default=False)
-    user_id = db.Column(db.String(32), db.ForeignKey('users.id'))
+    user_id = db.Column(db.String(40), db.ForeignKey('users.id'))
     user = db.relationship("User", back_populates="domains")
 
     def __init__(self, id, url, port, ssl, user_id, description=None):
@@ -93,7 +93,7 @@ class Domain(db.Model):
         self.description = description
         self.user_id = user_id
         # TODO: implement verification mechanism
-        self.verification = true
+        self.verification = True
         self.verification_code = ''
 
     def __repr__(self):
@@ -113,7 +113,7 @@ class Scan(db.Model):
     deleted = db.Column(db.Boolean, default=False)
     num_vulns = db.Column(db.Integer)
     vulns = db.relationship("Vulnerability", back_populates="scan")
-    user_id = db.Column(db.String(32), db.ForeignKey('users.id'))
+    user_id = db.Column(db.String(40), db.ForeignKey('users.id'))
     user = db.relationship("User", back_populates="scans")
 
     def __init__(self, id, description, target, profile, user_id):
@@ -121,7 +121,7 @@ class Scan(db.Model):
         self.description = description
         self.target_url = target
         self.profile = profile
-        self.status = '' # what?
+        self.status = 'Enqueued'
         self.user_id = user_id
         self.num_vulns = 0
 

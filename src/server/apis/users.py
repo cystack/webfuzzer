@@ -9,13 +9,13 @@ from models import User
 
 class UsersList(Resource):
     def post(self):
-        reqs = request.get_json()
+        reqs = request.get_json(force=True)
         if not reqs:
             raise JsonRequiredError()
         try:
             # check if email existed
-            u = User.query.filter_by(email=reqs['email'])
-            if (u is not None):
+            u = User.query.filter_by(email=reqs['email']).first()
+            if not (u is None):
                 raise UserExistedError()
             # TODO: check proper input
             u = User(**reqs)

@@ -18,7 +18,7 @@ class Config(object):
 
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite://' # stays in memory
+    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_CONN_STRING')
 
     @staticmethod
     def init_app(app):
