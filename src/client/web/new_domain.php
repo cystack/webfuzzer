@@ -126,8 +126,7 @@
                                         <tr>
                                             <td>Profile</td>
                                             <td>
-                                                <select class="c-select form-control boxed" style="width: 500px;">
-                                                    <option selected="">Select Category</option>
+                                                <select class="c-select form-control boxed" style="width: 500px;" id="sb">
                                                     <option value="1">One</option>
                                                     <option value="2">Two</option>
                                                     <option value="3">Three</option>
@@ -303,8 +302,21 @@
                     port = document.getElementById('portText').value;
                 }
                 else port = tmp;
+                accessToken = localStorage.getItem("accessToken"); 
+                var http = new XMLHttpRequest();
+                var url = "connection.php";
+                var e = document.getElementById('sb');
+                var params = "url='/domains'&accessToken" + accessToken + "&body={ url : \"" + domain + "\", desription : \"" + e.options[e.selectedIndex].value + "\", port : \"" + port + "\", ssl : " + protocol + "\" }";
+                http.open("POST", url, true);
 
-                
+                http.setRequestHeader("Content-type", "application/json");
+
+                http.onreadystatechange = function() {
+                    if(http.status != 200) {
+                        alert("Error");
+                    }
+                }
+                http.send(params);
             }
 
         </script>
