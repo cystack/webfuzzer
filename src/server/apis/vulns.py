@@ -21,7 +21,8 @@ class VulnsList(Resource):
             if (v.deleted):
                 continue
             t = json.loads(v.stored_json)
-            r = {"id": v.relative_id, "href": "/vulns/%d/%d" % (scan_rel_id, v.relative_id), "name": t.name, "url": t.url, "severity": t.severity}
+            print t
+            r = {"id": v.relative_id, "href": "/vulns/%d/%d" % (scan_rel_id, v.relative_id), "name": t['name'], "url": t['url'], "severity": t['severity']}
             res.append(r)
         return res
 
@@ -38,7 +39,7 @@ class VulnsEndpoint(Resource):
         res = json.loads(vuln.stored_json)
         res['id'] = vuln.relative_id
         res['false_positive'] = vuln.false_positive
-        res['href'] = ('/vulns/%d' % vuln.relative_id)
+        res['href'] = ('/vulns/%d/%d' % (scan_rel_id, vuln.relative_id))
         # TODO: save traffic or do something else
         if ('traffic_hrefs' in res):
             del res['traffic_hrefs']

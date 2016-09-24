@@ -1,13 +1,17 @@
-# Issues to be solved in next versions
+# Các cải tiến trong những phiên bản tiếp theo
 
 ## Core
-- Improve the stability
-- w3af_api is not working stability, so we should re-write this module
-- To be added an agent for each core server
+- Web Service của w3af hoạt động không ổn định và còn nhiều lỗi, sẽ phải sửa hoặc viết lại hoàn toàn
+- Bổ sung agent trên server core để quản lý hoạt động của w3af và giao tiếp với các thành phần khác của WebFuzzer, hiện tại giao tiếp đang là một chiều từ WF -> w3af
 
 ## Server
-- Improve the dispatcher and message broker architecture
+- Kiến trúc hàng đợi thông điệp và gửi nhận còn nhiều bất cập, cần cải tiến để dễ dàng scale hơn
+- Quản lý API Key và các gói dịch vụ hiệu quả hơn
+- Thêm cảnh báo email đến user khi quét xong
 
 ## Client
-- Use AngularJS instead of PHP
+- Sử dụng AngularJS thay thế hoàn toàn cho PHP đang sử dụng
+- Bổ sung chức năng xuất báo cáo
 
+## Tài liệu
+- Xây dựng trang tài liệu hướng dẫn sử dụng API
