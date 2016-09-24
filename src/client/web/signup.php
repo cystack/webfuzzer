@@ -11,11 +11,10 @@
                     </header>
                     <div class="auth-content">
                         <p class="text-xs-center">SIGNUP TO GET INSTANT ACCESS</p>
-                        <form id="signup-form" action="#" method="GET" novalidate="">
+                        <form id="signup-form" action="connection.php" method="POST" novalidate="">
                             <div class="form-group"> <label for="firstname">Name</label>
                                 <div class="row">
-                                    <div class="col-sm-6"> <input type="text" class="form-control underlined" name="firstname" id="firstname" placeholder="Enter firstname" required=""> </div>
-                                    <div class="col-sm-6"> <input type="text" class="form-control underlined" name="lastname" id="lastname" placeholder="Enter lastname" required=""> </div>
+                                    <div class="col-sm-12"> <input type="text" class="form-control underlined" name="name" id="name" placeholder="Enter full name" required=""> </div>
                                 </div>
                             </div>
                             <div class="form-group"> <label for="email">Email</label> <input type="email" class="form-control underlined" name="email" id="email" placeholder="Enter email address" required=""> </div>

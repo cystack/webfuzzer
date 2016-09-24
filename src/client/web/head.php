@@ -22,3 +22,4 @@
         }
     </script>
 </head>
+<?php include("connection.php"); ?>
