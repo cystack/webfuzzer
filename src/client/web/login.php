@@ -30,22 +30,19 @@
         </div>
 
         <script type="text/javascript">
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
+            function login() {
+                var username = document.getElementById('username').value;
+                var password = document.getElementById('password').value;
 
-            var http = new XMLHttpRequest();
-            var url = "connection.php";
-            var params = "action=POST&url=/auth&accessToken=None&body=email:" + username + " ++ password=" + password + "&redirectURL=dashboard";
-            http.open("POST", url, true);
+                var http = new XMLHttpRequest();
+                var url = "connection.php";
+                var params = "action=POST&url=/auth&accessToken=None&body=email:" + username + " ++ password=" + password + "&redirectURL=dashboard";
+                http.open("POST", url, true);
 
-            http.setRequestHeader("Content-type", "application/json");
+                http.setRequestHeader("Content-type", "application/json");
 
-            http.onreadystatechange = function() {
-                if(http.readyState == 4 && http.status == 200) {
-                    alert("Error");
-                }
+                http.send(params);
             }
-            http.send(params);
         </script>
         <!-- Reference block for JS -->
         <div class="ref" id="ref">

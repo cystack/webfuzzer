@@ -310,12 +310,6 @@
                 http.open("POST", url, true);
 
                 http.setRequestHeader("Content-type", "application/json");
-
-                http.onreadystatechange = function() {
-                    if(http.status != 200) {
-                        alert("Error");
-                    }
-                }
                 http.send(params);
             }
 
