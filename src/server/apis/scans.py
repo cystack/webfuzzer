@@ -23,7 +23,7 @@ class ScansList(Resource):
         return res
 
     def post(self):
-        reqs = request.get_json()
+        reqs = request.get_json(force=True)
         if not reqs:
             raise JsonRequiredError()
         try:

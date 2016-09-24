@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, json
 from flask_restful import Resource, Api, marshal_with, fields, abort
 from flask_jwt import current_identity, jwt_required
 from .errors import JsonRequiredError
@@ -21,7 +21,7 @@ class DomainsList(Resource):
         return res
 
     def post(self):
-        reqs = request.get_json()
+        reqs = request.get_json(force=True)
         if not reqs:
             raise JsonRequiredError()
         try:

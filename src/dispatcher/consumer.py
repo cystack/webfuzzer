@@ -126,7 +126,7 @@ def callback(ch, method, properties, body):
 		sess.commit()
 		if scan.status == 'Stopped' and not task_done:
 			task_done = True
-			requests.delete(sv + '/scans/0')
+			requests.delete(sv + currentpath)
 		step += 1
 		if step == 9:
 			con.process_data_events()
