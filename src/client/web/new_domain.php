@@ -88,7 +88,7 @@
                                 <div class="alert alert-success">
                                     <strong>Success!</strong> Verification code copied to clipboard.
                                 </div>
-                                <div class="alert alert-warning">
+                                <div class="alert alert-warning" style="display: none;">
                                     <strong>Warning!</strong> The HTTP response body does NOT contain the verification code.
                                 </div>
                                 Your plan requires you to verify bing.com's ownership before scanning it. To verify the domain add this HTML verification code to the site's root "index.html" page and click "Verify"
@@ -151,7 +151,7 @@
                                 <button type="button" class="btn btn-primary btn-lg" onclick="javascript: resetActive(event, '3', 'unfinished');">Previous</button>
                             </div>
                             <div class="col-md-4 col-md-offset-2">
-                                <button type="button" class="btn btn-primary btn-lg" onclick="javascript: submitData()">Launch scan</button>
+                                <button type="button" class="btn btn-primary btn-lg" onclick="javascript: submitData()">Save</button>
                             </div>
                         </div>
                 </div>
