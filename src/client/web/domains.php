@@ -3,7 +3,12 @@
     <?php 
     	include("head.php"); 
     ?>
-
+    <?php 
+    	if (!isset($_SESSION['token'])){
+        	header('Location: login.php');
+        	die();
+    	}
+	?>
     <body>
     <div class="main-wrapper">
         <div class="app" id="app">

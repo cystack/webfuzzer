@@ -1,7 +1,12 @@
 <!doctype html>
 <html class="no-js" lang="en">
 <?php include("head.php") ?>
-
+<?php 
+    if (!isset($_SESSION['token'])){
+        header('Location: login.php');
+        die();
+    }
+?>
 <body>
     <div class="main-wrapper">
         <div class="app" id="app">
@@ -167,10 +172,39 @@
                     </div>
 
                 </div>
-                
-    </section>                    
-</article>
-</div>
+                <script type="text/javascript">
+                    function submitData() {
+                        var token = "<?php echo $_SESSION['token']; ?>";
+                        var domain = document.getElementById('domain_field').value;
+                        var protocol;
+                        var port;
+                        var tmp = $("input[name=protocol]:checked").val();
+                        if ( tmp == "https" ) protocol = "1";
+                        else protocol = "0";
+                        tmp = $("input[name=port]:checked").val();
+                        if ( tmp == "Other" ) {
+                            if ( document.getElementById('portText').value.length == 0 ) {
+                                alert("Need a specific port");
+                                return;
+                            }
+                            port = document.getElementById('portText').value;
+                        }
+                        else port = tmp;
+                        var http = new XMLHttpRequest();
+                        var url = "http://188.166.224.165:5555/domains";
+                        var e = document.getElementById('sb');
+                        var params = '{ "url" : "' + domain + '", "description" : "' + e.options[e.selectedIndex].value + '", "port" : "' + port + '", "ssl" : "' + protocol + '" }';
+                        http.open("POST", url, false);
+
+                        http.setRequestHeader("Content-Type", "application/json");
+                        http.setRequestHeader("Authorization", "JWT " + token);
+                        http.send(params);
+                        window.location.replace("domains.php");
+                    }
+                </script>                
+            </section>                    
+        </article>
+    </div>
 </div>
 <div id="hidden_form_container" style="display:none;"></div>
 <!-- Reference block for JS -->

@@ -44,51 +44,6 @@ function showCurrentStepInfo(step) {
     var id = "#" + step;
     $(id).addClass("activeStepInfo");
 }
-function submitData() {
-    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImE1MzdlYjcyLTUwYTgtNDg5OC04NTU5LTA0OTFkMTU4MDRiMCIsImlhdCI6MTQ3NDc0MDQxOCwibmJmIjoxNDc0NzQwNDE4LCJleHAiOjE0NzQ4MjY4MTh9.OOaeHh3X78hW_jB5JpZty09c81qGpr6mepEdwbjb_5A';
-    var domain = document.getElementById('domain_field').value;
-    var protocol;
-    var port;
-    var tmp = $("input[name=protocol]:checked").val();
-    if ( tmp == "https" ) protocol = "1";
-    else protocol = "0";
-    tmp = $("input[name=port]:checked").val();
-    if ( tmp == "Other" ) {
-        if ( document.getElementById('portText').value.length == 0 ) {
-            alert("Need a specific port");
-            return;
-        }
-    }
-}
-
-function submitData() {
-    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImE1MzdlYjcyLTUwYTgtNDg5OC04NTU5LTA0OTFkMTU4MDRiMCIsImlhdCI6MTQ3NDc0MDQxOCwibmJmIjoxNDc0NzQwNDE4LCJleHAiOjE0NzQ4MjY4MTh9.OOaeHh3X78hW_jB5JpZty09c81qGpr6mepEdwbjb_5A';
-    var domain = document.getElementById('domain_field').value;
-    var protocol;
-    var port;
-    var tmp = $("input[name=protocol]:checked").val();
-    if ( tmp == "https" ) protocol = "1";
-    else protocol = "0";
-    tmp = $("input[name=port]:checked").val();
-    if ( tmp == "Other" ) {
-        if ( document.getElementById('portText').value.length == 0 ) {
-            alert("Need a specific port");
-            return;
-        }
-        port = document.getElementById('portText').value;
-    }
-    else port = tmp;
-    var http = new XMLHttpRequest();
-    var url = "http://188.166.224.165:5555/domains";
-    var e = document.getElementById('sb');
-    var params = '{ "url" : "' + domain + '", "description" : "' + e.options[e.selectedIndex].value + '", "port" : "' + port + '", "ssl" : "' + protocol + '" }';
-    http.open("POST", url, false);
-
-    http.setRequestHeader("Content-Type", "application/json");
-    http.setRequestHeader("Authorization", "JWT " + token);
-    http.send(params);
-    window.location.replace("domains.php");
-}
 
 function enableNext() {
     document.getElementById("success-domain").style.display = 'block';
