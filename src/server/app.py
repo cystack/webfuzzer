@@ -5,6 +5,7 @@ It contains the definition of routes and views for the application.
 
 from flask import Flask, request, current_app
 from flask_jwt import JWT, JWTError
+from flask_cors import CORS
 from config import configs
 from database import db
 from apis import api
@@ -12,6 +13,7 @@ from models import authenticate, identity, User
 from werkzeug.local import LocalProxy
 
 jwt = JWT(authentication_handler=authenticate, identity_handler=identity)
+cors = CORS(send_wildcard=True)
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -20,6 +22,7 @@ def create_app(config_name):
     app.config.from_object(configs[config_name])
 
     # init modules
+    cors.init_app(app)
     db.init_app(app)
     jwt.init_app(app)
     api.init_app(app)

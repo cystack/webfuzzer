@@ -1,7 +1,16 @@
 <!doctype html>
 <html class="no-js" lang="en">
 <?php include("head.php") ?>
-
+    <?php 
+        if (!isset($_SESSION['token'])){
+            header('Location: login.php');
+            die();
+        }
+    ?>
+<?php
+    $token = $_SESSION['token'];
+    $id = $_GET['id'];
+?>
 <body>
     <div class="main-wrapper">
         <div class="app" id="app">

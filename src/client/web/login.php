@@ -1,7 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="en">
     <?php include("head.php") ?>
-
     <body>
         <div class="auth">
             <div class="auth-container">
@@ -12,7 +11,7 @@
                     </header>
                     <div class="auth-content">
                         <p class="text-xs-center">LOGIN TO CONTINUE</p>
-                        <form id="login-form"  novalidate="">
+                        <div id="login-form" novalidate="">
                             <div class="form-group"> <label for="username">Username</label> <input type="email" class="form-control underlined" name="username" id="username" placeholder="Your email address" required> </div>
                             <div class="form-group"> <label for="password">Password</label> <input type="password" class="form-control underlined" name="password" id="password" placeholder="Your password" required> </div>
                             <div class="form-group"> <label for="remember">
@@ -23,7 +22,7 @@
                             <div class="form-group">
                                 <p class="text-muted text-xs-center">Do not have an account? <a href="signup.php">Sign Up!</a></p>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -38,13 +37,29 @@
                 var url = "http://188.166.224.165:5555/auth";
                 var params = '{"email" : "' + username + '", "password" : "' + password + '"}';
 
-                http.open("POST", url, true);
+                http.open("POST", url, false);
                 // console.log(params);
                 http.setRequestHeader("Content-Type", "application/json");
+                http.onreadystatechange = function() {
+                    if(http.readyState == 4 && http.status == 200) {
+                        var obj = JSON.parse(http.responseText);
+                        //alert("Success: " + obj.access_token);
 
+                        var req = new XMLHttpRequest();
+                        var addr = "setSession.php";
+                        var tmp_token = 'token=' + obj.access_token;
+                        req.open("POST", addr, false);
+                        req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                        req.send(tmp_token);
+                        // alert(1);
+                        window.location.replace("dashboard.php");
+                    }else{
+                        alert('Wrong username or password!');
+                        window.location.replace("login.php");
+                    }
+                }
                 http.send(params);
-                alert(http.responseText);
-                // alert(params);
+
             }
         </script>
         <!-- Reference block for JS -->

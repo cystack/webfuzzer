@@ -2,22 +2,26 @@
 <html class="no-js" lang="en">
     <?php include("head.php") ?>
     <?php
-    $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
+    if (!isset($_SESSION['token'])){
+        header('Location: login.php');
+        die();
+    }
+    $token = $_SESSION['token'];
     $all = GET('/scans', $token)['body'];
     $finished = array();
     $scanning = array();
-    $allID = array();
+    // $all = array();
     for ( $x = 0; $x < count($all); $x++ ) {
         if ($all[$x]['status'] == 'Stopped'){
-            array_push($finished, $all[$x]['id']);
+            array_push($finished, $all[$x]);
         }else{
-            array_push($scanning, $all[$x]['id']);
+            array_push($scanning, $all[$x]);
         }
-        array_push($allID, $all[$x]['id']);
+        // array_push($allID, $all[$x]);
     }
     // var_dump($finished);
     // var_dump($scanning);
-    // var_dump($allID);
+    // var_dump($all);
     ?>
     <body>
         <div class="main-wrapper">
@@ -67,17 +71,21 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php  
-                                                        foreach ($allID as &$id) {
+                                                    <?php
+                                                        for ( $x = 0; $x < count($all); $x++ ){
+                                                            $scan = $all[$x];
                                                             echo '<tr>';
-                                                            $all = GET('/scans/'.$id, $token)['body'];
-                                                            echo '<td>'.$all['id'].'</td>';
-                                                            echo '<td>'.$all['target_url'].'</td>';
-                                                            echo '<td>'.$all['status'].'</td>';
-                                                            echo '<td>'.$all['start_time'].'</td>';
-                                                            echo '<td>'.$all['scan_time'].'</td>';
-                                                            echo '<td>'.count(GET('/vulns/'.$id, $token)['body']).'</td>';
-                                                            echo '<td><a href="detailScan.php?scanID='.$id.'">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>';
+                                                            echo '<td>'.$scan['id'].'</td>';
+                                                            echo '<td>'.$scan['target_url'].'</td>';
+                                                            echo '<td>'.$scan['status'].'</td>';
+                                                            echo '<td>'.$scan['start_time'].'</td>';
+                                                            echo '<td>None</td>';
+                                                            echo '<td>'.count(GET('/vulns/'.$scan['id'], $token)['body']).'</td>';
+                                                            echo '<td><a href="detailScan.php?scanID='.$scan['id'].'">Detail</a> | <a href="#">Rescan</a> ';
+                                                            if ($scan['status'] === 'Running'){
+                                                                echo '| <a href="./connection?action=stop&id='.$scan['id'].'">Stop</a>';
+                                                            }
+                                                            echo '</td>';
                                                             echo '</tr>';
                                                         }
                                                     ?>
@@ -107,16 +115,15 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php  
-                                                        foreach ($finished as &$id) {
+                                                        foreach ($finished as &$scan) {
                                                             echo '<tr>';
-                                                            $all = GET('/scans/'.$id, $token)['body'];
-                                                            echo '<td>'.$all['id'].'</td>';
-                                                            echo '<td>'.$all['target_url'].'</td>';
-                                                            echo '<td>'.$all['status'].'</td>';
-                                                            echo '<td>'.$all['start_time'].'</td>';
-                                                            echo '<td>'.$all['scan_time'].'</td>';
-                                                            echo '<td>'.count(GET('/vulns/'.$id, $token)['body']).'</td>';
-                                                            echo '<td><a href="detailScan.php?id='.$id.'">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>';
+                                                            echo '<td>'.$scan['id'].'</td>';
+                                                            echo '<td>'.$scan['target_url'].'</td>';
+                                                            echo '<td>'.$scan['status'].'</td>';
+                                                            echo '<td>'.$scan['start_time'].'</td>';
+                                                            echo '<td>None</td>';
+                                                            echo '<td>'.count(GET('/vulns/'.$scan['id'], $token)['body']).'</td>';
+                                                            echo '<td><a href="detailScan.php?scanID='.$scan['id'].'">Detail</a> | <a href="#">Rescan</a></td>';
                                                             echo '</tr>';
                                                         }
                                                     ?>
@@ -146,16 +153,17 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php  
-                                                        foreach ($scanning as &$id) {
+                                                        foreach ($scanning as &$scan) {
                                                             echo '<tr>';
-                                                            $all = GET('/scans/'.$id, $token)['body'];
-                                                            echo '<td>'.$all['id'].'</td>';
-                                                            echo '<td>'.$all['target_url'].'</td>';
-                                                            echo '<td>'.$all['status'].'</td>';
-                                                            echo '<td>'.$all['start_time'].'</td>';
-                                                            echo '<td>'.$all['scan_time'].'</td>';
-                                                            echo '<td>'.count(GET('/vulns/'.$id, $token)['body']).'</td>';
-                                                            echo '<td><a href="detailScan.php?id='.$id.'">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>';
+                                                            echo '<td>'.$scan['id'].'</td>';
+                                                            echo '<td>'.$scan['target_url'].'</td>';
+                                                            echo '<td>'.$scan['status'].'</td>';
+                                                            echo '<td>'.$scan['start_time'].'</td>';
+                                                            echo '<td>None</td>';
+                                                            echo '<td>'.count(GET('/vulns/'.$scan['id'], $token)['body']).'</td>';
+                                                            echo '<td><a href="detailScan.php?scanID='.$scan['id'].'">Detail</a> | <a href="#">Rescan</a> ';
+                                                            echo '| <a href="./connection?action=stop&id='.$scan['id'].'">Stop</a>';
+                                                            echo '</td>';
                                                             echo '</tr>';
                                                         }
                                                     ?>

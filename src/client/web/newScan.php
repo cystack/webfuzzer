@@ -1,6 +1,11 @@
 <!doctype html>
 <html class="no-js" lang="en">
-    <?php include("head.php") ?>
+    <?php include("head.php");
+    if (!isset($_SESSION['token'])){
+        header('Location: login.php');
+        die();
+    }
+    ?>
 
     <body>
         <div class="main-wrapper">
@@ -8,7 +13,17 @@
             	<?php 
             		include("header.php"); 
             		include("sidebar.php");
-            	?>		
+            	?>
+                <?php 
+                    $token = $_SESSION['token'];
+                    $domainIDList = GET('/domains', $token)['body'];
+                    $domainNameList = array();
+                    foreach ($domainIDList as $value) {
+                        $domainName = GET('/domains/'.$value['id'], $token)['body']['url'];
+                        $domainNameList[$value['id']] = $domainName;
+                    }
+                    // var_dump($domainNameList);
+                ?>
                 <article class="content dashboard-page">
                     <section class="section">
                     <div class="row">
@@ -18,7 +33,15 @@
                                     <tbody>
                                         <tr>
                                             <td data-toggle="tooltip" data-placement="top" title="This is the domain where your Web application lives, and the target for WebFuzzer application scanner">Target Domain</td>
-                                            <td><input type="text" class="form-control"> </td>
+                                            <td>
+                                                <select class="c-select form-control boxed" id="domain">
+                                                <?php
+                                                    foreach ($domainNameList as $key => $value) {
+                                                        echo '<option value="'.$key.'">'.$value.'</option>';
+                                                    }
+                                                ?>
+                                                </select>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td data-toggle="tooltip" data-placement="top" title="The scan profile to use during this application scan">Profile</td>
@@ -36,7 +59,7 @@
                                             <td>
                                                 <br><br>
                                                 <div class="col-md-offset-6" role="">
-                                                    <p><a href="./scan.php" class="btn btn-primary" role="button">Launch Scan</a></p>
+                                                    <p><a class="btn btn-primary" onclick="javascript: pushToScan();" role="button">Launch Scan</a></p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -65,6 +88,24 @@
                 </article>
             </div>
         </div>
+
+        <script type="text/javascript">
+            function pushToScan() {
+                var token = "<?php echo $_SESSION['token']; ?>";
+                var domain = document.getElementById('domain');
+                var domainID = domain.options[domain.selectedIndex].value;
+                var http = new XMLHttpRequest();
+                var url = "http://188.166.224.165:5555/scans";
+                var params = '{ "domain_id" : "' + domainID + '", "profile_id" : "0", "bootstrap_path" : "/", "description" : "string" }';
+                http.open("POST", url, false);
+                http.setRequestHeader("Content-Type", "application/json");
+                http.setRequestHeader("Authorization", "JWT " + token);
+                http.send(params);
+                // alert(params);
+                window.location.replace("scan.php");
+            }
+        </script>
+
         <!-- Reference block for JS -->
         <div class="ref" id="ref">
             <div class="color-primary"></div>

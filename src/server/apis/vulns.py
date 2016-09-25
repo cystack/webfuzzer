@@ -21,7 +21,6 @@ class VulnsList(Resource):
             if (v.deleted):
                 continue
             t = json.loads(v.stored_json)
-            print t
             r = {"id": v.relative_id, "href": "/vulns/%d/%d" % (scan_rel_id, v.relative_id), "name": t['name'], "url": t['url'], "severity": t['severity']}
             res.append(r)
         return res

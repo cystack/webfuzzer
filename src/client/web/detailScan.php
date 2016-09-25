@@ -2,10 +2,15 @@
 <html class="no-js" lang="en">
     <?php include("head.php") ?>
     <?php
-        $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
+    if (!isset($_SESSION['token'])){
+        header('Location: login.php');
+        die();
+    }?>
+    <?php
+        $token = $_SESSION['token'];
         $allVul = GET('/vulns/'.$_GET['scanID'], $token)['body'];
         $scanInfo = GET('/scans/'.$_GET['scanID'], $token)['body'];
-        // var_dump($allVul);
+        $numberOnLevel = array('Information' => 0, 'Low' => 0, 'Medium' => 0, 'High' => 0);
     ?>
     <body>
         <div class="main-wrapper">
@@ -57,23 +62,6 @@
                             </div>
                         </div>
                         <div class="col-md-5">
-                        	<div class="card card-info">
-                                <div class="card-header">
-                                    <div class="header-block">
-                                        <p class="title"> Host Details </p>
-                                    </div>
-                                </div>
-                                <div class="card-block">
-                                    <ul>   
-                                        <?php
-                                        $parse = parse_url($scanInfo['target_url']);?>
-                                        
-                                    	<li>IP: 42.112.10.214</li>
-                                    	<li>Domain: <?php echo $parse['host'];?></li>
-                                    	<li>OS: Microsoft Windows Server 2012 R2</li>
-                                    </ul>
-                                </div>
-                            </div>
                             <div class="card card-primary">
                                 <div class="card-header">
                                     <div class="header-block">
@@ -82,8 +70,11 @@
                                 </div>
                                 <div class="card-block">
                                     <ul>
-                                    	<li>Start: May 21 at 9:58 AM</li>
-                                    	<li>End: May 21 at 10:06 AM</li>
+                                        <?php
+                                        $parse = parse_url($scanInfo['target_url']);?>
+                                        <li>Domain: <?php echo $parse['host'];?></li>
+                                    	<li>Start: <?php echo $scanInfo['start_time'];?></li>
+                                    	<li>End: <?php echo $scanInfo['start_time'];?></li>
                                     	<li>Elapsed: 8 minutes</li>
                                     	<li>Scan profile: full_audit</li>
                                     </ul>

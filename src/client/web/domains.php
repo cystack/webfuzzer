@@ -1,11 +1,14 @@
 <!doctype html>
 <html class="no-js" lang="en">
     <?php 
-    	ini_set('display_errors', 1);
-		ini_set('display_startup_errors', 1);
-		error_reporting(E_ALL);
-    	include("head.php"); ?>
-
+    	include("head.php"); 
+    ?>
+    <?php 
+    	if (!isset($_SESSION['token'])){
+        	header('Location: login.php');
+        	die();
+    	}
+	?>
     <body>
     <div class="main-wrapper">
         <div class="app" id="app">
@@ -53,12 +56,17 @@
 	                </thead>
 		                <tbody>
 	                    <?php
-	                    	$token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImMwOWFjNzExLTgyYTYtNDE1Zi1iMGI5LTg2NTA3YTM2NDAxMyIsImlhdCI6MTQ3NDcxODk1OSwibmJmIjoxNDc0NzE4OTU5LCJleHAiOjE0NzQ4MDUzNTl9.VB7wbwn2q6Kntsz18xA_a7juCrEA6u-JS6uBUORmSac';
+	                    	$token = $_SESSION['token'];
 	                    	$num = GET('/domains', $token);
 	                    	for ( $x = 0; $x < count($num['body']); $x++ ) {
-	                    		$data = GET('/domains/'.($x + 1), $token);
-
-	                    		echo "<tr><td>".$data['body']['id']."</td><td>".$data['body']['url']."</td><td>".(int)$data['body']['ssl']."</td><td>Delete</td></tr>";
+	                    		$data = GET($num['body'][$x]['href'], $token);
+	                    		$action = "<a href='connection.php?action=delete&id=".$num['body'][$x]['id']."'>Delete</a> | Verify";
+	                    		$verify = "false";
+	                    		if ( $data['body']['verification'] == "true" ) {
+	                    			$action = "<a href='connection.php?action=delete&id=".$num['body'][$x]['id']."'>Delete</a>";
+	                    			$verify = "true";
+	                    		}
+	                    		echo "<tr><td>".$data['body']['id']."</td><td>".$data['body']['url']."</td><td>".$verify."</td><td>".$action."</td></tr>";
 	                    	}
 	                    ?>
 	                </tbody>

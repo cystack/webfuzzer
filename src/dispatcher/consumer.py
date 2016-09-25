@@ -101,6 +101,10 @@ def scann(target):
 						data=json.dumps(data),
 						headers={'content-type': 'application/json'})
 
+	print response.status_code
+	print response.data
+	print response.headers
+
 def getVul(sv, href):
 	r = requests.get(sv + href)
 	#db.insert(r.text)
@@ -142,8 +146,8 @@ def callback(ch, method, properties, body):
 			v = Vulnerability(i+1, requests.get(sv + items[i]['href']).text, task['scan_id'])
 			sess.add(v)
 			sess.commit()
-		scan.num_vulns += 1
-		sess.commit()
+			scan.num_vulns += 1
+		last_vuln_len = len(items)
 		scan.status = list_scans[0]['status']
 		sess.commit()
 		if scan.status == 'Stopped' and not task_done:
@@ -155,6 +159,7 @@ def callback(ch, method, properties, body):
 			step = 0
 		time.sleep(5) # avoid over consumption
 	# TODO: send mails to list when the scan is stopped or completed
+	print 'DOne'
 	ch.basic_ack(delivery_tag=method.delivery_tag)
 #print getServerStatus(server)
 

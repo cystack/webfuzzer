@@ -1,6 +1,8 @@
 <?php
+	@session_start();
 	$host = '188.166.224.165';
 	$port = '5555';
+	@$token = $_SESSION['token'];
 	// var_dump($_POST);
 	function GET($url, $accessToken){
 		$host = '188.166.224.165';
@@ -21,6 +23,31 @@
 		return array('header' => $header, 'body' => $body);
 	}
 
+	function DELETE($url, $accessToken){
+		$host = '188.166.224.165';
+		$port = '5555';
+		$ch = curl_init($host.':'.$port.$url);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+		if ($accessToken !== "None"){
+			curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Authorization:JWT '.$accessToken));
+		}
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt($ch, CURLOPT_VERBOSE, 1);
+		curl_setopt($ch, CURLOPT_HEADER, 1);
+		# Send request.
+		$response = curl_exec($ch);
+	}
+
+	if (isset($_GET['action']) && isset($_GET['id'])){
+		if ($_GET['action'] === "delete"){
+			DELETE('/domains/'.$_GET['id'], $token);
+			header('Location: domains.php');
+		}
+		if ($_GET['action'] === "stop"){
+			GET('scans/'.$_GET['id'].'/stop', $token);
+			header('Location: scan.php');
+		}
+	}
 	function POST($host, $port, $url, $accessToken, $body){
 		$ch = curl_init($host.':'.$port.$url);
 		# Setup request to send json via POST.
