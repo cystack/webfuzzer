@@ -44,8 +44,13 @@
                 http.onreadystatechange = function() {
                     if(http.readyState == 4 && http.status == 200) {
                         var obj = JSON.parse(http.responseText);
-                        localStorage.setItem('accessToken', obj.access_token);
-                        alert("Success: " + obj.access_token);
+                        //alert("Success: " + obj.access_token);
+
+                        var req = new XMLHttpRequest();
+                        var addr = "setSession.php";
+                        var tmp_token = 'token=' + obj.access_token;
+                        req.open("POST", url, false);
+                        req.send(tmp_token);
                     }
                 }
                 http.send(params);
