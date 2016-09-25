@@ -6,7 +6,7 @@
 	- Tự động sinh rule cho modsecurity, iptable và cho phép người dùng tải về để cập nhật vào sản phẩm của họ
 	- Hướng người dùng sử dụng Web Application Firewall và vá lỗ hổng trên đó
 
-## Tính năng
+## Tại sao dùng WebFuzzer?
 - **Dễ sử dụng:**
 	- Giao diện web thân thiện
 	- Không cần cài đặt, không cần quan tâm đến cấu hình máy tính
