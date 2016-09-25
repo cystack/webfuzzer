@@ -28,3 +28,5 @@
 
 ## Giao diện
 ![alt text](docs/assets/wf_domain.PNG)
+
+![alt text](docs/assets/wf_vuln.png)
