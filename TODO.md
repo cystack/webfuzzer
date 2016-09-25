@@ -12,6 +12,8 @@
 ## Client
 - Sử dụng AngularJS thay thế hoàn toàn cho PHP đang sử dụng
 - Bổ sung chức năng xuất báo cáo
+- Phát triển Commandline Interface
+
 
 ## Tài liệu
 - Xây dựng trang tài liệu hướng dẫn sử dụng API
