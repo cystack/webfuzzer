@@ -77,7 +77,11 @@
                                                             echo '<td>'.$scan['start_time'].'</td>';
                                                             echo '<td>None</td>';
                                                             echo '<td>'.count(GET('/vulns/'.$scan['id'], $token)['body']).'</td>';
-                                                            echo '<td><a href="detailScan.php?scanID='.$scan['id'].'">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>';
+                                                            echo '<td><a href="detailScan.php?scanID='.$scan['id'].'">Detail</a> | <a href="#">Rescan</a> ';
+                                                            if ($scan['status'] === 'Running'){
+                                                                echo '| <a href="./connection?action=stop&id='.$scan['id'].'">Stop</a>';
+                                                            }
+                                                            echo '</td>';
                                                             echo '</tr>';
                                                         }
                                                     ?>
@@ -115,7 +119,7 @@
                                                             echo '<td>'.$scan['start_time'].'</td>';
                                                             echo '<td>None</td>';
                                                             echo '<td>'.count(GET('/vulns/'.$scan['id'], $token)['body']).'</td>';
-                                                            echo '<td><a href="detailScan.php?scanID='.$scan['id'].'">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>';
+                                                            echo '<td><a href="detailScan.php?scanID='.$scan['id'].'">Detail</a> | <a href="#">Rescan</a></td>';
                                                             echo '</tr>';
                                                         }
                                                     ?>
@@ -153,7 +157,9 @@
                                                             echo '<td>'.$scan['start_time'].'</td>';
                                                             echo '<td>None</td>';
                                                             echo '<td>'.count(GET('/vulns/'.$scan['id'], $token)['body']).'</td>';
-                                                            echo '<td><a href="detailScan.php?scanID='.$scan['id'].'">Detail</a> | <a href="#">Rescan</a> | <a href="#">Stop</a></td>';
+                                                            echo '<td><a href="detailScan.php?scanID='.$scan['id'].'">Detail</a> | <a href="#">Rescan</a> ';
+                                                            echo '| <a href="./connection?action=stop&id='.$scan['id'].'">Stop</a>';
+                                                            echo '</td>';
                                                             echo '</tr>';
                                                         }
                                                     ?>
