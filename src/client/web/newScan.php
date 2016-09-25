@@ -15,7 +15,7 @@
             		include("sidebar.php");
             	?>
                 <?php 
-                    $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImE1MzdlYjcyLTUwYTgtNDg5OC04NTU5LTA0OTFkMTU4MDRiMCIsImlhdCI6MTQ3NDc0MDQxOCwibmJmIjoxNDc0NzQwNDE4LCJleHAiOjE0NzQ4MjY4MTh9.OOaeHh3X78hW_jB5JpZty09c81qGpr6mepEdwbjb_5A';
+                    $token = $_SESSION['token'];
                     $domainIDList = GET('/domains', $token)['body'];
                     $domainNameList = array();
                     foreach ($domainIDList as $value) {
@@ -91,7 +91,7 @@
 
         <script type="text/javascript">
             function pushToScan() {
-                var token = "'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImE1MzdlYjcyLTUwYTgtNDg5OC04NTU5LTA0OTFkMTU4MDRiMCIsImlhdCI6MTQ3NDc0MDQxOCwibmJmIjoxNDc0NzQwNDE4LCJleHAiOjE0NzQ4MjY4MTh9.OOaeHh3X78hW_jB5JpZty09c81qGpr6mepEdwbjb_5A'";
+                var token = "<?php echo $_SESSION['token']; ?>";
                 var domain = document.getElementById('domain');
                 var domainID = domain.options[domain.selectedIndex].value;
                 var http = new XMLHttpRequest();
