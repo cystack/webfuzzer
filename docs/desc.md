@@ -6,10 +6,10 @@
 --------------------
 
 ## WebFuzzer là gì?
-- Một công cụ **kiểm thử an ninh ứng dụng web** được phân phối dưới dạng dịch vụ online (Software As A Service)
+- Một giải pháp **kiểm thử an ninh ứng dụng web** được phân phối dưới dạng dịch vụ online (Software As A Service)
 	- Input: domain ứng dụng web
 	- Output: danh sách lỗ hổng đang tồn tại, báo cáo, biểu đồ, hướng dẫn khắc phục
-- Đưa ra giải pháp **vá lỗ hổng** sau khi tìm thấy
+- Đưa ra biện pháp **vá lỗ hổng** sau khi tìm thấy lỗi
 	- Tự động sinh rule cho modsecurity, iptable và cho phép người dùng tải về để cập nhật vào sản phẩm của họ
 	- Hướng người dùng sử dụng Web Application Firewall và vá lỗ hổng trên đó
 
@@ -24,7 +24,7 @@
 - **Đa nền tảng**: Hiện tại là Web Interface, tương lai sẽ là CLI, Mobile, PC vì đã có API hỗ trợ
 
 ## Kiến trúc sản phẩm
-![alt text](assets/architecture.png)
+![alt text](docs/assets/architecture.png)
 
 ## Hướng dẫn cài đặt (dành cho nhà cung cấp sản phẩm, không dành cho người dùng cuối)
 1. Cài w3af trên các server riêng biệt và khởi động tiến trình w3af_api. Trên mỗi server có thể mở nhiều tiến trình này tùy thuộc vào cấu hình
@@ -34,3 +34,9 @@
 5. Khởi động server
 
 ## Giao diện
+![alt text](docs/assets/wf_domain.PNG)
+
+![alt text](docs/assets/wf_vuln.png)
+
+![alt text](docs/assets/wf_vuln_detail.png)
+
