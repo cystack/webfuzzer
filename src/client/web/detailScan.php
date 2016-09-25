@@ -39,14 +39,23 @@
                                                     foreach ($allVul as $vul) {
                                                         echo '<tr onclick="window.document.location=\'detailVulnerabilityScan.php?scanID='.$_GET['scanID'].'&vulID='.$vul['id'].'\';"style="cursor: pointer;">';
                                                         $severityColor = '';
+                                                        $info = 0;
+                                                        $low = 0;
+                                                        $medium = 0;
+                                                        $high = 0;
+                                                        
                                                         if ($vul['severity'] == 'Information'){
                                                             $severityColor = 'label-info';
+                                                            $info += 1;
                                                         }elseif ($vul['severity'] == 'Low') {
                                                             $severityColor = 'label-success';
+                                                            $low += 1;
                                                         }elseif ($vul['severity'] == 'Medium') {
                                                             $severityColor = 'label-warning';
+                                                            $medium += 1;
                                                         }elseif ($vul['severity'] == 'High') {
                                                             $severityColor = 'label-danger';
+                                                            $high += 1;
                                                         }
                                                         // var_dump($severityColor);
                                                         echo '<td><span class="label '.$severityColor.' col-md-12">'.$vul['severity'].'</span></td>';
