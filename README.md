@@ -30,3 +30,6 @@
 ![alt text](docs/assets/wf_domain.PNG)
 
 ![alt text](docs/assets/wf_vuln.png)
+
+![alt text](docs/assets/wf_vuln_detail.png)
+
