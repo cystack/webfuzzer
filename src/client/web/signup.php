@@ -11,7 +11,7 @@
                     </header>
                     <div class="auth-content">
                         <p class="text-xs-center">SIGNUP TO GET INSTANT ACCESS</p>
-                        <form id="signup-form" action="#" method="POST" novalidate="">
+                        <div id="signup-form"  novalidate="">
                             <div class="form-group"> <label for="firstname">Name</label>
                                 <div class="row">
                                     <div class="col-sm-12"> <input type="text" class="form-control underlined" name="name" id="name" placeholder="Enter full name" required=""> </div>
@@ -33,7 +33,7 @@
                             <div class="form-group">
                                 <p class="text-muted text-xs-center">Already have an account? <a href="login.php">Login!</a></p>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,11 +59,12 @@
                 var url = "http://188.166.224.165:5555/users";
                 var params = '{"name":"'+name+'","email" : "' + email + '", "password" : "' + password + '"}';
                 // alert(params);
-                http.open("POST", url, true);
+                http.open("POST", url, false);
                 // console.log(params);
                 http.setRequestHeader("Content-type", "text/plain");
 
                 http.send(params);
+                window.location.replace("./login.php");
                 // alert(params);
             }
         </script>
