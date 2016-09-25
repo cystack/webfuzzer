@@ -1,6 +1,8 @@
 <?php
+	@session_start();
 	$host = '188.166.224.165';
 	$port = '5555';
+	@$token = $_SESSION['token'];
 	// var_dump($_POST);
 	function GET($url, $accessToken){
 		$host = '188.166.224.165';
