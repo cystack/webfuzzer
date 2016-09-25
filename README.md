@@ -27,4 +27,4 @@
 5. Khởi động server
 
 ## Giao diện
-![alt text](docs/assets/wf_domain.png)
+![alt text](docs/assets/wf_domain.PNG)
