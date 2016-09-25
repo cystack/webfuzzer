@@ -318,19 +318,19 @@ $(function() {
         //Flot Pie Chart
         var data = [{
             label: "Information",
-            data: 21,
+            data: 57,
             color: '#81e119',
         }, {
             label: "Low",
-            data: 15,
+            data: 9,
             color: '#eff352',
         }, {
             label: "Medium",
-            data: 7,
+            data: 15,
             color: '#e69438',
         }, {
             label: "High",
-            data: 52,
+            data: 12,
             color: '#fe1122',
         }];
 
