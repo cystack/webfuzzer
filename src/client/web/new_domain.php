@@ -191,7 +191,7 @@
                         }
                         else port = tmp;
                         var http = new XMLHttpRequest();
-                        var url = "http://188.166.224.165:5555/domains";
+                        var url = "http://webfuzzer.com:5555/domains";
                         var e = document.getElementById('sb');
                         var params = '{ "url" : "' + domain + '", "description" : "' + e.options[e.selectedIndex].value + '", "port" : "' + port + '", "ssl" : "' + protocol + '" }';
                         http.open("POST", url, false);

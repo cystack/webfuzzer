@@ -56,7 +56,7 @@
                 var password = document.getElementById('password').value;
 
                 var http = new XMLHttpRequest();
-                var url = "http://188.166.224.165:5555/users";
+                var url = "http://webfuzzer.com:5555/users";
                 var params = '{"name":"'+name+'","email" : "' + email + '", "password" : "' + password + '"}';
                 // alert(params);
                 http.open("POST", url, false);

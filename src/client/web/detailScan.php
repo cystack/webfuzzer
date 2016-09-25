@@ -87,7 +87,13 @@
                                     </div>
                                 </div>
                                 <div class="card-block">
-                                    Pie chart here.
+                                    <div class="card-block">
+                                        <section class="example">
+                                            <div class="flot-chart">
+                                                <div class="flot-chart-pie-content" id="flot-pie-chart"></div>
+                                            </div>
+                                        </section>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +111,7 @@
         </div>
         <script src="js/vendor.js"></script>
         <script src="js/app.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
         <script type="text/javascript">
             jQuery(document).ready(function($) {
     $(".clickable-row").click(function() {

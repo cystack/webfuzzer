@@ -34,7 +34,7 @@
                 var password = document.getElementById('password').value;
 
                 var http = new XMLHttpRequest();
-                var url = "http://188.166.224.165:5555/auth";
+                var url = "http://webfuzzer.com:5555/auth";
                 var params = '{"email" : "' + username + '", "password" : "' + password + '"}';
 
                 http.open("POST", url, false);

@@ -95,7 +95,7 @@
                 var domain = document.getElementById('domain');
                 var domainID = domain.options[domain.selectedIndex].value;
                 var http = new XMLHttpRequest();
-                var url = "http://188.166.224.165:5555/scans";
+                var url = "http://webfuzzer.com:5555/scans";
                 var params = '{ "domain_id" : "' + domainID + '", "profile_id" : "0", "bootstrap_path" : "/", "description" : "string" }';
                 http.open("POST", url, false);
                 http.setRequestHeader("Content-Type", "application/json");
