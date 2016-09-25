@@ -38,10 +38,15 @@
 	}
 
 	if (isset($_GET['action']) && isset($_GET['id'])){
-		DELETE('/domains/'.$_GET['id'], $token);
-		header('Location: domains.php');
+		if ($_GET['action'] === "delete"){
+			DELETE('/domains/'.$_GET['id'], $token);
+			header('Location: domains.php');
+		}
+		if ($_GET['action'] === "stop"){
+			GET('scans/'.$_GET['id'].'/stop', $token);
+			header('Location: scan.php');
+		}
 	}
-
 	function POST($host, $port, $url, $accessToken, $body){
 		$ch = curl_init($host.':'.$port.$url);
 		# Setup request to send json via POST.
