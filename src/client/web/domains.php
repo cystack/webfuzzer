@@ -1,10 +1,8 @@
 <!doctype html>
 <html class="no-js" lang="en">
     <?php 
-    	ini_set('display_errors', 1);
-		ini_set('display_startup_errors', 1);
-		error_reporting(E_ALL);
-    	include("head.php"); ?>
+    	include("head.php"); 
+    ?>
 
     <body>
     <div class="main-wrapper">
@@ -53,7 +51,7 @@
 	                </thead>
 		                <tbody>
 	                    <?php
-	                    	$token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImE1MzdlYjcyLTUwYTgtNDg5OC04NTU5LTA0OTFkMTU4MDRiMCIsImlhdCI6MTQ3NDc0MDQxOCwibmJmIjoxNDc0NzQwNDE4LCJleHAiOjE0NzQ4MjY4MTh9.OOaeHh3X78hW_jB5JpZty09c81qGpr6mepEdwbjb_5A';
+	                    	$token = $_SESSION['token'];
 	                    	$num = GET('/domains', $token);
 	                    	for ( $x = 0; $x < count($num['body']); $x++ ) {
 	                    		$data = GET($num['body'][$x]['href'], $token);

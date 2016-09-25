@@ -22,4 +22,7 @@
         }
     </script>
 </head>
-<?php include("connection.php"); ?>
+<?php 
+include("connection.php"); 
+session_start();
+?>
