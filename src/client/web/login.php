@@ -38,13 +38,17 @@
                 var url = "http://188.166.224.165:5555/auth";
                 var params = '{"email" : "' + username + '", "password" : "' + password + '"}';
 
-                http.open("POST", url, true);
+                http.open("POST", url, false);
                 // console.log(params);
                 http.setRequestHeader("Content-Type", "application/json");
-
+                http.onreadystatechange = function() {//Call a function when the state changes.
+    if(http.readyState == 4 && http.status == 200) {
+        var obj = JSON.parse(http.responseText);
+        alert(obj.access_token);
+    }
+}
                 http.send(params);
-                alert(http.responseText);
-                // alert(params);
+
             }
         </script>
         <!-- Reference block for JS -->
