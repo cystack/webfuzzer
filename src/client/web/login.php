@@ -41,12 +41,13 @@
                 http.open("POST", url, false);
                 // console.log(params);
                 http.setRequestHeader("Content-Type", "application/json");
-                http.onreadystatechange = function() {//Call a function when the state changes.
-    if(http.readyState == 4 && http.status == 200) {
-        var obj = JSON.parse(http.responseText);
-        alert(obj.access_token);
-    }
-}
+                http.onreadystatechange = function() {
+                    if(http.readyState == 4 && http.status == 200) {
+                        var obj = JSON.parse(http.responseText);
+                        localStorage.setItem('accessToken', obj.access_token);
+                        alert("Success: " + obj.access_token);
+                    }
+                }
                 http.send(params);
 
             }
