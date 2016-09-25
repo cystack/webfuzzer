@@ -1,8 +1,14 @@
 <!doctype html>
 <html class="no-js" lang="en">
 <?php include("head.php") ?>
+    <?php 
+        if (!isset($_SESSION['token'])){
+            header('Location: login.php');
+            die();
+        }
+    ?>
 <?php
-    $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6ImE1MzdlYjcyLTUwYTgtNDg5OC04NTU5LTA0OTFkMTU4MDRiMCIsImlhdCI6MTQ3NDc0MDQxOCwibmJmIjoxNDc0NzQwNDE4LCJleHAiOjE0NzQ4MjY4MTh9.OOaeHh3X78hW_jB5JpZty09c81qGpr6mepEdwbjb_5A';
+    $token = $_SESSION['token'];
     $id = $_GET['id'];
 ?>
 <body>
