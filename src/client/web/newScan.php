@@ -1,6 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="en">
-    <?php include("head.php") 
+    <?php include("head.php");
     if (!isset($_SESSION['token'])){
         header('Location: login.php');
         die();
