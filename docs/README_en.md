@@ -1,4 +1,5 @@
 # Cystack team
+We are a team of young developers who are energetic and enthusiastic about security.
 # About WebFuzzer
 ## What is WebFuzzer?
 **WebFuzzer** is a SAAS (Software As A Service) **Web Application Penetration** product in which it has:
@@ -24,14 +25,13 @@ The spectacular superority of **WebFuzzer** is that it provides patching strateg
 ![alt text](assets/architecture.png)
 
 ## Deploy guide (for service providers, not endpoint users)
-1. Instasll [w3af](https://github.com/andresriancho/w3af) on dedicated servers and start the *w3af_api* process. 
-	Cài w3af trên các server riêng biệt và khởi động tiến trình w3af_api. Trên mỗi server có thể mở nhiều tiến trình này tùy thuộc vào cấu hình
-2. Cài đặt RabbitMQ làm hàng đợi thông điệp
-3. Cấu hình Server và Dispatcher làm Producer và Consumer cho hàng đợi trên, đồng thời cấu hình đến danh sách server w3af theo ip và port
-4. Thiết lập môi trường cho Server Flask bằng nginx, gunicorn
-5. Khởi động server
+1. Install [w3af](https://github.com/andresriancho/w3af) on dedicated servers and start the *w3af_api* process. Multiple *w3af_api* processes can be opened on every servers based on their system specification
+2. Install RabbitMQ for Message Queuing
+3. Config Server and Dispatcher, additionally provide w3af servers list by their IP and Port.
+4. Establish environment for *Flask* server by *nginx*, *gunicorn*
+5. Start the server
 
-## Giao diện
+## User Interface
 ![alt text](assets/wf_domain.PNG)
 
 ![alt text](assets/wf_vuln.png)
