@@ -1,26 +1,26 @@
 # Cystack team
 # About WebFuzzer
 ## What is WebFuzzer?
-**WebFuzzer** is a SAAS (Software As A Service) *Web Application Penetration* product in which it has:
+**WebFuzzer** is a SAAS (Software As A Service) **Web Application Penetration** product in which it has:
 - Input: Web application domain
 - Output: Overall graph report, list of vulnerabilities and their details.
 
-The spectacular advantages of **WebFuzzer** is that it provides patching strategies after finding vulnerabilities in Web application:
-- 
-- Tự động sinh rule cho modsecurity, iptable và cho phép người dùng tải về để cập nhật vào sản phẩm của họ
-- Hướng người dùng sử dụng Web Application Firewall và vá lỗ hổng trên đó
+The spectacular superority of **WebFuzzer** is that it provides patching strategies after finding vulnerabilities in Web application by 2 selections:
+- Automatically generating rules for **modsecurity** and **iptables** for customers to update on their system
+- Guiding customers to use Web Application Firewall and then apply patches to revamp their Web application system
 
-## Tại sao dùng WebFuzzer?
-- **Dễ sử dụng:**
-	- Giao diện web thân thiện
-	- Không cần cài đặt, không cần quan tâm đến cấu hình máy tính
-- **Opensource**, được phát triển dựa trên [w3af](https://github.com/andresriancho/w3af), khả năng mở rộng cao
-- Phát hiện được hơn **200 loại lỗ hổng**, và sẽ còn mở rộng tiếp
-- **Xử lý phân tán**, cho phép scan một số lượng lớn ứng dụng web đồng thời
-- **REST API**: Hướng đến người dùng chuyên gia, họ có khả năng tự xây dựng những công cụ Scanner trên hạ tầng WebFuzzer
-- **Đa nền tảng**: Hiện tại là Web Interface, tương lai sẽ là CLI, Mobile, PC vì đã có API hỗ trợ
+## WebFuzzer advantages
+- **Easy to use:**
+	- Friendly Web application user interface
+	- No need to install any addtional modules or plugins except a browser
+	- No need to care about *client computer* specs
+- **Opensource**, build on the top of [w3af](https://github.com/andresriancho/w3af), with a highly extensible ability
+- Having the ability to detect more than **200 types of vulnerabilities** (and this number will absolutely increase in the future)
+- **Distributed handling**, be able to simultaneously handle a considerable amount of Web application
+- **REST API**: Allow security specialists build their Scanner base on the **WebFuzzer** architecture.
+- **Multiplatform**: Currently **WebFuzzer** works as a *Web service*. *CLI*, *Mobile*, *PC* and other platforms will be supported in the near future base on the built APIs.
 
-## Kiến trúc sản phẩm
+## System architecture
 ![alt text](docs/assets/architecture.png)
 
 ## Hướng dẫn cài đặt (dành cho nhà cung cấp sản phẩm, không dành cho người dùng cuối)
