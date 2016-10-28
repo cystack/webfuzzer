@@ -21,18 +21,19 @@ The spectacular superority of **WebFuzzer** is that it provides patching strateg
 - **Multiplatform**: Currently **WebFuzzer** works as a *Web service*. *CLI*, *Mobile*, *PC* and other platforms will be supported in the near future base on the built APIs.
 
 ## System architecture
-![alt text](docs/assets/architecture.png)
+![alt text](assets/architecture.png)
 
-## Hướng dẫn cài đặt (dành cho nhà cung cấp sản phẩm, không dành cho người dùng cuối)
-1. Cài w3af trên các server riêng biệt và khởi động tiến trình w3af_api. Trên mỗi server có thể mở nhiều tiến trình này tùy thuộc vào cấu hình
+## Deploy guide (for service providers, not endpoint users)
+1. Instasll [w3af](https://github.com/andresriancho/w3af) on dedicated servers and start the *w3af_api* process. 
+	Cài w3af trên các server riêng biệt và khởi động tiến trình w3af_api. Trên mỗi server có thể mở nhiều tiến trình này tùy thuộc vào cấu hình
 2. Cài đặt RabbitMQ làm hàng đợi thông điệp
 3. Cấu hình Server và Dispatcher làm Producer và Consumer cho hàng đợi trên, đồng thời cấu hình đến danh sách server w3af theo ip và port
 4. Thiết lập môi trường cho Server Flask bằng nginx, gunicorn
 5. Khởi động server
 
 ## Giao diện
-![alt text](docs/assets/wf_domain.PNG)
+![alt text](assets/wf_domain.PNG)
 
-![alt text](docs/assets/wf_vuln.png)
+![alt text](assets/wf_vuln.png)
 
-![alt text](docs/assets/wf_vuln_detail.png)
+![alt text](assets/wf_vuln_detail.png)
