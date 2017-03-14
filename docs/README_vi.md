@@ -17,7 +17,7 @@
 - **Đa nền tảng**: Hiện tại là Web Interface, tương lai sẽ là CLI, Mobile, PC vì đã có API hỗ trợ
 
 ## Kiến trúc sản phẩm
-![alt text](docs/assets/architecture.png)
+![alt text](assets/architecture.png)
 
 ## Hướng dẫn cài đặt (dành cho nhà cung cấp sản phẩm, không dành cho người dùng cuối)
 1. Cài w3af trên các server riêng biệt và khởi động tiến trình w3af_api. Trên mỗi server có thể mở nhiều tiến trình này tùy thuộc vào cấu hình
@@ -27,9 +27,9 @@
 5. Khởi động server
 
 ## Giao diện
-![alt text](docs/assets/wf_domain.PNG)
+![alt text](assets/wf_domain.PNG)
 
-![alt text](docs/assets/wf_vuln.png)
+![alt text](assets/wf_vuln.png)
 
-![alt text](docs/assets/wf_vuln_detail.png)
+![alt text](assets/wf_vuln_detail.png)
 
